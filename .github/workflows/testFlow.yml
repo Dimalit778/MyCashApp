@@ -23,7 +23,6 @@ jobs:
           build: npm run build
           start: npm run test:mode
         env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         CYPRESS_token: ${{ secrets.CYPRESS_TOKEN }}
         CYPRESS_refresh_token: ${{ secrets.CYPRESS_REFRESH_TOKEN }}}
         CYPRESS_test_email: ${{ secrets.CYPRESS_REACT_APP_TEST_EMAIL }}
