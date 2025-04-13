@@ -19,6 +19,7 @@ jobs:
 
       - name: Install frontend dependencies
         run: npm ci
+        run: npm install --legacy-peer-deps
         working-directory: frontend
 
       - name: Cypress run
