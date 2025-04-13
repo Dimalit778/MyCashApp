@@ -3,22 +3,26 @@ on: push
 jobs:
   cypress-run:
     runs-on: ubuntu-24.04
+    container:
+      image: node:20
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          node-version: 20
 
-      - name: Install dependencies
-        run: |
-          cd frontend && npm install --legacy-peer-deps
-          cd ../backend && npm install
+      - name: Install backend dependencies
+        run: npm ci
+        working-directory: backend
 
       - name: Cypress run
         uses: cypress-io/github-action@v6
         with:
           working-directory: frontend
-          install: false
+          run: npm ci
+          build: npm run build
           start: npm run test:mode
-           wait-on: "http://localhost:3000,tcp:5001"
+
         env:
           CYPRESS_REACT_APP_TEST_API_URL: http://localhost:5001
           CYPRESS_REACT_APP_BASE_URL: http://localhost:3000
