@@ -22,6 +22,6 @@ jobs:
         uses: cypress-io/github-action@v6
         with:
           working-directory: frontend
-          # install: false # Skip installation as we've already done it
+          install: false # Skip installation as we've already done it
           # build: npm run build
           start: npm run test:mode
