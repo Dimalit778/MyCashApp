@@ -15,17 +15,23 @@ jobs:
         working-directory: backend
         run: npm install
 
+      - name: Start backend server
+        working-directory: backend
+        run: npm run test:backend &
+        env:
+          REACT_APP_TEST_API_URL: ${{ secrets.CYPRESS_REACT_APP_TEST_API_URL }}
+          REACT_APP_BASE_URL: ${{ secrets.CYPRESS_REACT_APP_BASE_URL }}
+
       - name: Cypress run
         uses: cypress-io/github-action@v6
         with:
           working-directory: frontend
-          install: false # Skip installation as we've already done it
+          install: false
           build: npm run build
           start: npm run test:mode
+          wait-on: "${{ secrets.CYPRESS_REACT_APP_BASE_URL }},${{ secrets.CYPRESS_REACT_APP_TEST_API_URL }}"
         env:
           CYPRESS_TOKEN: ${{ secrets.CYPRESS_TOKEN }}
-          CYPRESS_REFRESH_TOKEN: ${{ secrets.CYPRESS_REFRESH_TOKEN }}}
+          CYPRESS_REFRESH_TOKEN: ${{ secrets.CYPRESS_REFRESH_TOKEN }}
           CYPRESS_REACT_APP_TEST_EMAIL: ${{ secrets.CYPRESS_REACT_APP_TEST_EMAIL }}
           CYPRESS_REACT_APP_TEST_PASSWORD: ${{ secrets.CYPRESS_REACT_APP_TEST_PASSWORD }}
-          CYPRESS_REACT_APP_TEST_API_URL: ${{ secrets.CYPRESS_REACT_APP_TEST_API_URL }}
-          CYPRESS_REACT_APP_BASE_URL: ${{ secrets.CYPRESS_REACT_APP_BASE_URL }}
