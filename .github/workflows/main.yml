@@ -32,5 +32,7 @@ jobs:
         env:
           REACT_APP_TEST_API_URL: http://localhost:5001
           REACT_APP_BASE_URL: http://localhost:3000
-          TOKEN: ${{ secrets.CYPRESS_TOKEN }}
-          REFRESH_TOKEN: ${{ secrets.CYPRESS_REFRESH_TOKEN }}
+          TOKEN: ZFz5iL6c8hdlyU0aV83PdZxhEpHO8l61hv
+          REFRESH_TOKEN: 6YL6javjBVpuh82CYUEPNNYJhm7rhyBb
+          TOKEN_EXPIRY: 1d
+          REFRESH_TOKEN_EXPIRY: 7d
