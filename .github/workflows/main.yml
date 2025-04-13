@@ -29,8 +29,8 @@ jobs:
           install: false
           start: npm run test:mode
           wait-on: "http://localhost:3000"
-          env:
-            CYPRESS_REACT_APP_TEST_API_URL: http://localhost:5001
-            CYPRESS_REACT_APP_BASE_URL: http://localhost:3000
-            CYPRESS_TOKEN: ${{ secrets.CYPRESS_TOKEN }}
-            CYPRESS_ REFRESH_TOKEN: ${{ secrets.CYPRESS_REFRESH_TOKEN }}
+        env:
+          CYPRESS_REACT_APP_TEST_API_URL: http://localhost:5001
+          CYPRESS_REACT_APP_BASE_URL: http://localhost:3000
+          CYPRESS_TOKEN: ${{ secrets.CYPRESS_TOKEN }}
+          CYPRESS_ REFRESH_TOKEN: ${{ secrets.CYPRESS_REFRESH_TOKEN }}
