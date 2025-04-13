@@ -17,15 +17,12 @@ jobs:
 
       - name: Cypress run
         uses: cypress-io/github-action@v6
+
         with:
           working-directory: frontend
-          install: false # Skip installation as we've already done it
+          browser: chrome
           build: npm run build
           start: npm run test:mode
         env:
-          CYPRESS_TOKEN: ${{ secrets.CYPRESS_TOKEN }}
-          CYPRESS_REFRESH_TOKEN: ${{ secrets.CYPRESS_REFRESH_TOKEN }}}
-          CYPRESS_REACT_APP_TEST_EMAIL: ${{ secrets.CYPRESS_REACT_APP_TEST_EMAIL }}
-          CYPRESS_REACT_APP_TEST_PASSWORD: ${{ secrets.CYPRESS_REACT_APP_TEST_PASSWORD }}
           CYPRESS_REACT_APP_TEST_API_URL: "http://localhost:3000"
           CYPRESS_REACT_APP_BASE_URL: "http://localhost:5001"
