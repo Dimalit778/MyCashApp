@@ -19,7 +19,7 @@ import { errorHandler } from "./middleware/errorMiddleware.js";
 dotenv.config();
 
 const app = express();
-const PORT = 5000;
+const PORT = process.env.NODE_ENV === "test" ? 5001 : 5000;
 
 const __dirname = path.resolve();
 
