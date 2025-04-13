@@ -27,7 +27,7 @@ jobs:
           working-directory: frontend
           install: false
           start: npm run test:mode
-          wait-on: "http://localhost:3000,tcp:localhost:5001"
+          wait-on: "http://localhost:3000"
         env:
           REACT_APP_TEST_API_URL: http://localhost:5001
           REACT_APP_BASE_URL: http://localhost:3000
