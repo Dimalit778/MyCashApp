@@ -4,13 +4,13 @@ jobs:
   cypress-run:
     runs-on: ubuntu-24.04
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
       - name: start backend
+        uses: actions/checkout@v4
         with:
           start: npm run test:backend
           working-directory: backend
           wait-on: "http://localhost:5001"
+
       - name: Cypress run
         uses: cypress-io/github-action@v6
         with:
