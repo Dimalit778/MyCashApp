@@ -4,6 +4,11 @@ jobs:
   cypress-run:
     runs-on: ubuntu-24.04
     name: Build and test
+    env:
+      CYPRESS_REACT_APP_TEST_API_URL: http://localhost:5001
+      CYPRESS_REACT_APP_BASE_URL: http://localhost:3000
+      CYPRESS_TOKEN: ${{ secrets.CYPRESS_TOKEN }}
+     CYPRESS_ REFRESH_TOKEN: ${{ secrets.CYPRESS_REFRESH_TOKEN }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -21,14 +26,6 @@ jobs:
         run: npm install --legacy-peer-deps
         working-directory: frontend
 
-      - name: Create env file
-        run: |
-          echo "TOKEN=${{ secrets.TOKEN }}" > .env
-          echo "REFRESH_TOKEN=${{ secrets.REFRESH_TOKEN }}" >> .env
-          echo "TOKEN_EXPIRY=7d" >> .env
-          echo "REFRESH_TOKEN_EXPIRY=30d" >> .env
-        working-directory: backend
-
       - name: Cypress run
         uses: cypress-io/github-action@v6
         with:
@@ -36,6 +33,3 @@ jobs:
           install: false
           start: npm run test:mode
           wait-on: "http://localhost:3000"
-        env:
-          CYPRESS_REACT_APP_TEST_API_URL: http://localhost:5001
-          CYPRESS_REACT_APP_BASE_URL: http://localhost:3000
