@@ -3,14 +3,6 @@ on: push
 jobs:
   cypress-run:
     runs-on: ubuntu-24.04
-    env:
-      CYPRESS_TOKEN: ${{ secrets.CYPRESS_TOKEN }}
-      CYPRESS_REFRESH_TOKEN: ${{ secrets.CYPRESS_REFRESH_TOKEN }}}
-      CYPRESS_REACT_APP_TEST_EMAIL: ${{ secrets.CYPRESS_REACT_APP_TEST_EMAIL }}
-      CYPRESS_REACT_APP_TEST_PASSWORD: ${{ secrets.CYPRESS_REACT_APP_TEST_PASSWORD }}
-      CYPRESS_REACT_APP_TEST_API_URL: ${{ secrets.CYPRESS_REACT_APP_TEST_API_URL }}
-      CYPRESS_REACT_APP_BASE_URL: ${{ secrets.CYPRESS_REACT_APP_BASE_URL }}
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -30,3 +22,11 @@ jobs:
           install: false # Skip installation as we've already done it
           build: npm run build
           start: npm run test:mode
+        env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        CYPRESS_token: ${{ secrets.CYPRESS_TOKEN }}
+        CYPRESS_refresh_token: ${{ secrets.CYPRESS_REFRESH_TOKEN }}}
+        CYPRESS_test_email: ${{ secrets.CYPRESS_REACT_APP_TEST_EMAIL }}
+        CYPRESS_test_password: ${{ secrets.CYPRESS_REACT_APP_TEST_PASSWORD }}
+        CYPRESS_test_api_url: ${{ secrets.CYPRESS_REACT_APP_TEST_API_URL }}
+        CYPRESS_base_url: ${{ secrets.CYPRESS_REACT_APP_BASE_URL }}
