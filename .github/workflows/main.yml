@@ -4,16 +4,29 @@ jobs:
   cypress-run:
     runs-on: ubuntu-24.04
     steps:
-      - name: start backend
+      # First, checkout the code
+      - name: Checkout code
         uses: actions/checkout@v4
-        with:
-          start: npm run test:backend
-          working-directory: backend
-          wait-on: "http://localhost:5001"
 
+      # Install dependencies for both frontend and backend
+      - name: Install frontend dependencies
+        run: npm install --legacy-peer-deps
+        working-directory: frontend
+
+      - name: Install backend dependencies
+        run: npm install
+        working-directory: backend
+
+      # Start the backend server as a background process
+      - name: Start backend server
+        run: npm run test:backend &
+        working-directory: backend
+
+      # Then run Cypress tests
       - name: Cypress run
         uses: cypress-io/github-action@v6
         with:
           working-directory: frontend
-          start: npm run test:mode
-          wait-on: "http://localhost:3000"
+          install: false
+          start: npm start
+          wait-on: "http://localhost:3000,http://localhost:5001"
