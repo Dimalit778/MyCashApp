@@ -4,17 +4,13 @@ jobs:
   cypress-run:
     runs-on: ubuntu-24.04
     env:
-      MONGO_TEST_URL: ${{ secrets.MONGO_TEST_URL }}
-      TOKEN: ${{ secrets.TOKEN }}
-      REFRESH_TOKEN: ${{ secrets.REFRESH_TOKEN }}
-      TOKEN_EXPIRY: ${{ secrets.TOKEN_EXPIRY }}
-      REACT_APP_TEST_EMAIL: ${{ secrets.REACT_APP_TEST_EMAIL }}
-      REACT_APP_TEST_PASSWORD: ${{ secrets.REACT_APP_TEST_PASSWORD }}
-      REACT_APP_TEST_API_URL: ${{ secrets.REACT_APP_TEST_API_URL }}
-      REACT_APP_BASE_URL: ${{ secrets.REACT_APP_BASE_URL }}
-      REACT_APP_CLOUDINARY_NAME: ${{ secrets.REACT_APP_CLOUDINARY_NAME }}
-      REACT_APP_CLOUDINARY_API_KEY: ${{ secrets.REACT_APP_CLOUDINARY_API_KEY }}
-      REACT_APP_CLOUDINARY_API_SECRET: ${{ secrets.REACT_APP_CLOUDINARY_API_SECRET }}
+      CYPRESS_TOKEN: ${{ secrets.CYPRESS_TOKEN }}
+      CYPRESS_REFRESH_TOKEN: ${{ secrets.CYPRESS_REFRESH_TOKEN }}}
+      CYPRESS_REACT_APP_TEST_EMAIL: ${{ secrets.CYPRESS_REACT_APP_TEST_EMAIL }}
+      CYPRESS_REACT_APP_TEST_PASSWORD: ${{ secrets.CYPRESS_REACT_APP_TEST_PASSWORD }}
+      CYPRESS_REACT_APP_TEST_API_URL: ${{ secrets.CYPRESS_REACT_APP_TEST_API_URL }}
+      CYPRESS_REACT_APP_BASE_URL: ${{ secrets.CYPRESS_REACT_APP_BASE_URL }}
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
