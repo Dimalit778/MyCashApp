@@ -54,8 +54,8 @@ jobs:
   #     REACT_APP_FIREBASE_APP_ID: ${{ secrets.FIREBASE_APP_ID }}
 
   deploy-backend:
-    needs: cypress-run
-    if: success()
+    # needs: cypress-run
+    # if: success()
     runs-on: ubuntu-latest
     permissions:
       deployments: write
