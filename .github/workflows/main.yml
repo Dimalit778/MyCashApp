@@ -2,6 +2,21 @@ name: Test and Deploy
 on: push
 
 jobs:
+  deploy-frontend:
+    needs: deploy-backend
+    runs-on: ubuntu-latest
+    permissions:
+      deployments: write
+    steps:
+      - name: Deploy Frontend to Render
+        uses: JorgeLNJunior/render-deploy@v1.4.5
+        with:
+          service_id: ${{ secrets.RENDER_SERVICE_ID_FRONTEND }}
+          api_key: ${{ secrets.RENDER_API_KEY }}
+          github_deployment: true
+          deployment_environment: "production"
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          wait_deploy: false
   # cypress-run:
   #   runs-on: ubuntu-24.04
   #   name: Build and test
@@ -69,22 +84,6 @@ jobs:
   #         deployment_environment: "production"
   #         github_token: ${{ secrets.GITHUB_TOKEN }}
   #         wait_deploy: true
-
-  deploy-frontend:
-    needs: deploy-backend
-    runs-on: ubuntu-latest
-    permissions:
-      deployments: write
-    steps:
-      - name: Deploy Frontend to Render
-        uses: JorgeLNJunior/render-deploy@v1.4.5
-        with:
-          service_id: ${{ secrets.RENDER_SERVICE_ID_FRONTEND }}
-          api_key: ${{ secrets.RENDER_API_KEY }}
-          github_deployment: true
-          deployment_environment: "production"
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          wait_deploy: false
 # git add -A
 # git commit -m "Update"
 # git push origin main
