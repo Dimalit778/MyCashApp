@@ -58,8 +58,7 @@ jobs:
     if: success()
     runs-on: ubuntu-latest
     permissions:
-    deployments: write
-    contents: read
+      deployments: write
     steps:
       - name: Deploy Backend to Render
         uses: JorgeLNJunior/render-deploy@v1.4.5
@@ -84,3 +83,6 @@ jobs:
           deployment_environment: "production"
           github_token: ${{ secrets.GITHUB_TOKEN }}
           wait_deploy: false
+# git add -A
+# git commit -m "Update"
+# git push origin main
