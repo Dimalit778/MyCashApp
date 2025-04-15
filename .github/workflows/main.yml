@@ -57,7 +57,7 @@ jobs:
       - name: Deploy Backend to Render
         uses: JorgeLNJunior/render-deploy@v1.4.5
         with:
-          service_id: ${{ secrets.RENDER_BACKEND_SERVICE_ID }}
+          service_id: ${{ secrets.RENDER_SERVICE_ID_BACKEND }}
           api_key: ${{ secrets.RENDER_API_KEY }}
           github_deployment: true
           deployment_environment: "production"
@@ -71,7 +71,7 @@ jobs:
       - name: Deploy Frontend to Render
         uses: JorgeLNJunior/render-deploy@v1.4.5
         with:
-          service_id: ${{ secrets.RENDER_FRONTEND_SERVICE_ID }}
+          service_id: ${{ secrets.RENDER_SERVICE_ID_FRONTEND }}
           api_key: ${{ secrets.RENDER_API_KEY }}
           github_deployment: true
           deployment_environment: "production"
