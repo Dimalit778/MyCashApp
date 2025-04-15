@@ -49,31 +49,31 @@ jobs:
           REACT_APP_FIREBASE_MESSAGING_SENDER_ID: ${{ secrets.FIREBASE_MESSAGING_SENDER_ID }}
           REACT_APP_FIREBASE_APP_ID: ${{ secrets.FIREBASE_APP_ID }}
 
-deploy-backend:
-  needs: cypress-run
-  if: success()
-  runs-on: ubuntu-latest
-  steps:
-    - name: Deploy Backend to Render
-      uses: JorgeLNJunior/render-deploy@v1.4.5
-      with:
-        service_id: ${{ secrets.RENDER_BACKEND_SERVICE_ID }}
-        api_key: ${{ secrets.RENDER_API_KEY }}
-        github_deployment: true
-        deployment_environment: "production"
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        wait_deploy: true
+  deploy-backend:
+    needs: cypress-run
+    if: success()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy Backend to Render
+        uses: JorgeLNJunior/render-deploy@v1.4.5
+        with:
+          service_id: ${{ secrets.RENDER_BACKEND_SERVICE_ID }}
+          api_key: ${{ secrets.RENDER_API_KEY }}
+          github_deployment: true
+          deployment_environment: "production"
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          wait_deploy: true
 
-deploy-frontend:
-  needs: deploy-backend
-  runs-on: ubuntu-latest
-  steps:
-    - name: Deploy Frontend to Render
-      uses: JorgeLNJunior/render-deploy@v1.4.5
-      with:
-        service_id: ${{ secrets.RENDER_FRONTEND_SERVICE_ID }}
-        api_key: ${{ secrets.RENDER_API_KEY }}
-        github_deployment: true
-        deployment_environment: "production"
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        wait_deploy: false
+  deploy-frontend:
+    needs: deploy-backend
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy Frontend to Render
+        uses: JorgeLNJunior/render-deploy@v1.4.5
+        with:
+          service_id: ${{ secrets.RENDER_FRONTEND_SERVICE_ID }}
+          api_key: ${{ secrets.RENDER_API_KEY }}
+          github_deployment: true
+          deployment_environment: "production"
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          wait_deploy: false
