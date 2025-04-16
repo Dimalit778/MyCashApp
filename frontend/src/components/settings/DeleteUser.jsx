@@ -1,8 +1,6 @@
-import React from "react";
 import { useNavigate } from "react-router-dom";
 
 import Swal from "sweetalert2";
-import "@sweetalert2/theme-dark/dark.css";
 import { useLogoutMutation } from "services/api/authApi";
 import { useDeleteUserMutation } from "services/api/userApi";
 export default function DeleteUser() {
@@ -16,7 +14,7 @@ export default function DeleteUser() {
       text: "All your data will be deleted",
       icon: "warning",
       showCancelButton: true,
-
+      theme: "dark",
       confirmButtonColor: "#d33",
       cancelButtonColor: "#3085d6",
       confirmButtonText: "Delete Account",
