@@ -58,7 +58,7 @@ jobs:
     if: success()
     runs-on: ubuntu-latest
     permissions:
-    deployments: write
+      deployments: write
     steps:
       - name: Deploy Backend to Render
         uses: JorgeLNJunior/render-deploy@v1.4.5
@@ -74,7 +74,7 @@ jobs:
     needs: deploy-backend
     runs-on: ubuntu-latest
     permissions:
-    deployments: write
+      deployments: write
     steps:
       - name: Deploy Frontend to Render
         uses: JorgeLNJunior/render-deploy@v1.4.5
