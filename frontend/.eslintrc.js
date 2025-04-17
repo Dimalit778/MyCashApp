@@ -1,15 +1,12 @@
 module.exports = {
-  extends: ["react-app", "plugin:cypress/recommended"],
+  extends: ["react-app"],
   rules: {
     "no-unused-vars": "warn",
     "no-undef": "warn",
   },
-  overrides: [
-    {
-      files: ["cypress/**/*.js"],
-      env: {
-        "cypress/globals": true,
-      },
-    },
-  ],
 };
+// "overrides": {
+//   "svgo": {
+//     "nth-check": "2.1.1"
+//   }
+// },
