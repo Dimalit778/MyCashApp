@@ -1,7 +1,7 @@
 import { Suspense, lazy } from "react";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 
-// Layouts
+// -- Layouts
 import MainLayout from "layout/MainLayout";
 import PublicLayout from "layout/PublicLayout";
 
