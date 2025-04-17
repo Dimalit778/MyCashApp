@@ -20,6 +20,7 @@ dotenv.config();
 
 const app = express();
 const PORT = process.env.NODE_ENV === "test" ? 5001 : 5000;
+const ORIGIN = process.env.NODE_ENV === "production" ? process.env.RENDER_FRONTEND_URL : "http://localhost:3000";
 
 const __dirname = path.resolve();
 
@@ -32,7 +33,7 @@ app.use(bodyParser.json());
 app.use(
   cors({
     // origin: [process.env.CLIENT_URL, process.env.RENDER_FRONTEND_URL],
-    origin: ["http://localhost:3000"],
+    origin: [ORIGIN],
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
   })
