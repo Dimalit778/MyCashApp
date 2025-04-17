@@ -19,7 +19,7 @@ jobs:
         working-directory: backend
 
       - name: Install frontend dependencies
-        run: npm install
+        run: npm install --legacy-peer-deps
         working-directory: frontend
 
       - name: Cypress run
@@ -39,8 +39,10 @@ jobs:
           # Frontend environment variables
           REACT_APP_TEST_API_URL: ${{ secrets.TEST_API_URL }}
           REACT_APP_BASE_URL: ${{ secrets.BASE_URL }}
+
           REACT_APP_TEST_EMAIL: ${{ secrets.TEST_EMAIL }}
           REACT_APP_TEST_PASSWORD: ${{ secrets.TEST_PASSWORD }}
+
           REACT_APP_CLOUDINARY_NAME: ${{ secrets.CLOUDINARY_NAME }}
           REACT_APP_CLOUDINARY_API_KEY: ${{ secrets.CLOUDINARY_API_KEY }}
           REACT_APP_CLOUDINARY_API_SECRET: ${{ secrets.CLOUDINARY_API_SECRET }}
