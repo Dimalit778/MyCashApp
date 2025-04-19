@@ -6,7 +6,7 @@ module.exports = function (app) {
     process.env.REACT_APP_ENVIRONMENT === "test"
       ? process.env.REACT_APP_TEST_API_URL
       : process.env.REACT_APP_ENVIRONMENT === "production"
-      ? process.env.REACT_APP_LIVE_API_URL
+      ? process.env.REACT_APP_RENDER_SERVER_URL
       : process.env.REACT_APP_API_URL;
 
   console.log(`Setting up proxy to: ${target}`);
