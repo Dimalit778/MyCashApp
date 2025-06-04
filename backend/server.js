@@ -19,10 +19,9 @@ import { errorHandler } from "./middleware/errorMiddleware.js";
 dotenv.config();
 
 const app = express();
-const PORT = process.env.NODE_ENV === "test" ? 5001 : 5000;
+const PORT = 8080;
 const ORIGIN = process.env.NODE_ENV === "production" ? process.env.RENDER_FRONTEND_URL : "http://localhost:3000";
 
-const __dirname = path.resolve();
 
 app.use(cookieParser());
 app.use(express.json({ limit: "50mb" }));

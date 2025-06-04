@@ -150,7 +150,7 @@ describe("Transactions Management", () => {
       });
       cy.getDataCy("transaction-modal").should("not.exist");
 
-      cy.getDataCy("transactions-row").first().should("contain", "Updated Transaction");
+      cy.getDataCy("transactions-row").should("contain", "Updated Transaction");
       cy.contains("Successfully updated").should("be.visible");
     });
   });

@@ -2,10 +2,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { isPlatformMobile } from "utils/platform";
 import { tokenStorage } from "utils/tokenStorage";
 
-const BASE_URL =
-  process.env.REACT_APP_ENVIRONMENT === "test"
-    ? process.env.REACT_APP_TEST_API_URL
-    : process.env.REACT_APP_ENVIRONMENT === "production"
+const BASE_URL =process.env.REACT_APP_ENVIRONMENT === "production"
     ? process.env.REACT_APP_RENDER_SERVER_URL
     : process.env.REACT_APP_API_URL;
 

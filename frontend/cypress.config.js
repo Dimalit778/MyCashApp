@@ -6,7 +6,7 @@ module.exports = defineConfig({
     runMode: 2,
   },
   env: {
-    API_URL: process.env.REACT_APP_TEST_API_URL,
+    API_URL: process.env.REACT_APP_API_URL,
     mobileViewportWidthBreakpoint: 414,
     TEST_EMAIL: process.env.REACT_APP_TEST_EMAIL,
     TEST_PASSWORD: process.env.REACT_APP_TEST_PASSWORD,
@@ -22,7 +22,7 @@ module.exports = defineConfig({
       on("task", {
         async "db:seed-user"() {
           try {
-            await fetch(`${process.env.REACT_APP_TEST_API_URL}/seed/userAndCategories`, {
+            await fetch(`${process.env.REACT_APP_API_URL}/seed/userAndCategories`, {
               method: "POST",
             });
             return null;
@@ -34,7 +34,7 @@ module.exports = defineConfig({
 
         async "db:seed-transactions"({ count, type, monthly }) {
           try {
-            await fetch(`${process.env.REACT_APP_TEST_API_URL}/seed/transactions`, {
+            await fetch(`${process.env.REACT_APP_API_URL}/seed/transactions`, {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
@@ -49,7 +49,7 @@ module.exports = defineConfig({
         },
         async "db:multiple-users"() {
           try {
-            await fetch(`${process.env.REACT_APP_TEST_API_URL}/seed/multipleUsers`, {
+            await fetch(`${process.env.REACT_APP_API_URL}/seed/multipleUsers`, {
               method: "POST",
             });
             return null;
@@ -61,7 +61,7 @@ module.exports = defineConfig({
 
         async "db:clear-db"() {
           try {
-            await fetch(`${process.env.REACT_APP_TEST_API_URL}/seed/clear`, {
+            await fetch(`${process.env.REACT_APP_API_URL}/seed/clear`, {
               method: "DELETE",
             });
             return null;
