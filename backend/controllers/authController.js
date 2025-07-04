@@ -96,7 +96,9 @@ const login = asyncHandler(async (req, res) => {
     throw new ApiError(401, "Invalid Email or Password");
   }
 
-  const { accessToken, refreshToken } = await generateTokenAndSetCookie(user._id);
+  const { accessToken, refreshToken } = await generateTokenAndSetCookie(
+    user._id
+  );
 
   const loggedInUser = await User.findById(user._id).select("-password ");
   const options = {

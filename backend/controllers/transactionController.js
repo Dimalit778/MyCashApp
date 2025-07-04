@@ -4,6 +4,7 @@ import { TRANSACTION_TYPES } from "../config/config.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { ApiError } from "../utils/ApiError.js";
+import User from "../models/userSchema.js";
 
 export const getYearlyData = asyncHandler(async (req, res) => {
   const userId = req.user._id;
@@ -63,7 +64,8 @@ export const getYearlyData = asyncHandler(async (req, res) => {
   });
 
   // Calculate balance (improved sign handling)
-  yearlyTotals.totalBalance = yearlyTotals.totalIncomes - yearlyTotals.totalExpenses;
+  yearlyTotals.totalBalance =
+    yearlyTotals.totalIncomes - yearlyTotals.totalExpenses;
 
   // More efficient monthly stats creation
   const monthlyStats = Array.from({ length: 12 }, (_, i) => ({
@@ -117,7 +119,10 @@ export const getMonthlyData = asyncHandler(async (req, res) => {
     user: userId,
     transactionType: type,
     $expr: {
-      $and: [{ $eq: [{ $year: "$date" }, yearNum] }, { $eq: [{ $month: "$date" }, monthNum] }],
+      $and: [
+        { $eq: [{ $year: "$date" }, yearNum] },
+        { $eq: [{ $month: "$date" }, monthNum] },
+      ],
     },
   })
     .populate("category", "description type")
@@ -148,7 +153,15 @@ export const getOneTransaction = asyncHandler(async (req, res) => {
   if (!transaction) {
     throw new ApiError(404, "Transaction not found");
   }
-  return res.status(200).json(new ApiResponse(200, { transaction }, "Transaction retrieved successfully"));
+  return res
+    .status(200)
+    .json(
+      new ApiResponse(
+        200,
+        { transaction },
+        "Transaction retrieved successfully"
+      )
+    );
 });
 
 export const addTransaction = asyncHandler(async (req, res) => {
@@ -195,7 +208,11 @@ export const addTransaction = asyncHandler(async (req, res) => {
 
   await transaction.save();
 
-  return res.status(201).json(new ApiResponse(201, { transaction }, "Transaction created successfully"));
+  return res
+    .status(201)
+    .json(
+      new ApiResponse(201, { transaction }, "Transaction created successfully")
+    );
 });
 
 export const updateTransaction = asyncHandler(async (req, res) => {
@@ -226,13 +243,20 @@ export const updateTransaction = asyncHandler(async (req, res) => {
   let updateData = { description, amount, date };
 
   if (category) {
-    const categoryToUpdate = await Category.findOne({ user: userId, type: type, name: category });
+    const categoryToUpdate = await Category.findOne({
+      user: userId,
+      type: type,
+      name: category,
+    });
 
     if (!categoryToUpdate) {
       throw new ApiError(400, "Invalid category");
     }
 
-    if (categoryToUpdate.type !== type && type !== existingTransaction.transactionType) {
+    if (
+      categoryToUpdate.type !== type &&
+      type !== existingTransaction.transactionType
+    ) {
       throw new ApiError(400, "Category type doesn't match transaction type");
     }
 
@@ -240,14 +264,24 @@ export const updateTransaction = asyncHandler(async (req, res) => {
   }
 
   // Update transaction
-  const updatedTransaction = await Transaction.findOneAndUpdate({ _id, user: userId }, updateData, {
-    new: true,
-    runValidators: true,
-  });
+  const updatedTransaction = await Transaction.findOneAndUpdate(
+    { _id, user: userId },
+    updateData,
+    {
+      new: true,
+      runValidators: true,
+    }
+  );
 
   return res
     .status(200)
-    .json(new ApiResponse(200, { transaction: updatedTransaction }, "Transaction updated successfully"));
+    .json(
+      new ApiResponse(
+        200,
+        { transaction: updatedTransaction },
+        "Transaction updated successfully"
+      )
+    );
 });
 export const deleteTransaction = asyncHandler(async (req, res) => {
   const { id } = req.params;
@@ -262,5 +296,78 @@ export const deleteTransaction = asyncHandler(async (req, res) => {
     throw new ApiError(404, "Transaction not found");
   }
 
-  return res.status(200).json(new ApiResponse(200, { transactionId: id }, "Transaction deleted successfully"));
+  return res
+    .status(200)
+    .json(
+      new ApiResponse(
+        200,
+        { transactionId: id },
+        "Transaction deleted successfully"
+      )
+    );
+});
+
+// Get user transactions (admin only)
+export const getUserTransactions = asyncHandler(async (req, res) => {
+  const { userId } = req.params;
+  const { type } = req.query;
+
+  // Verify admin role
+  if (req.user.role !== "admin") {
+    throw new ApiError(403, "Not authorized to access this resource");
+  }
+
+  // Validate user exists
+  const userExists = await User.findById(userId);
+  if (!userExists) {
+    throw new ApiError(404, "User not found");
+  }
+
+  // Build query
+  const query = { user: userId };
+  if (type) {
+    query.transactionType = type;
+  }
+  console.log("query ----------", query);
+
+  // Get transactions
+  const transactions = await Transaction.find(query).sort({ date: -1 });
+
+  // Get categories for this user to match with transaction category names
+  const userCategories = await Category.find({ user: userId });
+
+  // Map transactions to include category details
+  const transactionsWithCategoryDetails = transactions.map((transaction) => {
+    const transactionObj = transaction.toObject();
+    // Find matching category by name
+    const categoryMatch = userCategories.find(
+      (cat) => cat.name === transaction.category
+    );
+
+    // Add category details if found
+    if (categoryMatch) {
+      transactionObj.category = {
+        _id: categoryMatch._id,
+        name: categoryMatch.name,
+        type: categoryMatch.type,
+      };
+    }
+
+    return transactionObj;
+  });
+
+  console.log(
+    "transactions with details ----------",
+    transactionsWithCategoryDetails
+  );
+
+  return res
+    .status(200)
+    .json(
+      new ApiResponse(
+        200,
+        transactionsWithCategoryDetails,
+        "User transactions retrieved successfully"
+      )
+    );
 });

@@ -11,6 +11,17 @@ export const categoriesApiSlice = apiSlice.injectEndpoints({
       }),
       providesTags: ["Categories"],
     }),
+    getUserCategories: builder.query({
+      query: ({ userId }) => ({
+        url: `${CATEGORY_URL}/user/${userId}`,
+        credentials: "include",
+        method: "GET",
+      }),
+      transformResponse: (response) => response.data,
+      providesTags: (result, error, { userId }) => [
+        { type: "Categories", id: userId },
+      ],
+    }),
     addCategory: builder.mutation({
       query: (data) => ({
         url: `${CATEGORY_URL}/add`,
@@ -32,4 +43,9 @@ export const categoriesApiSlice = apiSlice.injectEndpoints({
   }),
 });
 
-export const { useAddCategoryMutation, useDeleteCategoryMutation, useGetCategoriesQuery } = categoriesApiSlice;
+export const {
+  useAddCategoryMutation,
+  useDeleteCategoryMutation,
+  useGetCategoriesQuery,
+  useGetUserCategoriesQuery,
+} = categoriesApiSlice;

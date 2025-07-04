@@ -3,8 +3,8 @@ import { Cloudinary } from "@cloudinary/url-gen";
 import { lazyload } from "@cloudinary/react";
 import { scale } from "@cloudinary/url-gen/actions/resize";
 import React from "react";
+import { Image } from "react-bootstrap";
 
-// Create singleton Cloudinary instance
 const cld = new Cloudinary({
   cloud: {
     cloudName: "dx6oxmki4",
@@ -19,7 +19,7 @@ const CloudImage = ({ publicId, ...props }) => {
     .delivery("q_auto:best")
     .resize(scale().width(500));
 
-  return (
+  return publicId ? (
     <AdvancedImage
       cldImg={myImage}
       plugins={[lazyload()]}
@@ -29,6 +29,14 @@ const CloudImage = ({ publicId, ...props }) => {
         e.target.style.display = "none";
       }}
       {...props}
+    />
+  ) : (
+    <Image
+      src={require("../../../assets/avatar.jpg")}
+      alt="user"
+      className="rounded-circle"
+      width={120}
+      height={120}
     />
   );
 };

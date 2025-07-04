@@ -1,0 +1,305 @@
+/* LeftSideBar.module.css */
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background-color: #000;
+  padding: 1rem;
+  position: relative;
+  overflow-y: auto;
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Brand Section */
+.brandSection {
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+}
+
+/* Profile Section */
+.profileSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 1rem 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.avatarContainer {
+  margin-bottom: 1rem;
+}
+
+.profileImage {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 3px solid var(--primary-orange);
+  transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.profileImage:hover {
+  transform: scale(1.05);
+  border-color: var(--light);
+}
+
+.cloudImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.defaultAvatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: 3px solid var(--primary-orange);
+  transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.defaultAvatar:hover {
+  transform: scale(1.05);
+  border-color: var(--light);
+}
+
+.userInfo {
+  margin-top: 0.5rem;
+}
+
+.userName {
+  font-family: var(--font-accent);
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: white;
+  margin-bottom: 0.25rem;
+  letter-spacing: 0.5px;
+}
+
+.userEmail {
+  font-family: var(--font-primary);
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.9rem;
+  display: block;
+  margin-top: 0.25rem;
+}
+
+/* Divider */
+.divider {
+  background-color: rgba(255, 255, 255, 0.2);
+  height: 2px;
+  border: none;
+  margin: 1rem 0;
+  opacity: 0.8;
+}
+
+/* Navigation */
+.navigation {
+  flex: 1;
+  margin-top: 0.5rem;
+}
+
+.navList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.navItem {
+  margin: 0;
+}
+
+.navLink {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  text-decoration: none;
+  color: white;
+  transition: all 0.3s ease;
+  background-color: transparent;
+  border: 1px solid transparent;
+  position: relative;
+  overflow: hidden;
+}
+
+.navLink::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.1),
+    transparent
+  );
+  transition: left 0.5s ease;
+}
+
+.navLink:hover::before {
+  left: 100%;
+}
+
+.navLink:hover {
+  background-color: rgba(248, 135, 109, 0.1);
+  border-color: rgba(248, 135, 109, 0.3);
+  transform: translateX(4px);
+  color: white;
+  text-decoration: none;
+}
+
+.navLinkActive {
+  background-color: var(--primary-orange);
+  border-color: var(--primary-orange);
+  box-shadow: 0 4px 12px rgba(248, 135, 109, 0.3);
+}
+
+.navLinkActive:hover {
+  background-color: var(--primary-orange);
+  transform: translateX(2px);
+}
+
+.navIcon {
+  width: 28px;
+  height: 28px;
+  margin-right: 0.75rem;
+  transition: transform 0.3s ease;
+  flex-shrink: 0;
+}
+
+.navLink:hover .navIcon {
+  transform: scale(1.1);
+}
+
+.adminIcon {
+  filter: invert(1);
+}
+
+.navLabel {
+  font-family: var(--font-accent);
+  font-size: 1.1rem;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  color: inherit;
+  transition: color 0.3s ease;
+}
+
+/* Logout Section */
+.logoutSection {
+  margin-top: auto;
+  padding-top: 1rem;
+}
+
+.logoutButton {
+  width: 100%;
+  font-family: var(--font-accent);
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.logoutButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .userName {
+    font-size: 1.1rem;
+  }
+
+  .navLabel {
+    font-size: 1rem;
+  }
+
+  .navIcon {
+    width: 24px;
+    height: 24px;
+  }
+}
+
+@media (max-width: 992px) {
+  .profileImage,
+  .defaultAvatar {
+    width: 70px;
+    height: 70px;
+  }
+
+  .userName {
+    font-size: 1rem;
+  }
+
+  .userEmail {
+    font-size: 0.8rem;
+  }
+
+  .navLink {
+    padding: 0.6rem 0.8rem;
+  }
+
+  .navLabel {
+    font-size: 0.95rem;
+  }
+}
+
+/* Loading states */
+.sidebar.loading .profileImage,
+.sidebar.loading .defaultAvatar {
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* Focus styles for accessibility */
+.navLink:focus {
+  outline: 2px solid var(--primary-orange);
+  outline-offset: 2px;
+}
+
+.logoutButton:focus {
+  outline: 2px solid var(--primary-orange);
+  outline-offset: 2px;
+}
+
+/* Smooth scrolling for sidebar */
+.sidebar {
+  scrollbar-width: thin;
+  scrollbar-color: var(--primary-orange) transparent;
+}
+
+.sidebar::-webkit-scrollbar {
+  width: 6px;
+  display: block;
+}
+
+.sidebar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+  background-color: var(--primary-orange);
+  border-radius: 3px;
+}
+
+.sidebar::-webkit-scrollbar-thumb:hover {
+  background-color: var(--light);
+}

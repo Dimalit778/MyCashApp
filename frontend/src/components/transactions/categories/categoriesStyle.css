@@ -8,7 +8,7 @@
 
 .my-card-header {
   text-align: center;
-  font-family: var(--oswald-font);
+  font-family: var(--font-accent);
   letter-spacing: 0.08rem;
   font-size: 1.4rem;
   font-weight: bold;

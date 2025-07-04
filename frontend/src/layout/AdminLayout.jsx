@@ -1,32 +1,35 @@
+import React from "react";
 import { Navigate, Outlet } from "react-router-dom";
-import { Col, Row } from "react-bootstrap";
-import LeftSideBar from "layout/LeftSideBar";
-
-import TopBar from "layout/TopBar";
 import { useSelector } from "react-redux";
 import { currentUser } from "services/reducers/userSlice";
-import BottomNav from "layout/BottomNav";
+import { Col, Row } from "react-bootstrap";
 
-const MainLayout = () => {
+import AdminTopBar from "components/admin/AdminTopBar";
+
+import AdminSidebar from "components/admin/AdminSidebar";
+
+const AdminLayout = () => {
   const user = useSelector(currentUser);
 
-  if (user && user.role === "admin") {
-    return <Navigate to="/admin" replace />;
-  }
-
+  // Redirect non-admin users
   if (!user) {
     return <Navigate to="/" replace />;
   }
+
+  if (user.role !== "admin") {
+    return <Navigate to="/home" replace />;
+  }
+
   return (
-    <div style={{ backgroundColor: "black", minHeight: "100vh" }}>
-      <TopBar className="d-md-none" />
+    <div style={{ minHeight: "100vh" }}>
+      <AdminTopBar className="d-md-none" />
 
       <Row className="g-0">
         <Col
           md={3}
           lg={2}
           className="d-none d-md-block"
-          data-cy="left-sidebar-container"
+          data-cy="admin-sidebar-container"
           style={{
             position: "fixed",
             top: 0,
@@ -37,10 +40,10 @@ const MainLayout = () => {
             borderRight: "1px solid rgba(255, 255, 255, 0.1)",
           }}
         >
-          <LeftSideBar />
+          <AdminSidebar />
         </Col>
         <Col
-          data-cy="main-layout-outlet"
+          data-cy="admin-layout-outlet"
           xs={12}
           md={{ span: 9, offset: 3 }}
           lg={{ span: 10, offset: 2 }}
@@ -49,9 +52,8 @@ const MainLayout = () => {
           <Outlet />
         </Col>
       </Row>
-      <BottomNav className="d-md-none" />
     </div>
   );
 };
 
-export default MainLayout;
+export default AdminLayout;

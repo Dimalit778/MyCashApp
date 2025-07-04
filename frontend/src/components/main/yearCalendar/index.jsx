@@ -5,7 +5,10 @@ import React from "react";
 
 const YearCalender = ({ year, setYear }) => {
   return (
-    <div data-cy="year-calender" className="d-flex pt-2 justify-content-center align-items-center ">
+    <div
+      data-cy="year-calender"
+      className="d-flex pt-2 justify-content-center align-items-center "
+    >
       <IconButton
         data-cy="year-prev-btn"
         icon={<FontAwesomeIcon icon={faAngleLeft} />}
@@ -15,7 +18,11 @@ const YearCalender = ({ year, setYear }) => {
       <h1
         data-cy="year-display"
         className=" mb-0"
-        style={{ fontSize: "3rem", fontFamily: "cursive", fontWeight: "bold", color: "white" }}
+        style={{
+          color: "white",
+          fontSize: "3rem",
+          fontFamily: "Oswald",
+        }}
       >
         {year}
       </h1>

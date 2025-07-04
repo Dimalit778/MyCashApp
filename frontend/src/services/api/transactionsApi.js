@@ -20,6 +20,7 @@ export const transactionsApiSlice = apiSlice.injectEndpoints({
       }),
       providesTags: ["Transaction"],
     }),
+
     addTransaction: builder.mutation({
       query: (formattedData) => ({
         url: `${TRANSACTION_URL}/add`,
@@ -46,12 +47,26 @@ export const transactionsApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["Transaction"],
     }),
+    // Admin API
+    getUserTransactions: builder.query({
+      query: ({ userId, type }) => ({
+        url: `${TRANSACTION_URL}/user/${userId}`,
+        method: "GET",
+        params: { type },
+        credentials: "include",
+      }),
+      transformResponse: (response) => response.data,
+      providesTags: (result, error, { userId }) => [
+        { type: "Transaction", id: userId },
+      ],
+    }),
   }),
 });
 
 export const {
   useGetMonthlyTransactionsQuery,
   useGetYearlyTransactionsQuery,
+  useGetUserTransactionsQuery,
   useAddTransactionMutation,
   useUpdateTransactionMutation,
   useDeleteTransactionMutation,

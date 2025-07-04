@@ -1,0 +1,271 @@
+/* AdminSidebar.module.css */
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background-color: #000;
+  padding: 1rem;
+  position: relative;
+  overflow-y: auto;
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Brand Section */
+.brandSection {
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+}
+
+/* Profile Section */
+.profileSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 1rem 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.avatarContainer {
+  margin-bottom: 1rem;
+}
+
+.profileImage {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 3px solid var(--primary-orange);
+  transition: transform 0.3s ease;
+}
+
+.profileImage:hover {
+  transform: scale(1.05);
+}
+
+.defaultAvatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: var(--card-gradient);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 700;
+  font-size: 2rem;
+  font-family: var(--font-accent);
+  border: 3px solid var(--primary-orange);
+  transition: transform 0.3s ease;
+}
+
+.defaultAvatar:hover {
+  transform: scale(1.05);
+}
+
+.userInfo {
+  width: 100%;
+}
+
+.userName {
+  color: white;
+  font-family: var(--font-accent);
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  text-align: center;
+}
+
+.userRole {
+  color: var(--primary-orange);
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-align: center;
+  background-color: rgba(248, 135, 109, 0.1);
+  padding: 0.3rem 0.8rem;
+  border-radius: 15px;
+  border: 1px solid var(--primary-orange);
+  display: inline-block;
+  margin: 0 auto;
+}
+
+/* Navigation */
+.navigation {
+  flex: 1;
+  margin-bottom: 1rem;
+}
+
+.navList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.navItem {
+  width: 100%;
+}
+
+.navLink {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  border-radius: 12px;
+  color: rgba(255, 255, 255, 0.8);
+  text-decoration: none;
+  transition: all 0.3s ease;
+  font-family: var(--font-primary);
+  font-weight: 500;
+  position: relative;
+  overflow: hidden;
+}
+
+.navLink:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: white;
+  text-decoration: none;
+  transform: translateX(5px);
+}
+
+.navLink::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 0;
+  background: var(--card-gradient);
+  transition: width 0.3s ease;
+  border-radius: 12px 0 0 12px;
+}
+
+.navLink:hover::before {
+  width: 4px;
+}
+
+.navLinkActive {
+  background: rgba(248, 135, 109, 0.15);
+  color: var(--primary-orange);
+  border: 1px solid rgba(248, 135, 109, 0.3);
+}
+
+.navLinkActive::before {
+  width: 4px;
+}
+
+.navIcon {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  flex-shrink: 0;
+  transition: transform 0.3s ease;
+}
+
+.navLink:hover .navIcon {
+  transform: scale(1.1);
+}
+
+.navLabel {
+  font-size: 1rem;
+  font-weight: 500;
+  flex: 1;
+}
+
+/* Logout Section */
+.logoutSection {
+  margin-top: auto;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.logoutButton {
+  width: 100%;
+  border: 2px solid var(--primary-orange);
+  background: transparent;
+  color: var(--primary-orange);
+  padding: 0.8rem 1rem;
+  border-radius: 25px;
+  font-weight: 600;
+  font-family: var(--font-accent);
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.logoutButton:hover {
+  background: var(--primary-orange);
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(248, 135, 109, 0.4);
+}
+
+/* Scrollbar Styling */
+.sidebar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 3px;
+}
+
+.sidebar::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .sidebar {
+    padding: 0.75rem;
+  }
+
+  .profileSection {
+    padding: 0.75rem 0.25rem;
+  }
+
+  .profileImage,
+  .defaultAvatar {
+    width: 80px;
+    height: 80px;
+  }
+
+  .defaultAvatar {
+    font-size: 1.5rem;
+  }
+
+  .userName {
+    font-size: 1rem;
+  }
+
+  .navLink {
+    padding: 0.75rem;
+  }
+}
+
+/* Animation Classes */
+.fadeIn {
+  animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

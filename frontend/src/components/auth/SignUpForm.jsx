@@ -92,7 +92,9 @@ const SignUpForm = ({ onSubmit, onGoogleClick, isLoading }) => {
               endAdornment={
                 <IconButton
                   data-cy="toggle-password"
-                  icon={<FontAwesomeIcon icon={showPassword ? faEye : faEyeSlash} />}
+                  icon={
+                    <FontAwesomeIcon icon={showPassword ? faEye : faEyeSlash} />
+                  }
                   onClick={() => setShowPassword(!showPassword)}
                   color="white"
                   border="none"
@@ -110,11 +112,16 @@ const SignUpForm = ({ onSubmit, onGoogleClick, isLoading }) => {
               autoComplete="none"
               rules={{
                 required: "Confirm password is required",
-                validate: (value) => value === password || "Passwords do not match",
+                validate: (value) =>
+                  value === password || "Passwords do not match",
               }}
               endAdornment={
                 <IconButton
-                  icon={<FontAwesomeIcon icon={showConfirmPassword ? faEye : faEyeSlash} />}
+                  icon={
+                    <FontAwesomeIcon
+                      icon={showConfirmPassword ? faEye : faEyeSlash}
+                    />
+                  }
                   onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                   color="white"
                   border="none"
@@ -124,9 +131,15 @@ const SignUpForm = ({ onSubmit, onGoogleClick, isLoading }) => {
           </div>
 
           <div className="d-grid gap-2">
-            <MyButton data-cy="signup-submit" type="submit" bgColor={THEME.orange} isLoading={isLoading}>
+            <MyButton
+              data-cy="signup-submit"
+              type="submit"
+              bgColor={THEME.orange}
+              isLoading={isLoading}
+            >
               Sign Up
             </MyButton>
+            <div className="divider"></div>
             <button
               data-cy="signup-google"
               type="button"
@@ -141,7 +154,11 @@ const SignUpForm = ({ onSubmit, onGoogleClick, isLoading }) => {
 
           <div className="auth-prompt">
             <p>Already have an account?</p>
-            <Link data-cy="goto-login" to="/login" className="btn btn-outline-light btn-sm">
+            <Link
+              data-cy="goto-login"
+              to="/login"
+              className="btn btn-outline-light btn-sm"
+            >
               Login
             </Link>
           </div>

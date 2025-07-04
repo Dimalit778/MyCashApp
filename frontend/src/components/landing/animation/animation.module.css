@@ -14,7 +14,7 @@
   z-index: 2;
   transition: color 0.3s ease;
   color: black;
-  font-family: var(--oswald-font);
+  font-family: var(--font-accent);
   font-weight: bold;
   letter-spacing: 0.06rem;
 }

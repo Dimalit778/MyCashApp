@@ -1,4 +1,14 @@
 {
-  "cSpell.words": ["cloudinary", "fvilers", "oxmki", "signout", "signup", "testid", "virtuals", "Xmark"],
+  "cSpell.words": [
+    "cloudinary",
+    "fvilers",
+    "lazyload",
+    "oxmki",
+    "signout",
+    "signup",
+    "testid",
+    "virtuals",
+    "Xmark"
+  ],
   "cSpell.ignoreWords": ["mycash"]
 }

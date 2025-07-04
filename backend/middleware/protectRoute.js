@@ -17,7 +17,9 @@ export const protectRoute = asyncHandler(async (req, res, next) => {
   if (token) {
     try {
       const decoded = jwt.verify(token, process.env.TOKEN);
-      const user = await User.findById(decoded.userId).select("-password -refreshToken");
+      const user = await User.findById(decoded.userId).select(
+        "-password -refreshToken"
+      );
 
       if (!user) {
         throw new ApiError(401, "Unauthorized: User not found");
@@ -42,7 +44,9 @@ export const protectRoute = asyncHandler(async (req, res, next) => {
       throw new ApiError(401, "Unauthorized: Invalid refresh token");
     }
 
-    const newAccessToken = jwt.sign({ userId: user._id }, process.env.TOKEN, { expiresIn: process.env.TOKEN_EXPIRY });
+    const newAccessToken = jwt.sign({ userId: user._id }, process.env.TOKEN, {
+      expiresIn: process.env.TOKEN_EXPIRY,
+    });
 
     if (req.cookies.token || req.cookies.refreshToken) {
       res.cookie("token", newAccessToken, {
@@ -64,4 +68,17 @@ export const protectRoute = asyncHandler(async (req, res, next) => {
     }
     throw new ApiError(401, "Invalid refresh token");
   }
+});
+
+// Admin authorization middleware
+export const adminOnly = asyncHandler(async (req, res, next) => {
+  if (!req.user) {
+    throw new ApiError(401, "Unauthorized: Please login first");
+  }
+
+  if (req.user.role !== "admin") {
+    throw new ApiError(403, "Forbidden: Admin access required");
+  }
+
+  next();
 });

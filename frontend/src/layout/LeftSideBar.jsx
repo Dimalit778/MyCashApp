@@ -1,6 +1,7 @@
 import React from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import avatarIcon from "assets/avatar.jpg";
+import adminIcon from "assets/icons/adminIcon.svg";
 import BrandLogo from "components/brandLogo";
 import { useSelector } from "react-redux";
 import MyButton from "components/ui/button";
@@ -9,6 +10,7 @@ import { HOME_LINKS } from "constants/HomeLinks";
 import { THEME } from "constants/Theme";
 import { useLogoutMutation } from "services/api/authApi";
 import CloudImage from "components/ui/cloudImage";
+import styles from "./LeftSideBar.module.css";
 
 const LeftSideBar = () => {
   const { pathname } = useLocation();
@@ -24,86 +26,104 @@ const LeftSideBar = () => {
   };
 
   return (
-    <div
-      data-cy="left-sidebar"
-      className="d-flex flex-column p-2 "
-      style={{ height: "100vh", backgroundColor: "black" }}
-    >
-      <div data-cy="brand-logo" className="mb-3">
+    <div data-cy="left-sidebar" className={styles.sidebar}>
+      {/* Brand Logo Section */}
+      <div data-cy="brand-logo" className={styles.brandSection}>
         <BrandLogo />
       </div>
 
-      <div
-        data-cy="profile-image-container"
-        className="d-flex flex-column align-items-center justify-content-center text-center p-2"
-      >
-        {user?.imageUrl ? (
-          <div
-            data-cy="user-profile-image"
-            style={{ width: "100px", height: "100px", overflow: "hidden" }}
-            className="rounded-circle"
-          >
-            <CloudImage
-              publicId={user.imageUrl}
-              style={{
-                width: "100%",
-                height: "100%",
-                objectFit: "cover",
-              }}
+      {/* User Profile Section */}
+      <div data-cy="profile-image-container" className={styles.profileSection}>
+        <div className={styles.avatarContainer}>
+          {user?.imageUrl ? (
+            <div data-cy="user-profile-image" className={styles.profileImage}>
+              <CloudImage
+                publicId={user.imageUrl}
+                className={styles.cloudImage}
+                alt="profile"
+              />
+            </div>
+          ) : (
+            <img
+              data-cy="avatar-icon"
+              src={avatarIcon}
               alt="profile"
+              className={styles.defaultAvatar}
             />
-          </div>
-        ) : (
-          <img
-            data-cy="avatar-icon"
-            src={avatarIcon}
-            alt="profile"
-            className="rounded-circle me-2"
-            width={80}
-            height={80}
-          />
-        )}
+          )}
+        </div>
 
-        <div className="mt-2">
-          <h3 data-cy="user-name" className="mb-0">
+        <div className={styles.userInfo}>
+          <h3 data-cy="user-name" className={styles.userName}>
             {user.firstName + " " + user.lastName}
           </h3>
-          <small data-cy="user-email">{user.email}</small>
+          <small data-cy="user-email" className={styles.userEmail}>
+            {user.email}
+          </small>
         </div>
       </div>
 
-      <hr style={{ backgroundColor: "gray", height: "3px" }} />
-      <ul className="nav flex-column p-0 gap-2 mt-1 ps-2 ">
-        {HOME_LINKS.map((link) => {
-          const isActive = pathname === link.route;
-          return (
-            <li key={link.label}>
-              <NavLink
-                data-cy={`nav-${link.dataCy}`}
-                to={link.route}
-                className="nav-link p-2 rounded"
-                style={{ backgroundColor: isActive ? THEME.orange : "transparent" }}
-              >
-                <img src={link.imgURL} alt={link.label} width={28} height={28} />
-                <span
-                  className="ms-3 text-light "
-                  style={{ fontFamily: "Oswald", fontWeight: "bold", fontSize: "1.2rem", letterSpacing: "1px" }}
+      {/* Divider */}
+      <hr className={styles.divider} />
+
+      {/* Navigation Links */}
+      <nav className={styles.navigation}>
+        <ul className={styles.navList}>
+          {HOME_LINKS.map((link) => {
+            const isActive = pathname === link.route;
+            return (
+              <li key={link.label} className={styles.navItem}>
+                <NavLink
+                  data-cy={`nav-${link.dataCy}`}
+                  to={link.route}
+                  className={`${styles.navLink} ${
+                    isActive ? styles.navLinkActive : ""
+                  }`}
                 >
-                  {link.label}
-                </span>
+                  <img
+                    src={link.imgURL}
+                    alt={link.label}
+                    className={styles.navIcon}
+                  />
+                  <span className={styles.navLabel}>{link.label}</span>
+                </NavLink>
+              </li>
+            );
+          })}
+
+          {/* Admin Link - Only show for admin users */}
+          {user?.role === "admin" && (
+            <li className={styles.navItem}>
+              <NavLink
+                data-cy="nav-admin"
+                to="/admin"
+                className={`${styles.navLink} ${
+                  pathname === "/admin" ? styles.navLinkActive : ""
+                }`}
+              >
+                <img
+                  src={adminIcon}
+                  alt="Admin"
+                  className={`${styles.navIcon} ${styles.adminIcon}`}
+                />
+                <span className={styles.navLabel}>Admin</span>
               </NavLink>
             </li>
-          );
-        })}
-      </ul>
-      <MyButton
-        data-cy="left-sidebar-logout-button"
-        bgColor={THEME.dark}
-        className="mt-auto w-auto"
-        onClick={logoutHandler}
-      >
-        Logout
-      </MyButton>
+          )}
+        </ul>
+      </nav>
+
+      {/* Logout Button */}
+      <div className={styles.logoutSection}>
+        <MyButton
+          data-cy="left-sidebar-logout-button"
+          bgColor={THEME.dark}
+          className={styles.logoutButton}
+          onClick={logoutHandler}
+        >
+          Logout
+        </MyButton>
+      </div>
     </div>
   );
 };

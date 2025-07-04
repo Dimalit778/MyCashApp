@@ -8,11 +8,16 @@ const PublicLayout = () => {
   const user = useSelector(currentUser);
 
   if (user) {
-    return <Navigate to="/home" replace />;
+    if (user.role === "admin") {
+      return <Navigate to="/admin" replace />;
+    } else {
+      return <Navigate to="/home" replace />;
+    }
   }
+
   return (
-    <div className="bg-black min-vh-100">
-      <TopBar className="sticky-top" />
+    <div className="bg-black min-vh-100 ">
+      <TopBar />
       <div className="main-content" style={{ paddingTop: "65px" }}>
         <Outlet />
       </div>

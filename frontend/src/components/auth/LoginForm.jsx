@@ -24,12 +24,12 @@ const LoginForm = ({ onSubmit, signGoogleClick, isLoading }) => {
 
   return (
     <div className="auth-container">
-      <div className="auth-form-wrapper">
+      <div className="auth-form-wrapper ">
         <h1 data-cy="login-title" className="auth-title">
           LOGIN
         </h1>
         <form className="auth-form " onSubmit={handleSubmit(onSubmit)}>
-          <div className="d-flex flex-column gap-3 mb-3 ">
+          <div className="d-flex flex-column   ">
             <TextInput
               data-cy="login-email"
               name="email"
@@ -57,7 +57,9 @@ const LoginForm = ({ onSubmit, signGoogleClick, isLoading }) => {
               endAdornment={
                 <IconButton
                   data-cy="toggle-password"
-                  icon={<FontAwesomeIcon icon={showPassword ? faEye : faEyeSlash} />}
+                  icon={
+                    <FontAwesomeIcon icon={showPassword ? faEye : faEyeSlash} />
+                  }
                   onClick={() => setShowPassword(!showPassword)}
                   color="white"
                   border="none"
@@ -65,10 +67,17 @@ const LoginForm = ({ onSubmit, signGoogleClick, isLoading }) => {
               }
             />
           </div>
+
           <div className="d-grid gap-2">
-            <MyButton data-cy="login-submit" type="submit" bgColor={THEME.orange} isLoading={isLoading}>
+            <MyButton
+              data-cy="login-submit"
+              type="submit"
+              bgColor={THEME.orange}
+              isLoading={isLoading}
+            >
               Login
             </MyButton>
+            <div className="divider"></div>
             <MyButton
               data-cy="login-google"
               type="button"
@@ -80,7 +89,11 @@ const LoginForm = ({ onSubmit, signGoogleClick, isLoading }) => {
             </MyButton>
           </div>
 
-          <Link data-cy="forgot-password" to="/forgot-password" className="forgot-password">
+          <Link
+            data-cy="forgot-password"
+            to="/forgot-password"
+            className="forgot-password"
+          >
             Forgot Password?
           </Link>
 
