@@ -1,5 +1,6 @@
 import User from "../models/userSchema.js";
 import Category from "../models/categorySchema.js";
+import DefaultCategory from "../models/defaultCategorySchema.js";
 
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { ApiError } from "../utils/ApiError.js";
@@ -48,24 +49,24 @@ const signup = asyncHandler(async (req, res) => {
     });
 
     const newUser = await user.save();
-    await Category.insertMany([
-      { user: newUser._id, name: "Home", type: "expenses" },
-      { user: newUser._id, name: "Other", type: "expenses" },
-      { user: newUser._id, name: "Job", type: "incomes" },
-      { user: newUser._id, name: "Other", type: "incomes" },
-    ]);
 
-    return res.status(201).json(
-      new ApiResponse(
-        200,
-        {
-          user: {
-            ...user._doc,
-          },
-        },
-        "User successfully created"
-      )
-    );
+    // Get all active default categories
+    const defaultCategories = await DefaultCategory.find({ isActive: true });
+
+    if (defaultCategories.length > 0) {
+      // Create user-specific categories from default categories
+      const userCategories = defaultCategories.map((category) => ({
+        user: newUser._id,
+        name: category.name,
+        type: category.type,
+      }));
+
+      await Category.insertMany(userCategories);
+    }
+
+    return res
+      .status(201)
+      .json(new ApiResponse(200, user._doc, "User successfully created"));
   } catch (error) {
     throw new ApiError(500, "Failed to create user", error.stack);
   }

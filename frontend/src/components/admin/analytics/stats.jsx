@@ -14,12 +14,11 @@ import Loader from "components/ui/loader/Loader";
 import "./adminStyles.css";
 import { useGetUserStatsQuery } from "services/api/userApi";
 
-const StatCard = ({ icon, title, value, color, subtitle, dataCy }) => (
+const StatCard = ({ icon, title, value, color, subtitle }) => (
   <Col md={6} lg={4} className="mb-4">
     <Card
       className={`stat-card border-0 shadow-sm h-100`}
       style={{ backgroundColor: "var(--light)" }}
-      data-cy={dataCy}
     >
       <Card.Body className="d-flex align-items-center">
         <div
@@ -37,40 +36,33 @@ const StatCard = ({ icon, title, value, color, subtitle, dataCy }) => (
   </Col>
 );
 
-const AdminStats = () => {
+const Stats = () => {
   const { data: stats, isLoading, error } = useGetUserStatsQuery();
 
-  if (isLoading) return <Loader data-cy="loading-spinner" />;
+  if (isLoading) return <Loader />;
   if (error)
-    return (
-      <div className="alert alert-danger" data-cy="error-message">
-        Error loading statistics
-      </div>
-    );
+    return <div className="alert alert-danger">Error loading statistics</div>;
 
   return (
-    <div className="admin-stats" data-cy="admin-stats">
+    <div className="admin-stats">
       <Row>
         <StatCard
           icon={<FontAwesomeIcon icon={faUsers} size="lg" />}
           title="Total Users"
           value={stats?.totalUsers || 0}
           color="primary"
-          dataCy="total-users-card"
         />
         <StatCard
           icon={<FontAwesomeIcon icon={faUserShield} size="lg" />}
           title="Admin Users"
           value={stats?.adminUsers || 0}
           color="warning"
-          dataCy="admin-users-card"
         />
         <StatCard
           icon={<FontAwesomeIcon icon={faUserCheck} size="lg" />}
           title="Regular Users"
           value={stats?.regularUsers || 0}
           color="success"
-          dataCy="regular-users-card"
         />
         <StatCard
           icon={<FontAwesomeIcon icon={faClock} size="lg" />}
@@ -78,25 +70,22 @@ const AdminStats = () => {
           value={stats?.recentUsers || 0}
           color="info"
           subtitle="Last 30 days"
-          dataCy="recent-users-card"
         />
         <StatCard
           icon={<FontAwesomeIcon icon={faExchangeAlt} size="lg" />}
           title="Total Transactions"
           value={stats?.totalTransactions || 0}
           color="secondary"
-          dataCy="total-transactions-card"
         />
         <StatCard
           icon={<FontAwesomeIcon icon={faTags} size="lg" />}
           title="Total Categories"
           value={stats?.totalCategories || 0}
           color="dark"
-          dataCy="total-categories-card"
         />
       </Row>
     </div>
   );
 };
 
-export default AdminStats;
+export default Stats;

@@ -24,7 +24,6 @@ import Loader from "components/ui/loader/Loader";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faArrowLeft,
-  faUser,
   faCalendarAlt,
   faEnvelope,
   faMoneyBillWave,
@@ -196,7 +195,10 @@ const AdminUserDetails = () => {
           <Row className="align-items-center">
             <Col xs="auto">
               <Button variant="outline-light" onClick={goBack} className="me-3">
-                <FontAwesomeIcon icon={faArrowLeft} />
+                <FontAwesomeIcon
+                  icon={faArrowLeft}
+                  data-cy="admin-user-details-back-button"
+                />
               </Button>
             </Col>
             <Col>

@@ -1,5 +1,4 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 
 import LoginForm from "components/auth/LoginForm";
@@ -7,7 +6,6 @@ import { firebaseOAuth } from "hooks/firebaseOAuth";
 import { useGoogleAuthMutation, useLoginMutation } from "services/api/authApi";
 
 const Login = () => {
-  const navigate = useNavigate();
   const [login, { isLoading }] = useLoginMutation();
   const [googleAuth] = useGoogleAuthMutation();
 
@@ -18,11 +16,9 @@ const Login = () => {
     if (user) {
       try {
         await googleAuth(user).unwrap();
-
-        navigate("/home");
       } catch (err) {
         console.log(err);
-        toast.error(err?.data?.message || err.error);
+        toast.error(err?.message || err.error);
       }
     }
   };
@@ -30,14 +26,19 @@ const Login = () => {
   const handleLogin = async (formData) => {
     try {
       await login(formData).unwrap();
-
-      navigate("/home");
     } catch (err) {
-      toast.error(err?.data?.message || "Login failed");
+      console.log("err", err);
+      toast.error(err?.data?.message);
     }
   };
 
-  return <LoginForm onSubmit={handleLogin} onGoogleClick={signGoogleClick} isLoading={isLoading} />;
+  return (
+    <LoginForm
+      onSubmit={handleLogin}
+      onGoogleClick={signGoogleClick}
+      isLoading={isLoading}
+    />
+  );
 };
 
 export default Login;

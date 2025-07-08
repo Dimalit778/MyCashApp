@@ -10,7 +10,22 @@ module.exports = defineConfig({
     mobileViewportWidthBreakpoint: 414,
     TEST_EMAIL: process.env.REACT_APP_TEST_EMAIL,
     TEST_PASSWORD: process.env.REACT_APP_TEST_PASSWORD,
-    protectedRoutes: ["/home", "/transactions/expenses", "/transactions/incomes", "/settings", "/contact"],
+    TEST_ADMIN_EMAIL: process.env.REACT_APP_TEST_ADMIN_EMAIL,
+    TEST_ADMIN_PASSWORD: process.env.REACT_APP_TEST_ADMIN_PASSWORD,
+    protectedRoutes: [
+      "/home",
+      "/transactions/expenses",
+      "/transactions/incomes",
+      "/settings",
+      "/contact",
+    ],
+    adminRoutes: [
+      "",
+      "/admin/analytics",
+      "/admin/users",
+      "/admin/categories",
+      "/admin/database",
+    ],
   },
   e2e: {
     watchForFileChanges: false,
@@ -20,11 +35,25 @@ module.exports = defineConfig({
 
     setupNodeEvents(on, config) {
       on("task", {
-        async "db:seed-user"() {
+        async "db:seed-admin"() {
           try {
-            await fetch(`${process.env.REACT_APP_API_URL}/seed/userAndCategories`, {
+            await fetch(`${process.env.REACT_APP_API_URL}/seed/admin`, {
               method: "POST",
             });
+            return null;
+          } catch (error) {
+            console.error("Seed error:", error);
+            return null;
+          }
+        },
+        async "db:seed-user"() {
+          try {
+            await fetch(
+              `${process.env.REACT_APP_API_URL}/seed/userAndCategories`,
+              {
+                method: "POST",
+              }
+            );
             return null;
           } catch (error) {
             console.error("Seed error:", error);

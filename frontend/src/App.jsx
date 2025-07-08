@@ -14,11 +14,12 @@ import Settings from "pages/dashboard/Settings";
 import ContactUs from "pages/dashboard/ContactUs";
 
 // Admin Pages
-import AdminDashboard from "pages/admin/AdminDashboard";
+
 import AdminUsers from "pages/admin/AdminUsers";
 import AdminAnalytics from "pages/admin/AdminAnalytics";
-import AdminSettings from "pages/admin/AdminSettings";
 import AdminUserDetails from "pages/admin/AdminUserDetails";
+import AdminDatabase from "pages/admin/AdminDatabase";
+import AdminCategories from "pages/admin/AdminCategories";
 
 // Lazy loaded components
 const Home = lazy(() => import("pages/dashboard/Home"));
@@ -60,11 +61,11 @@ export const App = () => {
 
         {/* Admin Routes */}
         <Route path="/admin" element={<AdminLayout />}>
-          <Route index element={<AdminDashboard />} />
+          <Route path="analytics" element={<AdminAnalytics />} />
           <Route path="users" element={<AdminUsers />} />
           <Route path="users/:id" element={<AdminUserDetails />} />
-          <Route path="analytics" element={<AdminAnalytics />} />
-          <Route path="settings" element={<AdminSettings />} />
+          <Route path="categories" element={<AdminCategories />} />
+          <Route path="database" element={<AdminDatabase />} />
         </Route>
 
         <Route path="*" element={<Navigate to="/" replace />} />

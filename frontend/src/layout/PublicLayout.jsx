@@ -9,7 +9,7 @@ const PublicLayout = () => {
 
   if (user) {
     if (user.role === "admin") {
-      return <Navigate to="/admin" replace />;
+      return <Navigate to="/admin/analytics" replace />;
     } else {
       return <Navigate to="/home" replace />;
     }

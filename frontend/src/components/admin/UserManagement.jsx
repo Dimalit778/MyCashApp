@@ -294,6 +294,7 @@ const UserManagement = () => {
                   <td>
                     <div className="d-flex gap-2">
                       <Button
+                        data-cy="user-details-btn"
                         variant="outline-primary"
                         size="sm"
                         onClick={() => showUserDetails(user._id)}
@@ -301,6 +302,7 @@ const UserManagement = () => {
                         <FontAwesomeIcon icon={faEye} />
                       </Button>
                       <Button
+                        data-cy="user-delete-btn"
                         variant="outline-danger"
                         size="sm"
                         onClick={() => confirmDelete(user)}

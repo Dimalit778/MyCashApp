@@ -6,7 +6,7 @@ export const userApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getUser: builder.query({
       query: () => ({
-        url: `${USER_URL}/get`,
+        url: `${USER_URL}/users/get`,
         credentials: "include",
       }),
       providesTags: ["User"],
@@ -14,7 +14,7 @@ export const userApiSlice = apiSlice.injectEndpoints({
 
     updateUser: builder.mutation({
       query: (data) => ({
-        url: `${USER_URL}/update`,
+        url: `${USER_URL}/users/update`,
         method: "PATCH",
         body: data,
         credentials: "include",
@@ -25,7 +25,7 @@ export const userApiSlice = apiSlice.injectEndpoints({
 
     deleteUser: builder.mutation({
       query: () => ({
-        url: `${USER_URL}/delete`,
+        url: `${USER_URL}/users/delete`,
         method: "DELETE",
         credentials: "include",
       }),
@@ -33,7 +33,7 @@ export const userApiSlice = apiSlice.injectEndpoints({
     }),
     imageActions: builder.mutation({
       query: (data) => ({
-        url: `${USER_URL}/imageActions`,
+        url: `${USER_URL}/users/imageActions`,
         method: "PATCH",
         body: data,
         credentials: "include",
@@ -88,6 +88,26 @@ export const userApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["AdminUsers", "AdminStats"],
     }),
+
+    // Add this new endpoint to fetch historical user data
+    getUserHistoricalData: builder.query({
+      query: (period = 30) => ({
+        url: `${USER_URL}/admin/historical?period=${period}`,
+        method: "GET",
+        credentials: "include",
+      }),
+      providesTags: ["UserStats"],
+    }),
+
+    getDatabaseStats: builder.query({
+      query: () => ({
+        url: `${USER_URL}/admin/database-stats`,
+        method: "GET",
+        credentials: "include",
+      }),
+
+      providesTags: ["DatabaseStats"],
+    }),
   }),
 });
 
@@ -102,4 +122,6 @@ export const {
   useGetUserDetailsQuery,
   useAdminDeleteUserMutation,
   useUpdateUserRoleMutation,
+  useGetUserHistoricalDataQuery,
+  useGetDatabaseStatsQuery,
 } = userApiSlice;

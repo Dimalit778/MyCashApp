@@ -12,8 +12,7 @@ const SignUp = () => {
   const handleSignUp = async (formData) => {
     try {
       const res = await signUp(formData).unwrap();
-
-      toast.success(res.success?.message);
+      toast.success(res?.message);
       navigate("/login");
     } catch (err) {
       toast.error(err?.data?.message || "Registration failed");
@@ -24,7 +23,13 @@ const SignUp = () => {
     toast.error("Google Sign-Up not implemented yet");
   };
 
-  return <SignUpForm onSubmit={handleSignUp} onGoogleClick={handleGoogleSignUp} isLoading={isLoading} />;
+  return (
+    <SignUpForm
+      onSubmit={handleSignUp}
+      onGoogleClick={handleGoogleSignUp}
+      isLoading={isLoading}
+    />
+  );
 };
 
 export default SignUp;

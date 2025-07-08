@@ -1,6 +1,7 @@
 import User from "../models/userSchema.js";
 import Transaction from "../models/transactionSchema.js";
 import Category from "../models/categorySchema.js";
+import DefaultCategory from "../models/defaultCategorySchema.js";
 import mongoose from "mongoose";
 import cloudinary from "../cloudinary.js";
 
@@ -353,6 +354,105 @@ const getUserDetails = asyncHandler(async (req, res) => {
   );
 });
 
+const getHistoricalData = asyncHandler(async (req, res) => {
+  const period = parseInt(req.query.period) || 30;
+
+  // Calculate the date 'period' days ago
+  const startDate = new Date();
+  startDate.setDate(startDate.getDate() - period);
+
+  // Aggregate users by creation date
+  const userGrowth = await User.aggregate([
+    {
+      $match: {
+        createdAt: { $gte: startDate },
+      },
+    },
+    {
+      $group: {
+        _id: {
+          $dateToString: { format: "%Y-%m-%d", date: "$createdAt" },
+        },
+        count: { $sum: 1 },
+      },
+    },
+    {
+      $sort: { _id: 1 },
+    },
+  ]);
+
+  // Aggregate transactions by type
+  const transactionTypes = await Transaction.aggregate([
+    {
+      $match: {
+        createdAt: { $gte: startDate },
+      },
+    },
+    {
+      $group: {
+        _id: "$type",
+        count: { $sum: 1 },
+        total: { $sum: "$amount" },
+      },
+    },
+  ]);
+
+  // Fill in missing dates for user growth data
+  const userGrowthByDate = {};
+  for (let i = 0; i < period; i++) {
+    const date = new Date(startDate);
+    date.setDate(date.getDate() + i);
+    const dateStr = date.toISOString().split("T")[0];
+    userGrowthByDate[dateStr] = 0;
+  }
+
+  // Populate with actual data
+  userGrowth.forEach((item) => {
+    userGrowthByDate[item._id] = item.count;
+  });
+
+  // Convert to array format for frontend
+  const userGrowthData = Object.entries(userGrowthByDate).map(
+    ([date, count]) => ({
+      date,
+      count,
+    })
+  );
+
+  res.status(200).json({
+    success: true,
+    data: {
+      userGrowth: userGrowthData,
+      transactionTypes,
+    },
+  });
+});
+const getDatabaseStats = asyncHandler(async (req, res) => {
+  const totalUsers = await User.find({}).select("-password -refreshToken");
+
+  const totalTransactions = await Transaction.find({});
+
+  const totalCategories = await Category.find();
+  const totalDefaultCategories = await DefaultCategory.find({});
+  const totalExpenses = await Transaction.find({ transactionType: "expenses" });
+  const totalIncomes = await Transaction.find({ transactionType: "incomes" });
+
+  return res.status(200).json(
+    new ApiResponse(
+      200,
+      {
+        totalUsers,
+        totalTransactions,
+        totalCategories,
+        totalDefaultCategories,
+        totalExpenses,
+        totalIncomes,
+      },
+      "Database stats fetched successfully"
+    )
+  );
+});
+
 export {
   updateUser,
   getUser,
@@ -364,4 +464,6 @@ export {
   adminDeleteUser,
   updateUserRole,
   getUserDetails,
+  getHistoricalData,
+  getDatabaseStats,
 };

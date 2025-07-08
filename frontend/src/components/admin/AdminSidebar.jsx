@@ -3,11 +3,11 @@ import { NavLink, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faTachometerAlt,
   faUsers,
-  faCog,
   faChartBar,
   faSignOutAlt,
+  faDatabase,
+  faTableCellsLarge,
 } from "@fortawesome/free-solid-svg-icons";
 
 import { currentUser } from "services/reducers/userSlice";
@@ -19,10 +19,10 @@ import styles from "./AdminSidebar.module.css";
 
 const ADMIN_LINKS = [
   {
-    label: "Dashboard",
-    route: "/admin",
-    icon: faTachometerAlt,
-    dataCy: "dashboard",
+    label: "Analytics",
+    route: "/admin/analytics",
+    icon: faChartBar,
+    dataCy: "analytics",
   },
   {
     label: "Users",
@@ -31,16 +31,16 @@ const ADMIN_LINKS = [
     dataCy: "users",
   },
   {
-    label: "Analytics",
-    route: "/admin/analytics",
-    icon: faChartBar,
-    dataCy: "analytics",
+    label: "Categories",
+    route: "/admin/categories",
+    icon: faTableCellsLarge,
+    dataCy: "categories",
   },
   {
-    label: "Settings",
-    route: "/admin/settings",
-    icon: faCog,
-    dataCy: "settings",
+    label: "Database",
+    route: "/admin/database",
+    icon: faDatabase,
+    dataCy: "database",
   },
 ];
 
@@ -59,18 +59,20 @@ const AdminSidebar = ({ onClose }) => {
   };
 
   return (
-    <div className={styles.sidebar}>
+    <div className={styles.sidebar} data-cy="admin-sideBar">
       <div className={styles.profileSection}>
-        <div className={styles.userInfo}>
-          <h2 className={styles.userName}>
+        <div className={styles.userInfo} data-cy="admin-sidebar-user-info">
+          <h2 className={styles.userName} data-cy="user-name">
             {user?.firstName} {user?.lastName}
           </h2>
-          <p className={styles.userRole}>Administrator</p>
+          <p className={styles.userRole} data-cy="user-role">
+            Administrator
+          </p>
         </div>
       </div>
 
       {/* Navigation */}
-      <nav className={styles.navigation}>
+      <nav className={styles.navigation} data-cy="admin-sidebar-navigation">
         <ul className={styles.navList}>
           {ADMIN_LINKS.map((link) => {
             const isActive =
@@ -90,7 +92,9 @@ const AdminSidebar = ({ onClose }) => {
                 >
                   <FontAwesomeIcon
                     icon={link.icon}
-                    className={styles.navIcon}
+                    className="me-2"
+                    size="xl"
+                    color="grey"
                   />
                   <span className={styles.navLabel}>{link.label}</span>
                 </NavLink>

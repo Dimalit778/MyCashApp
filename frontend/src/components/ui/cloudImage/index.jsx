@@ -35,8 +35,8 @@ const CloudImage = ({ publicId, ...props }) => {
       src={require("../../../assets/avatar.jpg")}
       alt="user"
       className="rounded-circle"
-      width={120}
-      height={120}
+      width={40}
+      height={40}
     />
   );
 };

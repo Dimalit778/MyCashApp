@@ -15,6 +15,7 @@ const AdminTopBar = ({ className }) => {
   return (
     <>
       <Navbar
+        data-cy="admin-topBar"
         className={className}
         style={{
           position: "fixed",
@@ -33,7 +34,11 @@ const AdminTopBar = ({ className }) => {
         </Navbar.Brand>
 
         <Nav className="ms-auto">
-          <Nav.Link onClick={handleShow} style={{ color: "white" }}>
+          <Nav.Link
+            onClick={handleShow}
+            style={{ color: "white" }}
+            data-cy="admin-topBar-hamburger"
+          >
             <FontAwesomeIcon icon={faBars} size="lg" />
           </Nav.Link>
         </Nav>

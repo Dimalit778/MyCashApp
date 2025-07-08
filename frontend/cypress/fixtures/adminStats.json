@@ -1,0 +1,21 @@
+{
+  "statusCode": 200,
+  "message": "Admin statistics retrieved successfully",
+  "data": {
+    "totalUsers": 10,
+    "adminUsers": 2,
+    "regularUsers": 8,
+    "recentUsers": 3,
+    "totalTransactions": 150,
+    "totalCategories": 25,
+    "userGrowth": [
+      { "date": "2023-06-01", "count": 5 },
+      { "date": "2023-06-15", "count": 7 },
+      { "date": "2023-07-01", "count": 10 }
+    ],
+    "transactionDistribution": {
+      "income": 60,
+      "expense": 90
+    }
+  }
+}
