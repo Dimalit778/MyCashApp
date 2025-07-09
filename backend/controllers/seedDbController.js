@@ -69,10 +69,10 @@ const seedAdminUser = asyncHandler(async (req, res) => {
 });
 
 const seedTransactions = asyncHandler(async (req, res) => {
-  await Transaction.deleteMany({});
-  const { count = 25, type, monthly } = req.body;
+  // await Transaction.deleteMany({});
+  const { count = 20, type, monthly } = req.body;
 
-  const user = await User.findOne({ email: "cypress@gmail.com" });
+  const user = await User.findOne({ email: "john@gmail.com" });
   if (!user) throw new ApiError(404, "User not found");
 
   const categories = await Category.find({ user: user._id });

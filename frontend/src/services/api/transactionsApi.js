@@ -1,5 +1,6 @@
-import { TRANSACTION_URL } from "config/api";
 import { apiSlice } from "services/baseQuery";
+
+const TRANSACTION_URL = "/api/transactions";
 
 export const transactionsApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({

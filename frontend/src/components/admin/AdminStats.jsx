@@ -12,7 +12,7 @@ import {
 import Loader from "components/ui/loader/Loader";
 
 import "./adminStyles.css";
-import { useGetUserStatsQuery } from "services/api/userApi";
+import { useGetUserStatsQuery } from "services/api/adminApi";
 
 const StatCard = ({ icon, title, value, color, subtitle, dataCy }) => (
   <Col md={6} lg={4} className="mb-4">

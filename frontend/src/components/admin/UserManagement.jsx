@@ -26,7 +26,7 @@ import {
   useGetAllUsersQuery,
   useAdminDeleteUserMutation,
   useUpdateUserRoleMutation,
-} from "services/api/userApi";
+} from "services/api/adminApi";
 
 import "./adminStyles.css";
 import CloudImage from "components/ui/cloudImage";

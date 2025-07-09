@@ -6,7 +6,7 @@ import styles from "./AdminPages.module.css";
 import {
   useGetUserStatsQuery,
   useGetUserHistoricalDataQuery,
-} from "services/api/userApi";
+} from "services/api/adminApi";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -226,22 +226,11 @@ const AdminAnalytics = () => {
                 Platform overview and performance metrics
               </p>
             </Col>
-            <Col xs="auto">
-              <Button
-                variant="primary"
-                onClick={handleExportData}
-                data-cy="export-report-btn"
-              >
-                <FontAwesomeIcon icon={faDownload} className="me-2" />
-                Export Report
-              </Button>
-            </Col>
           </Row>
         </Container>
       </div>
 
       <Container fluid className="py-4">
-        {/* Stats Cards */}
         <Row>
           <Col>
             <Card className={styles.contentCard} data-cy="stats-card">
@@ -280,39 +269,48 @@ const AdminAnalytics = () => {
                   Platform Summary
                 </h5>
               </Card.Header>
-              <Card.Body>
+              <Card.Body className="bg-black">
                 <Row>
-                  <Col md={3} className="mb-3 mb-md-0">
+                  <Col md={4} className="mb-3 mb-md-0">
                     <div className="text-center" data-cy="avg-transactions">
-                      <h3>
+                      <h3 style={{ color: "var(--light)" }}>
                         {stats?.totalUsers > 0
                           ? (
                               stats?.totalTransactions / stats?.totalUsers
                             ).toFixed(1)
                           : "0"}
                       </h3>
-                      <p className="text-muted mb-0">
+                      <p
+                        className=" mb-0"
+                        style={{ color: "var(--light-grey)" }}
+                      >
                         Avg. Transactions per User
                       </p>
                     </div>
                   </Col>
-                  <Col md={3} className="mb-3 mb-md-0">
-                    <div className="text-center" data-cy="avg-categories">
-                      <h3>
+                  <Col md={4} className="mb-3 mb-md-0">
+                    <div
+                      className="text-center text-light"
+                      data-cy="avg-categories"
+                    >
+                      <h3 style={{ color: "var(--light)" }}>
                         {stats?.totalUsers > 0
                           ? (
                               stats?.totalCategories / stats?.totalUsers
                             ).toFixed(1)
                           : "0"}
                       </h3>
-                      <p className="text-muted mb-0">
+                      <p
+                        className=" mb-0"
+                        style={{ color: "var(--light-grey)" }}
+                      >
                         Avg. Categories per User
                       </p>
                     </div>
                   </Col>
-                  <Col md={3} className="mb-3 mb-md-0">
-                    <div className="text-center" data-cy="growth-rate">
-                      <h3>
+                  <Col md={4} className="mb-3 mb-md-0">
+                    <div className="text-center " data-cy="growth-rate">
+                      <h3 style={{ color: "var(--light)" }}>
                         {stats?.totalUsers > 0
                           ? (
                               (stats?.recentUsers / stats?.totalUsers) *
@@ -320,58 +318,15 @@ const AdminAnalytics = () => {
                             ).toFixed(1) + "%"
                           : "0%"}
                       </h3>
-                      <p className="text-muted mb-0">User Growth Rate (30d)</p>
-                    </div>
-                  </Col>
-                  <Col md={3}>
-                    <div className="text-center" data-cy="admin-ratio">
-                      <h3>
-                        {stats?.totalUsers > 0
-                          ? (
-                              (stats?.adminUsers / stats?.totalUsers) *
-                              100
-                            ).toFixed(0) + "%"
-                          : "0%"}
-                      </h3>
-                      <p className="text-muted mb-0">Admin to User Ratio</p>
+                      <p
+                        className=" mb-0"
+                        style={{ color: "var(--light-grey)" }}
+                      >
+                        User Growth Rate (30d)
+                      </p>
                     </div>
                   </Col>
                 </Row>
-              </Card.Body>
-            </Card>
-          </Col>
-        </Row>
-
-        {/* User Role Distribution */}
-        <Row className="g-4 mt-2">
-          <Col lg={6}>
-            <Card className={styles.contentCard} data-cy="user-role-chart">
-              <Card.Header
-                style={{
-                  backgroundColor: "var(--surface)",
-                  borderBottom: "1px solid var(--light-grey)",
-                }}
-              >
-                <h5 className="mb-0" style={{ color: "var(--light)" }}>
-                  User Role Distribution
-                </h5>
-              </Card.Header>
-              <Card.Body style={{ height: "300px" }}>
-                {stats && (
-                  <Bar
-                    data={{
-                      labels: ["Admins", "Regular Users"],
-                      datasets: [
-                        {
-                          label: "Users by Role",
-                          data: [stats.adminUsers, stats.regularUsers],
-                          backgroundColor: ["#f59e0b", "#3b82f6"],
-                        },
-                      ],
-                    }}
-                    options={chartOptions}
-                  />
-                )}
               </Card.Body>
             </Card>
           </Col>

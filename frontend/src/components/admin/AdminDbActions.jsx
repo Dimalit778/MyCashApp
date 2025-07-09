@@ -1,27 +1,23 @@
 import { useState } from "react";
-import { Card, Col, Row, Button, Modal, Spinner } from "react-bootstrap";
+import { Card, Button, Modal, Spinner } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faDatabase,
   faExclamationTriangle,
   faTrash,
 } from "@fortawesome/free-solid-svg-icons";
-import {
-  USER_URL,
-  TRANSACTION_URL,
-  CATEGORY_URL,
-  DEFAULT_CATEGORY_URL,
-} from "config/api";
+
 import toast from "react-hot-toast";
 import styles from "../../pages/admin/AdminPages.module.css";
+import { useDatabaseActionsMutation } from "services/api/adminApi";
 
-const AdminDbActions = ({ stats }) => {
+const AdminDbActions = () => {
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [confirmAction, setConfirmAction] = useState(null);
   const [confirmTitle, setConfirmTitle] = useState("");
   const [confirmMessage, setConfirmMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-
+  const [databaseActions] = useDatabaseActionsMutation();
   const showConfirmDialog = (action, title, message) => {
     setConfirmAction(() => action);
     setConfirmTitle(title);
@@ -32,14 +28,9 @@ const AdminDbActions = ({ stats }) => {
   const handleConfirm = async () => {
     setIsLoading(true);
     setShowConfirmModal(false);
-
     try {
       await confirmAction();
       toast.success("Operation completed successfully");
-      // Refresh stats after operation - assuming this function exists
-      if (typeof fetchStats === "function") {
-        fetchStats();
-      }
     } catch (error) {
       console.error("Operation failed:", error);
       toast.error("Operation failed: " + (error.message || "Unknown error"));
@@ -52,14 +43,8 @@ const AdminDbActions = ({ stats }) => {
   const performDatabaseOperation = (operation, title, message) => {
     showConfirmDialog(
       async () => {
-        const response = await fetch(`/seed/operation/${operation}`, {
-          method: "DELETE",
-          credentials: "include",
-        });
-
-        if (!response.ok) {
-          throw new Error(`Operation failed: ${response.statusText}`);
-        }
+        const response = await databaseActions({ operation });
+        console.log("response", response);
       },
       title,
       message

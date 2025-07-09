@@ -2,7 +2,7 @@ import { Row, Col, Container, Spinner } from "react-bootstrap";
 import AdminDbActions from "components/admin/AdminDbActions";
 import AdminDbExport from "components/admin/AdminDbExport";
 import styles from "./AdminPages.module.css";
-import { useGetDatabaseStatsQuery } from "services/api/userApi";
+import { useGetDatabaseStatsQuery } from "services/api/adminApi";
 
 const MaintenanceSettings = () => {
   const { data: stats, isLoading } = useGetDatabaseStatsQuery();

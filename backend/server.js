@@ -11,8 +11,8 @@ import userRoutes from "./routes/userRoute.js";
 import transactionRoutes from "./routes/transactionsRoute.js";
 import categoryRoutes from "./routes/categoryRoute.js";
 import seedRoutes from "./routes/seedRoutes.js";
-import defaultCategoryRoutes from "./routes/defaultCategoryRoute.js";
 
+import adminRoutes from "./routes/adminRoute.js";
 // Middleware
 
 import { errorHandler } from "./middleware/errorMiddleware.js";
@@ -49,10 +49,10 @@ app.use(
 );
 
 app.use("/api/auth", authRoutes);
-app.use("/api", userRoutes);
+app.use("/api/users", userRoutes);
+app.use("/api/admin", adminRoutes);
 app.use("/api/transactions", transactionRoutes);
 app.use("/api/categories", categoryRoutes);
-app.use("/api/default-categories", defaultCategoryRoutes);
 app.use("/seed", seedRoutes);
 
 // Additional CORS headers and preflight handling

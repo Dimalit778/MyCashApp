@@ -13,13 +13,12 @@ import {
 } from "react-bootstrap";
 import styles from "./AdminPages.module.css";
 import { useParams, useNavigate } from "react-router-dom";
-import { useGetUserDetailsQuery } from "services/api/userApi";
+import { useGetUserDetailsQuery } from "services/api/adminApi";
 import {
-  useGetUserTransactionsQuery,
   useUpdateTransactionMutation,
   useDeleteTransactionMutation,
 } from "services/api/transactionsApi";
-import { useGetUserCategoriesQuery } from "services/api/categoriesApi";
+
 import Loader from "components/ui/loader/Loader";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {

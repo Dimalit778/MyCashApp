@@ -25,7 +25,7 @@ import {
   useAddDefaultCategoryMutation,
   useUpdateDefaultCategoryMutation,
   useDeleteDefaultCategoryMutation,
-} from "services/api/defaultCategoriesApi";
+} from "services/api/adminApi";
 import Swal from "sweetalert2";
 
 const AdminCategories = () => {

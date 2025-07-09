@@ -21,7 +21,10 @@ export const authApiSlice = apiSlice.injectEndpoints({
 
           // For mobile, store tokens
           if (isPlatformMobile()) {
-            tokenStorage.setTokens(data.data.accessToken, data.data.refreshToken);
+            tokenStorage.setTokens(
+              data.data.accessToken,
+              data.data.refreshToken
+            );
           }
         } catch (error) {
           console.error("Login error:", error);
@@ -66,4 +69,9 @@ export const authApiSlice = apiSlice.injectEndpoints({
     }),
   }),
 });
-export const { useLoginMutation, useLogoutMutation, useGoogleAuthMutation, useSignUpMutation } = authApiSlice;
+export const {
+  useLoginMutation,
+  useLogoutMutation,
+  useGoogleAuthMutation,
+  useSignUpMutation,
+} = authApiSlice;
