@@ -19,17 +19,7 @@ const SignUp = () => {
     }
   };
 
-  const handleGoogleSignUp = () => {
-    toast.error("Google Sign-Up not implemented yet");
-  };
-
-  return (
-    <SignUpForm
-      onSubmit={handleSignUp}
-      onGoogleClick={handleGoogleSignUp}
-      isLoading={isLoading}
-    />
-  );
+  return <SignUpForm onSubmit={handleSignUp} isLoading={isLoading} />;
 };
 
 export default SignUp;

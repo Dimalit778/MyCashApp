@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faGoogle } from "@fortawesome/free-brands-svg-icons";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
@@ -11,7 +10,7 @@ import MyButton from "components/ui/button";
 import { THEME } from "constants/Theme";
 import { emailValidation } from "utils/emailValidation";
 
-const SignUpForm = ({ onSubmit, onGoogleClick, isLoading }) => {
+const SignUpForm = ({ onSubmit, isLoading }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
@@ -139,17 +138,6 @@ const SignUpForm = ({ onSubmit, onGoogleClick, isLoading }) => {
             >
               Sign Up
             </MyButton>
-            <div className="divider"></div>
-            <button
-              data-cy="signup-google"
-              type="button"
-              onClick={onGoogleClick}
-              className="btn btn-outline-light btn-block"
-              disabled={isLoading}
-            >
-              <FontAwesomeIcon icon={faGoogle} className="me-2" />
-              Sign up with Google
-            </button>
           </div>
 
           <div className="auth-prompt">

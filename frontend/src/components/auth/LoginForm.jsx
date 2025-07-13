@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faGoogle } from "@fortawesome/free-brands-svg-icons";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
@@ -11,7 +10,7 @@ import MyButton from "components/ui/button";
 import { THEME } from "constants/Theme";
 import "./authStyle.css";
 import { emailValidation } from "utils/emailValidation";
-const LoginForm = ({ onSubmit, signGoogleClick, isLoading }) => {
+const LoginForm = ({ onSubmit, isLoading }) => {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
 
@@ -76,16 +75,6 @@ const LoginForm = ({ onSubmit, signGoogleClick, isLoading }) => {
               isLoading={isLoading}
             >
               Login
-            </MyButton>
-            <div className="divider"></div>
-            <MyButton
-              data-cy="login-google"
-              type="button"
-              onClick={signGoogleClick}
-              className="btn btn-outline-light btn-block"
-            >
-              <FontAwesomeIcon icon={faGoogle} className="me-2" />
-              Sign in with Google
             </MyButton>
           </div>
 
