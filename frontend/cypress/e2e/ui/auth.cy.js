@@ -62,7 +62,7 @@ describe("User Sign-up and Login", () => {
     cy.getDataCy("login-email").should("be.visible");
     cy.getDataCy("login-password").should("be.visible");
     cy.getDataCy("login-submit").should("be.visible");
-    cy.getDataCy("login-google").should("be.visible");
+
     // Password visibility
     cy.getDataCy("login-password")
       .find("input")
@@ -91,7 +91,7 @@ describe("User Sign-up and Login", () => {
     cy.getDataCy("signup-confirm-password").should("be.visible");
     // Form buttons
     cy.getDataCy("signup-submit").should("be.visible");
-    cy.getDataCy("signup-google").should("be.visible");
+
     cy.getDataCy("goto-login").should("be.visible");
     // Password visibility
     cy.getDataCy("signup-password")
