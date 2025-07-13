@@ -27,7 +27,6 @@
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
     "express-async-handler": "^1.2.0",
-    "firebase-admin": "^13.2.0",
     "js-cookie": "^3.0.5",
     "jsonwebtoken": "^9.0.1",
     "mongodb": "^5.7.0",
