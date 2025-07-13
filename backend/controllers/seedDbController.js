@@ -6,11 +6,15 @@ import User from "./../models/userSchema.js";
 import DefaultCategory from "../models/defaultCategorySchema.js";
 
 const seedUserWithCategories = asyncHandler(async (req, res) => {
+  // Delete all users except those with role 'admin'
+  await User.deleteMany({ email: { $ne: "cypress-ad@gmail.com" } });
+  await Category.deleteMany({});
+
   const user = new User({
     firstName: "Test",
     lastName: "User",
     email: "cypress@gmail.com",
-    password: "144695",
+    password: "cypress123",
     imageUrl: null,
     role: "user",
   });
@@ -69,10 +73,10 @@ const seedAdminUser = asyncHandler(async (req, res) => {
 });
 
 const seedTransactions = asyncHandler(async (req, res) => {
-  // await Transaction.deleteMany({});
-  const { count = 20, type, monthly } = req.body;
+  await Transaction.deleteMany({});
+  const { count = 45, type, monthly } = req.body;
 
-  const user = await User.findOne({ email: "john@gmail.com" });
+  const user = await User.findOne({ email: "cypress@gmail.com" });
   if (!user) throw new ApiError(404, "User not found");
 
   const categories = await Category.find({ user: user._id });
@@ -104,10 +108,8 @@ const seedTransactions = asyncHandler(async (req, res) => {
       user: user._id,
     });
   }
-  console.log("tra", transactions);
 
   const savedTransactions = await Transaction.insertMany(transactions);
-  console.log("savedTransactions", savedTransactions);
 
   return res.status(200).json(
     new ApiResponse(
@@ -164,6 +166,7 @@ const seedClearDb = asyncHandler(async (req, res) => {
   await Transaction.deleteMany({});
   await Category.deleteMany({});
   await User.deleteMany({});
+  await DefaultCategory.deleteMany({});
   return res
     .status(200)
     .json(new ApiResponse(200, {}, "Database cleared successfully"));

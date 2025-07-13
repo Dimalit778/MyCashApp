@@ -96,6 +96,7 @@ const AdminDbExport = ({ stats }) => {
               </span>
               <span>
                 <Button
+                  data-cy="export-data-btn"
                   variant="primary"
                   onClick={() => exportData(item.key)}
                   disabled={isLoading}
@@ -112,6 +113,7 @@ const AdminDbExport = ({ stats }) => {
             <span className={styles.healthLabel}>All Data</span>
             <span>
               <Button
+                data-cy="export-all-data-btn"
                 variant="primary"
                 onClick={() => exportData("all")}
                 disabled={isLoading}

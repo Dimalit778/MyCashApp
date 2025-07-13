@@ -128,7 +128,8 @@ const AdminDbActions = () => {
         </Card.Header>
         <Card.Body>
           <div className={styles.maintenanceActions}>
-            <div className={styles.actionItem}>
+            {/* Delete All Users */}
+            <div className={styles.actionItem} data-cy="delete-all-users-item">
               <div>
                 <h6 style={{ color: "var(--light)" }}>Users</h6>
                 <p className="text-danger mb-0">
@@ -140,6 +141,7 @@ const AdminDbActions = () => {
                 </p>
               </div>
               <Button
+                data-cy="action-delete-btn"
                 variant="danger"
                 onClick={deleteAllUsers}
                 disabled={isLoading}
@@ -152,7 +154,7 @@ const AdminDbActions = () => {
                 Delete
               </Button>
             </div>
-
+            {/* Delete All Transactions */}
             <div className={styles.actionItem}>
               <div>
                 <h6 style={{ color: "var(--light)" }}>Transactions</h6>
@@ -165,6 +167,7 @@ const AdminDbActions = () => {
                 </p>
               </div>
               <Button
+                data-cy="action-delete-btn"
                 variant="danger"
                 onClick={deleteAllTransactions}
                 disabled={isLoading}
@@ -178,6 +181,7 @@ const AdminDbActions = () => {
               </Button>
             </div>
 
+            {/* Delete All Categories */}
             <div className={styles.actionItem}>
               <div>
                 <h6 style={{ color: "var(--light)" }}>Categories</h6>
@@ -190,12 +194,18 @@ const AdminDbActions = () => {
                 </p>
               </div>
               <Button
+                data-cy="action-delete-btn"
                 variant="danger"
                 onClick={deleteAllCategories}
                 disabled={isLoading}
               >
                 {isLoading ? (
-                  <Spinner size="sm" animation="border" className="me-2" />
+                  <Spinner
+                    size="sm"
+                    animation="border"
+                    className="me-2"
+                    data-cy="loading-spinner"
+                  />
                 ) : (
                   <FontAwesomeIcon icon={faTrash} className="me-2" />
                 )}
@@ -203,6 +213,7 @@ const AdminDbActions = () => {
               </Button>
             </div>
 
+            {/* Delete All Default Categories */}
             <div className={styles.actionItem}>
               <div>
                 <h6 style={{ color: "var(--light)" }}>Default Categories</h6>
@@ -215,20 +226,29 @@ const AdminDbActions = () => {
                 </p>
               </div>
               <Button
+                data-cy="action-delete-btn"
                 variant="danger"
                 onClick={deleteAllDefaultCategories}
                 disabled={isLoading}
               >
                 {isLoading ? (
-                  <Spinner size="sm" animation="border" className="me-2" />
+                  <Spinner
+                    size="sm"
+                    animation="border"
+                    className="me-2"
+                    data-cy="loading-spinner"
+                  />
                 ) : (
                   <FontAwesomeIcon icon={faTrash} className="me-2" />
                 )}
                 Delete
               </Button>
             </div>
-
-            <div className={styles.actionItem}>
+            {/* Delete All Expenses */}
+            <div
+              className={styles.actionItem}
+              data-cy="delete-all-expenses-item"
+            >
               <div>
                 <h6 style={{ color: "var(--light)" }}>Expenses</h6>
                 <p className="text-danger mb-0">
@@ -243,9 +263,15 @@ const AdminDbActions = () => {
                 variant="danger"
                 onClick={deleteAllExpenses}
                 disabled={isLoading}
+                data-cy="action-delete-btn"
               >
                 {isLoading ? (
-                  <Spinner size="sm" animation="border" className="me-2" />
+                  <Spinner
+                    size="sm"
+                    animation="border"
+                    className="me-2"
+                    data-cy="loading-spinner"
+                  />
                 ) : (
                   <FontAwesomeIcon icon={faTrash} className="me-2" />
                 )}
@@ -253,7 +279,11 @@ const AdminDbActions = () => {
               </Button>
             </div>
 
-            <div className={styles.actionItem}>
+            {/* Delete All Incomes */}
+            <div
+              className={styles.actionItem}
+              data-cy="delete-all-incomes-item"
+            >
               <div>
                 <h6 style={{ color: "var(--light)" }}>Incomes</h6>
                 <p className="text-danger mb-0">
@@ -265,12 +295,18 @@ const AdminDbActions = () => {
                 </p>
               </div>
               <Button
+                data-cy="action-delete-btn"
                 variant="danger"
                 onClick={deleteAllIncomes}
                 disabled={isLoading}
               >
                 {isLoading ? (
-                  <Spinner size="sm" animation="border" className="me-2" />
+                  <Spinner
+                    size="sm"
+                    animation="border"
+                    className="me-2"
+                    data-cy="loading-spinner"
+                  />
                 ) : (
                   <FontAwesomeIcon icon={faTrash} className="me-2" />
                 )}
@@ -278,7 +314,8 @@ const AdminDbActions = () => {
               </Button>
             </div>
 
-            <div className={styles.actionItem}>
+            {/* Delete All Data */}
+            <div className={styles.actionItem} data-cy="delete-all-data-item">
               <div>
                 <h6 style={{ color: "var(--light)" }}>All Data</h6>
                 <p className="text-danger mb-0">
@@ -290,12 +327,18 @@ const AdminDbActions = () => {
                 </p>
               </div>
               <Button
+                data-cy="action-delete-btn"
                 variant="danger"
                 onClick={deleteAllData}
                 disabled={isLoading}
               >
                 {isLoading ? (
-                  <Spinner size="sm" animation="border" className="me-2" />
+                  <Spinner
+                    size="sm"
+                    animation="border"
+                    className="me-2"
+                    data-cy="loading-spinner"
+                  />
                 ) : (
                   <FontAwesomeIcon icon={faTrash} className="me-2" />
                 )}
@@ -337,7 +380,12 @@ const AdminDbActions = () => {
           </Button>
           <Button variant="danger" onClick={handleConfirm}>
             {isLoading ? (
-              <Spinner size="sm" animation="border" className="me-2" />
+              <Spinner
+                size="sm"
+                animation="border"
+                className="me-2"
+                data-cy="loading-spinner"
+              />
             ) : (
               <FontAwesomeIcon icon={faTrash} className="me-2" />
             )}

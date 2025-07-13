@@ -47,11 +47,11 @@ describe("Admin Routes and Access Control", () => {
 
       adminRoutes.forEach((route) => {
         cy.getDataCy("admin-topBar-hamburger").click();
-        cy.getDataCy("admin-sideBar").should("be.visible");
+        cy.getDataCy("admin-sidebar").should("be.visible");
         cy.getDataCy(route.dataCy).filter(":visible").click(); // Filter for visible elements
         cy.url().should("include", route.path);
         cy.contains("h1", route.title).should("be.visible");
-        cy.getDataCy("admin-sideBar").should("not.be.visible");
+        cy.getDataCy("admin-sidebar").should("not.be.visible");
       });
     });
   });
@@ -68,7 +68,7 @@ describe("Admin Routes and Access Control", () => {
       cy.contains("User Management").should("be.visible");
 
       // Click on first user's view button
-      cy.getDataCy("user-details-btn").first().click();
+      cy.getDataCy("user-view-btn").first().click();
 
       // Should be on user details page
       cy.url().should("match", /\/admin\/users\/[a-f0-9]{24}$/);

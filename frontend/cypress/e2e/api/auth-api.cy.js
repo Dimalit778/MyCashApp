@@ -18,7 +18,12 @@ describe("Auth API", () => {
       },
     }).then((response) => {
       expect(response.status).to.eq(201);
-      expect(response.body.data).to.have.property("user");
+      expect(response.body.data).to.have.property("firstName", "API");
+      expect(response.body.data).to.have.property("lastName", "Tester");
+      expect(response.body.data).to.have.property(
+        "email",
+        "new-api@example.com"
+      );
     });
   });
   it("should fail to register a user ", () => {
@@ -45,11 +50,13 @@ describe("Auth API", () => {
       url: `${authApi}/login`,
       body: {
         email: "cypress@gmail.com",
-        password: "144695",
+        password: "cypress123",
       },
     }).then((response) => {
+      console.log("success login", response.body);
       expect(response.status).to.eq(200);
       expect(response.body.data).to.have.property("accessToken");
+      expect(response.body.data).to.have.property("refreshToken");
       expect(response.body.data).to.have.property("user");
     });
   });
@@ -65,7 +72,10 @@ describe("Auth API", () => {
       failOnStatusCode: false,
     }).then((response) => {
       expect(response.status).to.eq(404);
-      expect(response.body).to.have.property("message", "Invalid Email or Password");
+      expect(response.body).to.have.property(
+        "message",
+        "Invalid Email or Password"
+      );
     });
   });
 
@@ -75,7 +85,10 @@ describe("Auth API", () => {
       url: `${authApi}/logout`,
     }).then((response) => {
       expect(response.status).to.eq(200);
-      expect(response.body).to.have.property("message", "Logged out successfully");
+      expect(response.body).to.have.property(
+        "message",
+        "Logged out successfully"
+      );
     });
   });
 });

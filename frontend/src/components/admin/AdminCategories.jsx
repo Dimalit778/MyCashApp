@@ -161,7 +161,8 @@ const AdminCategories = () => {
 
   // Handle toggling category active status
   const handleToggleActive = (category) => {
-    updateDefaultCategory({ id: category._id, isActive: !category.isActive })
+    console.log("category", category);
+    updateDefaultCategory({ _id: category._id, isActive: !category.isActive })
       .unwrap()
       .then((res) => {
         toast.success("Category status updated successfully");

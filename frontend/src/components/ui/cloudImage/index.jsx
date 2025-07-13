@@ -11,13 +11,13 @@ const cld = new Cloudinary({
   },
 });
 
-const CloudImage = ({ publicId, ...props }) => {
+const CloudImage = ({ publicId, width = 40, height = 40, ...props }) => {
   const myImage = cld
     .image(publicId)
     .quality("auto:best")
     .format("auto")
     .delivery("q_auto:best")
-    .resize(scale().width(500));
+    .resize(scale().width(props.width).height(props.height));
 
   return publicId ? (
     <AdvancedImage
@@ -35,8 +35,8 @@ const CloudImage = ({ publicId, ...props }) => {
       src={require("../../../assets/avatar.jpg")}
       alt="user"
       className="rounded-circle"
-      width={40}
-      height={40}
+      width={width}
+      height={height}
     />
   );
 };

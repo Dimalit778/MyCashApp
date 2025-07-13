@@ -59,7 +59,7 @@ const AdminSidebar = ({ onClose }) => {
   };
 
   return (
-    <div className={styles.sidebar} data-cy="admin-sideBar">
+    <div className={styles.sidebar} data-cy="admin-sidebar">
       <div className={styles.profileSection}>
         <div className={styles.userInfo} data-cy="admin-sidebar-user-info">
           <h2 className={styles.userName} data-cy="user-name">

@@ -81,13 +81,17 @@ const logout = asyncHandler(async (req, res) => {
 });
 const login = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
+  console.log("email", email);
+  console.log("password", password);
 
   if (!email || !password) {
     throw new ApiError(400, "All fields are required");
   }
+  const users = await User.find({});
+  console.log("users", users);
 
   const user = await User.findOne({ email });
-
+  console.log("user", user);
   if (!user) {
     throw new ApiError(404, "Invalid Email or Password");
   }

@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Container, Row, Col, Card, Button, Spinner } from "react-bootstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faDownload } from "@fortawesome/free-solid-svg-icons";
+import { Container, Row, Col, Card, Spinner } from "react-bootstrap";
 import styles from "./AdminPages.module.css";
 import {
   useGetUserStatsQuery,
@@ -20,7 +18,6 @@ import {
   Legend,
 } from "chart.js";
 
-import { Bar } from "react-chartjs-2";
 import { format } from "date-fns";
 import toast from "react-hot-toast";
 import AdminStats from "components/admin/AdminStats";
@@ -56,36 +53,6 @@ const AdminAnalytics = () => {
   const [userGrowthData, setUserGrowthData] = useState(null);
   const [transactionData, setTransactionData] = useState(null);
 
-  const chartOptions = {
-    responsive: true,
-    maintainAspectRatio: false,
-    plugins: {
-      legend: {
-        labels: {
-          color: "#e5e7eb",
-        },
-      },
-    },
-    scales: {
-      x: {
-        grid: {
-          color: "rgba(229, 231, 235, 0.1)",
-        },
-        ticks: {
-          color: "#e5e7eb",
-        },
-      },
-      y: {
-        grid: {
-          color: "rgba(229, 231, 235, 0.1)",
-        },
-        ticks: {
-          color: "#e5e7eb",
-        },
-      },
-    },
-  };
-
   // Refetch historical data when period changes
   useEffect(() => {
     refetchHistorical();
@@ -96,7 +63,6 @@ const AdminAnalytics = () => {
     if (historicalData?.data) {
       const { userGrowth, transactionTypes } = historicalData.data;
 
-      // Process user growth data
       const labels = userGrowth.map((item) =>
         format(new Date(item.date), "MMM d")
       );
@@ -115,7 +81,6 @@ const AdminAnalytics = () => {
         ],
       });
 
-      // Process transaction types data
       if (transactionTypes && transactionTypes.length > 0) {
         const labels = transactionTypes.map((item) => item._id || "Other");
         const data = transactionTypes.map((item) => item.total);
@@ -145,37 +110,6 @@ const AdminAnalytics = () => {
       }
     }
   }, [historicalData]);
-
-  const handleExportData = () => {
-    if (!stats) return;
-
-    const reportData = {
-      generatedAt: new Date().toISOString(),
-      statistics: {
-        totalUsers: stats.totalUsers,
-        adminUsers: stats.adminUsers,
-        regularUsers: stats.regularUsers,
-        newUsersLast30Days: stats.recentUsers,
-        totalTransactions: stats.totalTransactions,
-        totalCategories: stats.totalCategories,
-      },
-      historicalData: historicalData?.data || null,
-    };
-
-    const blob = new Blob([JSON.stringify(reportData, null, 2)], {
-      type: "application/json",
-    });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = `admin-report-${format(new Date(), "yyyy-MM-dd")}.json`;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
-
-    toast.success("Report exported successfully");
-  };
 
   const isLoading = statsLoading || historicalLoading;
   const error = statsError || historicalError;
@@ -269,7 +203,7 @@ const AdminAnalytics = () => {
                   Platform Summary
                 </h5>
               </Card.Header>
-              <Card.Body className="bg-black">
+              <Card.Body className="bg-bl ack">
                 <Row>
                   <Col md={4} className="mb-3 mb-md-0">
                     <div className="text-center" data-cy="avg-transactions">

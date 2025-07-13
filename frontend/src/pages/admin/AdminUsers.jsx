@@ -4,7 +4,6 @@ import UserManagement from "components/admin/UserManagement";
 import styles from "./AdminPages.module.css";
 
 const AdminUsers = () => {
-  console.log("admin users");
   return (
     <div className={styles.adminPage}>
       <div className={styles.pageHeader}>

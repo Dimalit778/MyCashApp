@@ -64,11 +64,17 @@ describe("User Sign-up and Login", () => {
     cy.getDataCy("login-submit").should("be.visible");
     cy.getDataCy("login-google").should("be.visible");
     // Password visibility
-    cy.getDataCy("login-password").find("input").should("have.attr", "type", "password");
+    cy.getDataCy("login-password")
+      .find("input")
+      .should("have.attr", "type", "password");
     cy.getDataCy("login-password").find("button").click();
-    cy.getDataCy("login-password").find("input").should("have.attr", "type", "text");
+    cy.getDataCy("login-password")
+      .find("input")
+      .should("have.attr", "type", "text");
     cy.getDataCy("login-password").find("button").click();
-    cy.getDataCy("login-password").find("input").should("have.attr", "type", "password");
+    cy.getDataCy("login-password")
+      .find("input")
+      .should("have.attr", "type", "password");
     //Form buttons
     cy.getDataCy("forgot-password").should("contain", "Forgot Password?");
     cy.getDataCy("signup-link").should("be.visible");
@@ -88,12 +94,20 @@ describe("User Sign-up and Login", () => {
     cy.getDataCy("signup-google").should("be.visible");
     cy.getDataCy("goto-login").should("be.visible");
     // Password visibility
-    cy.getDataCy("signup-password").find("input").should("have.attr", "type", "password");
+    cy.getDataCy("signup-password")
+      .find("input")
+      .should("have.attr", "type", "password");
     cy.getDataCy("signup-password").find("button").click();
-    cy.getDataCy("signup-password").find("input").should("have.attr", "type", "text");
-    cy.getDataCy("signup-confirm-password").find("input").should("have.attr", "type", "password");
+    cy.getDataCy("signup-password")
+      .find("input")
+      .should("have.attr", "type", "text");
+    cy.getDataCy("signup-confirm-password")
+      .find("input")
+      .should("have.attr", "type", "password");
     cy.getDataCy("signup-confirm-password").find("button").click();
-    cy.getDataCy("signup-confirm-password").find("input").should("have.attr", "type", "text");
+    cy.getDataCy("signup-confirm-password")
+      .find("input")
+      .should("have.attr", "type", "text");
   });
 
   it("should display login errors", () => {
@@ -120,7 +134,9 @@ describe("User Sign-up and Login", () => {
     // length errors
     cy.getDataCy("signup-firstName").find("input").type("A");
     cy.getDataCy("signup-submit").click();
-    cy.contains("First name must be at least 2 characters").should("be.visible");
+    cy.contains("First name must be at least 2 characters").should(
+      "be.visible"
+    );
     cy.getDataCy("signup-lastName").find("input").type("B");
     cy.getDataCy("signup-submit").click();
     cy.contains("Last name must be at least 2 characters").should("be.visible");
@@ -140,7 +156,11 @@ describe("User Sign-up and Login", () => {
     cy.getDataCy("signup-submit").click();
     cy.contains("Invalid email address").should("be.visible");
 
-    const invalidDomains = ["user@invalid.com", "user@wrong.org", "user@fake.net"];
+    const invalidDomains = [
+      "user@invalid.com",
+      "user@wrong.org",
+      "user@fake.net",
+    ];
     invalidDomains.forEach((email) => {
       cy.getDataCy("signup-email").find("input").clear();
       cy.getDataCy("signup-email").find("input").type(email);
@@ -163,9 +183,13 @@ describe("User Sign-up and Login", () => {
     cy.getDataCy("login-submit").click();
     cy.wait("@login").then((intercept) => {
       expect(intercept.response.statusCode).to.equal(401);
-      expect(intercept.response.body.message).to.equal("Invalid Email or Password");
+      expect(intercept.response.body.message).to.equal(
+        "Invalid Email or Password"
+      );
     });
-    cy.get('[role="status"]').should("be.visible").and("have.text", "Invalid Email or Password");
+    cy.get('[role="status"]')
+      .should("be.visible")
+      .and("have.text", "Invalid Email or Password");
   });
   it("should error if email is already in use ", () => {
     cy.visit("/signup");
@@ -180,6 +204,8 @@ describe("User Sign-up and Login", () => {
       expect(intercept.response.statusCode).to.equal(400);
       expect(intercept.response.body.message).to.equal("User already exists");
     });
-    cy.get('[role="status"]').should("be.visible").and("have.text", "User already exists");
+    cy.get('[role="status"]')
+      .should("be.visible")
+      .and("have.text", "User already exists");
   });
 });

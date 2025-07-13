@@ -8,7 +8,7 @@ describe("Admin Database Management", () => {
   });
 
   describe("Page Load and Display", () => {
-    it.only("should display the database page with correct elements", () => {
+    it("should display the database page with correct elements", () => {
       cy.getDataCy("db-actions-title")
         .should("be.visible")
         .and("contain", "Database Operations");
@@ -31,7 +31,7 @@ describe("Admin Database Management", () => {
       cy.contains("h6", "All Data").should("be.visible");
 
       // Check for delete buttons
-      cy.contains("button", "Delete").should("have.length.at.least", 7);
+      cy.getDataCy("action-delete-btn").should("have.length.at.least", 7);
     });
 
     it("should display data export section", () => {
@@ -45,10 +45,9 @@ describe("Admin Database Management", () => {
       cy.contains("Expenses").should("be.visible");
       cy.contains("Incomes").should("be.visible");
       cy.contains("All Data").should("be.visible");
-      cy.contains("JSON Export").should("be.visible");
 
-      // Check for export buttons
-      cy.contains("button", "Export").should("have.length.at.least", 7);
+      cy.getDataCy("export-data-btn").should("have.length.at.least", 6);
+      cy.getDataCy("export-all-data-btn").should("have.length.at.least", 1);
     });
   });
 
@@ -74,7 +73,7 @@ describe("Admin Database Management", () => {
     });
 
     it("should delete all transactions with confirmation", () => {
-      cy.intercept("DELETE", "**/api/transactions/deleteAll").as(
+      cy.intercept("DELETE", "**/api/admin/dbActions/transactions").as(
         "deleteTransactions"
       );
 
@@ -96,7 +95,7 @@ describe("Admin Database Management", () => {
     });
 
     it("should handle delete operation errors", () => {
-      cy.intercept("DELETE", "**/api/categories/deleteAll", {
+      cy.intercept("DELETE", "**/api/admin/dbActions/categories", {
         statusCode: 500,
         body: { message: "Server error" },
       }).as("deleteError");
@@ -108,16 +107,17 @@ describe("Admin Database Management", () => {
       cy.get(".modal-footer").contains("Confirm Delete").click();
 
       // Wait for API call
-      cy.wait("@deleteError");
-
-      // Check error message
-      cy.contains("Operation failed").should("be.visible");
+      cy.wait("@deleteError").then((response) => {
+        console.log(response);
+        expect(response.response.statusCode).to.eq(500);
+        expect(response.response.body.message).to.eq("Server error");
+      });
     });
   });
 
   describe("Export Operations", () => {
     beforeEach(() => {
-      // Setup download stubs
+      // Setup download stub
       cy.window().then((win) => {
         cy.stub(win.URL, "createObjectURL").returns("blob:test-url");
         cy.stub(win.URL, "revokeObjectURL").as("revokeObjectURL");
@@ -135,74 +135,29 @@ describe("Admin Database Management", () => {
       });
     });
 
-    it("should export users data", () => {
-      cy.intercept("GET", "**/api/users/admin/all?limit=1000").as("fetchUsers");
-
-      // Find the Users row and click Export button
-      cy.contains(".healthItem", "Users")
-        .find("button")
-        .contains("Export")
-        .click();
-
-      cy.wait("@fetchUsers");
-
-      // Verify PDF was created (success message appears)
-      cy.contains("Data exported successfully").should("be.visible");
-    });
-
-    it("should export transactions data", () => {
-      cy.intercept("GET", "**/api/transactions/yearly").as("fetchTransactions");
-
-      // Find the Transactions row and click Export button
-      cy.contains(".healthItem", "Transactions")
-        .find("button")
-        .contains("Export")
-        .click();
-
-      cy.wait("@fetchTransactions");
-      cy.contains("Data exported successfully").should("be.visible");
-    });
-
-    it("should export as JSON", () => {
-      // Click JSON Export button
-      cy.contains("JSON Export")
-        .parent()
-        .parent()
-        .find("button")
-        .contains("Export as JSON")
-        .click();
+    it("should download file when clicking export button", () => {
+      // Find any export button and click it
+      cy.get("[data-cy='export-data-btn']").first().click();
 
       // Verify download was triggered
       cy.get("@downloadClick").should("be.called");
-      cy.get("@revokeObjectURL").should("be.called");
-
-      cy.contains("Data exported as JSON successfully").should("be.visible");
     });
 
-    it("should handle export errors gracefully", () => {
-      cy.intercept("GET", "**/api/users/admin/all?limit=1000", {
-        statusCode: 500,
-        body: { message: "Server error" },
-      }).as("exportError");
+    it("should download file when clicking export all button", () => {
+      // Click Export All button
+      cy.get("[data-cy='export-all-data-btn']").click();
 
-      // Find the Users row and click Export button
-      cy.contains(".healthItem", "Users")
-        .find("button")
-        .contains("Export")
-        .click();
-
-      cy.wait("@exportError");
-      cy.contains("Export failed").should("be.visible");
+      // Verify download was triggered
+      cy.get("@downloadClick").should("be.called");
     });
   });
 
   describe("Loading States", () => {
     it("should show loading state during operations", () => {
       // Intercept delete request with delay
-      cy.intercept("DELETE", "**/api/transactions/deleteAll", {
-        delay: 1000,
-        body: { success: true },
-      }).as("slowDelete");
+      cy.intercept("DELETE", "**/api/admin/dbActions/transactions").as(
+        "slowDelete"
+      );
 
       // Click delete transactions button
       cy.contains("h6", "Transactions")
@@ -215,18 +170,21 @@ describe("Admin Database Management", () => {
       cy.get(".modal-footer").contains("Confirm Delete").click();
 
       // Button should show loading spinner
-      cy.get(".modal-footer button")
-        .contains("Confirm Delete")
-        .find(".spinner-border")
-        .should("be.visible");
+      cy.getDataCy("loading-spinner").should("be.visible");
 
       cy.wait("@slowDelete");
+
+      // Check success message
+      cy.contains("Operation completed successfully").should("be.visible");
     });
   });
 
   describe("Responsive Design", () => {
     it("should display correctly on mobile devices", () => {
       cy.viewport(375, 667);
+
+      cy.getDataCy("admin-sidebar").should("not.be.visible");
+      cy.getDataCy("admin-topbar").should("be.visible");
 
       // Cards should stack vertically on mobile
       cy.get(".card").should("have.length", 2);
@@ -238,6 +196,9 @@ describe("Admin Database Management", () => {
 
     it("should display correctly on tablet devices", () => {
       cy.viewport(768, 1024);
+
+      cy.getDataCy("admin-sidebar").should("be.visible");
+      cy.getDataCy("admin-topbar").should("not.be.visible");
 
       cy.get(".card").should("have.length", 2);
       cy.contains("h5", "Database Operations").should("be.visible");

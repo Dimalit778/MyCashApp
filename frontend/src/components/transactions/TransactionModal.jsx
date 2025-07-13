@@ -2,28 +2,39 @@ import React, { useEffect, useMemo } from "react";
 import { Modal, Form, Row, Col } from "react-bootstrap";
 import { useForm, Controller } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { closeTransactionModal, transactionModal } from "services/reducers/uiSlice";
+import {
+  closeTransactionModal,
+  transactionModal,
+} from "services/reducers/uiSlice";
 import TextInput from "components/ui/textInput";
 import SelectInput from "components/ui/selectInput";
 import MyButton from "components/ui/button";
 import toast from "react-hot-toast";
 import { format } from "date-fns";
 
-import { useAddTransactionMutation, useUpdateTransactionMutation } from "services/api/transactionsApi";
+import {
+  useAddTransactionMutation,
+  useUpdateTransactionMutation,
+} from "services/api/transactionsApi";
 
 const TransactionModal = ({ type, date, categories }) => {
   const dispatch = useDispatch();
   const { isOpen, editItem } = useSelector(transactionModal);
 
   const [addTransaction, { isLoading: isAdding }] = useAddTransactionMutation();
-  const [updateTransaction, { isLoading: isUpdating }] = useUpdateTransactionMutation();
+  const [updateTransaction, { isLoading: isUpdating }] =
+    useUpdateTransactionMutation();
+  console.log("editItem", editItem);
 
   const defaultValues = useMemo(
     () => ({
       description: editItem?.description || "",
       amount: editItem?.amount || "",
       category: editItem?.category || "",
-      date: format(editItem?.date ? new Date(editItem.date) : date, "yyyy-MM-dd"),
+      date: format(
+        editItem?.date ? new Date(editItem.date) : date,
+        "yyyy-MM-dd"
+      ),
     }),
     [editItem, date]
   );
@@ -88,7 +99,9 @@ const TransactionModal = ({ type, date, categories }) => {
       backdrop="static"
     >
       <Modal.Header closeButton closeVariant="white">
-        <Modal.Title className="text-light">{editItem ? `Edit ${type}` : `Add ${type}`}</Modal.Title>
+        <Modal.Title className="text-light">
+          {editItem ? `Edit ${type}` : `Add ${type}`}
+        </Modal.Title>
       </Modal.Header>
 
       <Modal.Body>
@@ -134,7 +147,8 @@ const TransactionModal = ({ type, date, categories }) => {
                     message: "must not exceed 1,000,000",
                   },
                   validate: {
-                    isNumber: (value) => !isNaN(value) || "Please enter a valid number",
+                    isNumber: (value) =>
+                      !isNaN(value) || "Please enter a valid number",
                   },
                 }}
               />
@@ -157,7 +171,9 @@ const TransactionModal = ({ type, date, categories }) => {
                       isInvalid={!!error}
                       className="bg-dark text-light"
                     />
-                    <Form.Control.Feedback type="invalid">{error?.message}</Form.Control.Feedback>
+                    <Form.Control.Feedback type="invalid">
+                      {error?.message}
+                    </Form.Control.Feedback>
                   </Form.Group>
                 )}
               />
@@ -182,7 +198,9 @@ const TransactionModal = ({ type, date, categories }) => {
             <MyButton
               data-cy="modal-submit"
               type="submit"
-              disabled={isSubmitting || isAdding || isUpdating || (editItem && !isDirty)}
+              disabled={
+                isSubmitting || isAdding || isUpdating || (editItem && !isDirty)
+              }
             >
               {isSubmitting || isAdding || isUpdating ? (
                 <>

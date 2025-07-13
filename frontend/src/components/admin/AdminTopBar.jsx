@@ -15,7 +15,7 @@ const AdminTopBar = ({ className }) => {
   return (
     <>
       <Navbar
-        data-cy="admin-topBar"
+        data-cy="admin-topbar"
         className={className}
         style={{
           position: "fixed",

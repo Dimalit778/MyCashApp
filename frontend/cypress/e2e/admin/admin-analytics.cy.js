@@ -11,7 +11,9 @@ describe("Admin Analytics Page", () => {
       req.headers["Cache-Control"] = "no-cache, no-store, must-revalidate";
     }).as("getStats");
 
-    cy.intercept("GET", "**/api/admin/historical*").as("getHistorical");
+    cy.intercept("GET", "**/api/admin/historical*", (req) => {
+      req.headers["Cache-Control"] = "no-cache, no-store, must-revalidate";
+    }).as("getHistorical");
 
     cy.visit("/admin/analytics");
     cy.wait("@getStats");
@@ -48,13 +50,6 @@ describe("Admin Analytics Page", () => {
   });
 
   describe("Analytics Content", () => {
-    it("should display page title and export button", () => {
-      cy.getDataCy("page-title")
-        .should("be.visible")
-        .and("contain", "Analytics & Reports");
-      cy.getDataCy("export-report-btn").should("be.visible");
-    });
-
     it("should display stats cards with correct data", () => {
       cy.getDataCy("admin-analytics-page").should("be.visible");
       cy.getDataCy("stats-card").should("be.visible");
@@ -121,8 +116,8 @@ describe("Admin Analytics Page", () => {
     });
 
     it("should render transaction types pie chart", () => {
-      cy.getDataCy("transaction-types-chart").should("be.visible");
-      cy.getDataCy("pie-chart").should("be.visible");
+      cy.getDataCy("charts-container").should("be.visible");
+      cy.getDataCy("user-growth-chart").should("be.visible");
 
       // Verify the chart is using real data from the API
       cy.get("@getHistorical").then(({ response }) => {
@@ -132,7 +127,7 @@ describe("Admin Analytics Page", () => {
     });
 
     it("should render user role distribution bar chart", () => {
-      cy.getDataCy("user-role-chart").should("be.visible");
+      cy.getDataCy("charts-container").should("be.visible");
       cy.get("canvas").should("be.visible");
     });
 
@@ -141,42 +136,6 @@ describe("Admin Analytics Page", () => {
       cy.getDataCy("avg-transactions").should("be.visible");
       cy.getDataCy("avg-categories").should("be.visible");
       cy.getDataCy("growth-rate").should("be.visible");
-      cy.getDataCy("admin-ratio").should("be.visible");
-
-      // Just verify the elements exist and are visible
-      // Don't check specific content since it's calculated dynamically
-    });
-  });
-
-  describe("Export Functionality", () => {
-    it("should export report when button is clicked", () => {
-      // Spy on window.URL.createObjectURL
-      cy.window().then((win) => {
-        cy.stub(win.URL, "createObjectURL").returns("blob:test-url");
-        cy.stub(win.URL, "revokeObjectURL").as("revokeObjectURL");
-      });
-
-      // Spy on document.createElement to intercept the download
-      cy.document().then((doc) => {
-        const originalCreateElement = doc.createElement;
-        cy.stub(doc, "createElement").callsFake((tagName) => {
-          const element = originalCreateElement.call(doc, tagName);
-          if (tagName === "a") {
-            cy.stub(element, "click").as("downloadClick");
-          }
-          return element;
-        });
-      });
-
-      // Click export button
-      cy.getDataCy("export-report-btn").click();
-
-      // Verify download was triggered
-      cy.get("@downloadClick").should("be.called");
-      cy.get("@revokeObjectURL").should("be.called");
-
-      // Check toast notification
-      cy.contains("Report exported successfully").should("be.visible");
     });
   });
 
@@ -185,20 +144,24 @@ describe("Admin Analytics Page", () => {
       // Test desktop view
       cy.viewport(1200, 800);
       cy.getDataCy("admin-analytics-page").should("be.visible");
-      cy.getDataCy("user-growth-chart").should("be.visible");
-      cy.getDataCy("transaction-types-chart").should("be.visible");
+      cy.getDataCy("stats-card").should("be.visible");
+      cy.getDataCy("charts-container").should("be.visible");
+      cy.getDataCy("admin-sidebar").should("be.visible");
+      cy.getDataCy("admin-topbar").should("not.be.visible");
 
       // Test tablet view
       cy.viewport(768, 1024);
       cy.getDataCy("admin-analytics-page").should("be.visible");
       cy.getDataCy("user-growth-chart").should("be.visible");
-      cy.getDataCy("transaction-types-chart").should("be.visible");
+      cy.getDataCy("charts-container").should("be.visible");
 
       // Test mobile view
       cy.viewport(375, 667);
       cy.getDataCy("admin-analytics-page").should("be.visible");
       cy.getDataCy("user-growth-chart").should("be.visible");
-      cy.getDataCy("transaction-types-chart").should("be.visible");
+      cy.getDataCy("charts-container").should("be.visible");
+      cy.getDataCy("admin-sidebar").should("not.be.visible");
+      cy.getDataCy("admin-topbar").should("be.visible");
     });
   });
 

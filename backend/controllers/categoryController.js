@@ -3,7 +3,6 @@ import { CATEGORY_LIMITS } from "../config/config.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { ApiError } from "../utils/ApiError.js";
-import User from "../models/userSchema.js";
 
 const getCategories = asyncHandler(async (req, res) => {
   const type = req.query.type;
@@ -101,32 +100,6 @@ const deleteCategory = asyncHandler(async (req, res) => {
     .status(200)
     .json(
       new ApiResponse(200, { categories }, "Category deleted successfully")
-    );
-});
-
-// Get user categories (admin only)
-export const getUserCategories = asyncHandler(async (req, res) => {
-  const { userId } = req.params;
-
-  // Verify admin role
-  if (req.user.role !== "admin") {
-    throw new ApiError(403, "Not authorized to access this resource");
-  }
-
-  // Validate user exists
-  const userExists = await User.findById(userId);
-  if (!userExists) {
-    throw new ApiError(404, "User not found");
-  }
-
-  const categories = await Category.find({ user: userId }).sort({
-    createdAt: -1,
-  });
-
-  return res
-    .status(200)
-    .json(
-      new ApiResponse(200, categories, "User categories retrieved successfully")
     );
 });
 

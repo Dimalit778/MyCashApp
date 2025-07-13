@@ -11,6 +11,8 @@ Cypress.Commands.add("loginTestUser", (role = "user") => {
       ? Cypress.env("TEST_ADMIN_PASSWORD")
       : Cypress.env("TEST_PASSWORD");
 
+  console.log("email", email);
+  console.log("password", password);
   cy.request({
     method: "POST",
     url: `${apiUrl}/api/auth/login`,

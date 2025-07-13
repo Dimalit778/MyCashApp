@@ -120,7 +120,7 @@ const UserManagement = () => {
 
             {/* Dropdown  */}
             <Col xs={6} md={6} lg={4} className="d-flex justify-content-end">
-              <Dropdown>
+              <Dropdown data-cy="role-filter-dropdown">
                 <Dropdown.Toggle
                   variant="outline-secondary"
                   size="sm"
@@ -191,7 +191,7 @@ const UserManagement = () => {
 
             {/* Search - Full width on small/medium, right side on large screens */}
             <Col xs={12} md={12} lg={4}>
-              <InputGroup>
+              <InputGroup data-cy="search-users-input">
                 <InputGroup.Text
                   style={{
                     backgroundColor: "var(--dark)",
@@ -217,7 +217,7 @@ const UserManagement = () => {
           </Row>
         </Card.Header>
 
-        <Card.Body className="p-0">
+        <Card.Body className="p-0" data-cy="users-table">
           <Table hover className="mb-0 dark-table table-dark">
             <thead
               style={{
@@ -237,7 +237,12 @@ const UserManagement = () => {
             </thead>
             <tbody>
               {users.map((user, index) => (
-                <tr key={user._id} className="dark-row">
+                <tr
+                  key={user._id}
+                  className="dark-row"
+                  data-cy="user-row"
+                  onClick={() => showUserDetails(user._id)}
+                >
                   <td>{(page - 1) * 10 + index + 1}</td>
                   <td>
                     <CloudImage
@@ -249,7 +254,7 @@ const UserManagement = () => {
                   </td>
                   <td>
                     <div>
-                      <strong>
+                      <strong data-cy="user-name">
                         {user.firstName} {user.lastName}
                       </strong>
                     </div>
@@ -294,7 +299,7 @@ const UserManagement = () => {
                   <td>
                     <div className="d-flex gap-2">
                       <Button
-                        data-cy="user-details-btn"
+                        data-cy="user-view-btn"
                         variant="outline-primary"
                         size="sm"
                         onClick={() => showUserDetails(user._id)}

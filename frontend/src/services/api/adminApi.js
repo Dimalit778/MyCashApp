@@ -32,6 +32,48 @@ export const adminApi = apiSlice.injectEndpoints({
       providesTags: (result, error, id) => [{ type: "AdminUserDetails", id }],
     }),
 
+    // User Categories
+    getUserCategories: builder.query({
+      query: (userId) => ({
+        url: `${ADMIN_URL}/user/${userId}/categories`,
+        method: "GET",
+        credentials: "include",
+      }),
+      transformResponse: (response) => response.data,
+      providesTags: (result, error, { userId }) => [
+        { type: "Categories", id: userId },
+      ],
+    }),
+    // User Transactions
+    getUserTransactions: builder.query({
+      query: (userId) => ({
+        url: `${ADMIN_URL}/user/${userId}/transactions`,
+        method: "GET",
+        credentials: "include",
+      }),
+      transformResponse: (response) => response.data,
+      providesTags: (result, error, { userId }) => [
+        { type: "Transactions", id: userId },
+      ],
+    }),
+
+    getUserTransactionsPaginated: builder.query({
+      query: ({
+        userId,
+        type = "",
+        page = 1,
+        limit = 10,
+        month = "",
+        year = "",
+      }) => ({
+        url: `${ADMIN_URL}/user/${userId}/transactions-paginated`,
+        params: { type, page, limit, month, year },
+        credentials: "include",
+      }),
+      transformResponse: (response) => response.data,
+      providesTags: ["UserTransactions"],
+    }),
+
     adminDeleteUser: builder.mutation({
       query: ({ id }) => ({
         url: `${ADMIN_URL}/deleteUser/${id}`,
@@ -128,6 +170,8 @@ export const {
   useGetAllUsersQuery,
   useGetUserStatsQuery,
   useGetUserDetailsQuery,
+  useGetUserCategoriesQuery,
+  useGetUserTransactionsQuery,
   useAdminDeleteUserMutation,
   useUpdateUserRoleMutation,
   useGetUserHistoricalDataQuery,
@@ -137,4 +181,5 @@ export const {
   useUpdateDefaultCategoryMutation,
   useDeleteDefaultCategoryMutation,
   useDatabaseActionsMutation,
+  useGetUserTransactionsPaginatedQuery,
 } = adminApi;

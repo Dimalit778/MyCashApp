@@ -56,6 +56,12 @@ const userSchema = mongoose.Schema(
   }
 );
 
+userSchema.virtual("categories", {
+  ref: "Category",
+  localField: "_id",
+  foreignField: "user",
+});
+
 userSchema.virtual("transactions", {
   ref: "Transaction",
   localField: "_id",

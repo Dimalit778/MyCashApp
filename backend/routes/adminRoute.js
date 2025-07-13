@@ -13,6 +13,9 @@ import {
   updateDefaultCategory,
   deleteDefaultCategory,
   dbActions,
+  getUserCategories,
+  getUserTransactions,
+  getUserTransactionsPaginated,
 } from "../controllers/adminController.js";
 const router = express.Router();
 
@@ -23,6 +26,11 @@ router
   .get("/user/:id", getUserDetails)
   .delete("/deleteUser/:id", adminDeleteUser)
   .patch("/updateUser/:id/role", updateUserRole)
+  // User Categories
+  .get("/user/:userId/categories", getUserCategories)
+  // User Transactions
+  .get("/user/:userId/transactions", getUserTransactions)
+  .get("/user/:userId/transactions-paginated", getUserTransactionsPaginated)
   // Historical Data
   .get("/historical", getHistoricalData)
   .get("/database-stats", getDatabaseStats)

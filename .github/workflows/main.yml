@@ -37,11 +37,13 @@ jobs:
           REFRESH_TOKEN_EXPIRY: ${{ secrets.REFRESH_TOKEN_EXPIRY }}
 
           # Frontend environment variables
-          REACT_APP_API_URL: ${{ secrets.TEST_API_URL }}
+          REACT_APP_API_URL: ${{ secrets.APP_API_URL }}
           REACT_APP_BASE_URL: ${{ secrets.BASE_URL }}
 
           REACT_APP_TEST_EMAIL: ${{ secrets.TEST_EMAIL }}
           REACT_APP_TEST_PASSWORD: ${{ secrets.TEST_PASSWORD }}
+          REACT_APP_TEST_ADMIN_EMAIL: ${{ secrets.TEST_ADMIN_EMAIL }}
+          REACT_APP_TEST_ADMIN_PASSWORD: ${{ secrets.TEST_ADMIN_PASSWORD }}
 
           REACT_APP_CLOUDINARY_NAME: ${{ secrets.CLOUDINARY_NAME }}
           REACT_APP_CLOUDINARY_API_KEY: ${{ secrets.CLOUDINARY_API_KEY }}

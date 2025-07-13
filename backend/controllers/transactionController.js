@@ -4,9 +4,8 @@ import { TRANSACTION_TYPES } from "../config/config.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { ApiError } from "../utils/ApiError.js";
-import User from "../models/userSchema.js";
 
-export const getYearlyData = asyncHandler(async (req, res) => {
+const getYearlyData = asyncHandler(async (req, res) => {
   const userId = req.user._id;
   const { year } = req.query;
 
@@ -101,7 +100,7 @@ export const getYearlyData = asyncHandler(async (req, res) => {
   );
 });
 
-export const getMonthlyData = asyncHandler(async (req, res) => {
+const getMonthlyData = asyncHandler(async (req, res) => {
   const userId = req.user._id;
   const { year, month, type } = req.query;
 
@@ -142,7 +141,7 @@ export const getMonthlyData = asyncHandler(async (req, res) => {
   );
 });
 
-export const getOneTransaction = asyncHandler(async (req, res) => {
+const getOneTransaction = asyncHandler(async (req, res) => {
   const { id } = req.params;
   const userId = req.user._id;
 
@@ -164,7 +163,7 @@ export const getOneTransaction = asyncHandler(async (req, res) => {
     );
 });
 
-export const addTransaction = asyncHandler(async (req, res) => {
+const addTransaction = asyncHandler(async (req, res) => {
   const userId = req.user._id;
   const { description, amount, category, date, type } = req.body;
 
@@ -215,7 +214,7 @@ export const addTransaction = asyncHandler(async (req, res) => {
     );
 });
 
-export const updateTransaction = asyncHandler(async (req, res) => {
+const updateTransaction = asyncHandler(async (req, res) => {
   const { _id, description, amount, date, type, category } = req.body;
   const userId = req.user._id;
 
@@ -283,7 +282,7 @@ export const updateTransaction = asyncHandler(async (req, res) => {
       )
     );
 });
-export const deleteTransaction = asyncHandler(async (req, res) => {
+const deleteTransaction = asyncHandler(async (req, res) => {
   const { id } = req.params;
   const userId = req.user._id;
 
@@ -307,67 +306,11 @@ export const deleteTransaction = asyncHandler(async (req, res) => {
     );
 });
 
-// Get user transactions (admin only)
-export const getUserTransactions = asyncHandler(async (req, res) => {
-  const { userId } = req.params;
-  const { type } = req.query;
-
-  // Verify admin role
-  if (req.user.role !== "admin") {
-    throw new ApiError(403, "Not authorized to access this resource");
-  }
-
-  // Validate user exists
-  const userExists = await User.findById(userId);
-  if (!userExists) {
-    throw new ApiError(404, "User not found");
-  }
-
-  // Build query
-  const query = { user: userId };
-  if (type) {
-    query.transactionType = type;
-  }
-  console.log("query ----------", query);
-
-  // Get transactions
-  const transactions = await Transaction.find(query).sort({ date: -1 });
-
-  // Get categories for this user to match with transaction category names
-  const userCategories = await Category.find({ user: userId });
-
-  // Map transactions to include category details
-  const transactionsWithCategoryDetails = transactions.map((transaction) => {
-    const transactionObj = transaction.toObject();
-    // Find matching category by name
-    const categoryMatch = userCategories.find(
-      (cat) => cat.name === transaction.category
-    );
-
-    // Add category details if found
-    if (categoryMatch) {
-      transactionObj.category = {
-        _id: categoryMatch._id,
-        name: categoryMatch.name,
-        type: categoryMatch.type,
-      };
-    }
-
-    return transactionObj;
-  });
-
-  console.log(
-    "transactions with details ----------",
-    transactionsWithCategoryDetails
-  );
-
-  return res
-    .status(200)
-    .json(
-      new ApiResponse(
-        200,
-        transactionsWithCategoryDetails,
-        "User transactions retrieved successfully"
-      )
-    );
-});
+export {
+  getYearlyData,
+  getMonthlyData,
+  getOneTransaction,
+  addTransaction,
+  updateTransaction,
+  deleteTransaction,
+};

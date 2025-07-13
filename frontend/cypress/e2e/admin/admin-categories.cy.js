@@ -4,7 +4,9 @@ describe("Admin Default Categories Management", () => {
     cy.task("db:seed-admin");
 
     cy.loginTestUser("admin");
-    cy.intercept("GET", "**/api/default-categories").as("getCategories");
+    cy.intercept("GET", "**/api/admin/getDefaultCategories").as(
+      "getCategories"
+    );
 
     cy.visit("/admin/categories");
 
@@ -305,74 +307,14 @@ describe("Admin Default Categories Management", () => {
     });
   });
 
-  describe("Bulk Operations", () => {
-    it("should reset to default categories", () => {
-      cy.get("body").then(($body) => {
-        if ($body.find('[data-cy="reset-to-defaults-btn"]').length) {
-          // Add a custom category first
-          cy.getDataCy("add-category-button").click();
-          cy.getDataCy("category-modal").should("be.visible");
-          cy.getDataCy("category-name-input").type("Custom Category");
-          cy.getDataCy("category-type-select").select("expenses");
-          cy.getDataCy("save-category-btn").click();
-          cy.contains("Category added successfully").should("be.visible");
-
-          // Click reset to defaults button
-          cy.getDataCy("reset-to-defaults-btn").click();
-
-          // Confirm the action
-          cy.get(".swal2-confirm").click();
-
-          // Check success message
-          cy.contains("Categories reset to defaults").should("be.visible");
-
-          // Custom category should be gone
-          cy.contains("Custom Category").should("not.exist");
-        } else {
-          cy.log("Skipping reset test - reset button not implemented");
-        }
-      });
-    });
-
-    it("should export categories to JSON", () => {
-      cy.get("body").then(($body) => {
-        if ($body.find('[data-cy="export-categories-btn"]').length) {
-          // Spy on download
-          cy.window().then((win) => {
-            cy.stub(win.URL, "createObjectURL").returns("blob:test-url");
-            cy.stub(win.URL, "revokeObjectURL").as("revokeObjectURL");
-          });
-
-          cy.document().then((doc) => {
-            const originalCreateElement = doc.createElement;
-            cy.stub(doc, "createElement").callsFake((tagName) => {
-              const element = originalCreateElement.call(doc, tagName);
-              if (tagName === "a") {
-                cy.stub(element, "click").as("downloadClick");
-              }
-              return element;
-            });
-          });
-
-          // Click export button
-          cy.getDataCy("export-categories-btn").click();
-
-          // Verify download was triggered
-          cy.get("@downloadClick").should("be.called");
-          cy.get("@revokeObjectURL").should("be.called");
-        } else {
-          cy.log("Skipping export test - export button not implemented");
-        }
-      });
-    });
-  });
-
   describe("Responsive Design", () => {
     it("should display correctly on mobile", () => {
       cy.viewport(375, 667);
 
       // Check layout adjustments
       cy.getDataCy("admin-categories-container").should("be.visible");
+      cy.getDataCy("admin-sidebar").should("not.be.visible");
+      cy.getDataCy("admin-topbar").should("be.visible");
 
       // Check if form exists
       cy.get("body").then(($body) => {
@@ -388,6 +330,8 @@ describe("Admin Default Categories Management", () => {
     it("should display correctly on tablet", () => {
       cy.viewport(768, 1024);
       cy.getDataCy("admin-categories-container").should("be.visible");
+      cy.getDataCy("admin-sidebar").should("be.visible");
+      cy.getDataCy("admin-topbar").should("not.be.visible");
 
       // Check if categories list exists
       cy.get("body").then(($body) => {
@@ -404,7 +348,7 @@ describe("Admin Default Categories Management", () => {
   describe("Error Handling", () => {
     it("should handle API errors gracefully", () => {
       // Intercept and fail the add category request
-      cy.intercept("POST", "**/api/default-categories/add", {
+      cy.intercept("POST", "**/api/admin/addDefaultCategory", {
         statusCode: 500,
         body: { message: "Server error" },
       }).as("addCategoryError");
