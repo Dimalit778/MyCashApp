@@ -14,12 +14,14 @@ import Settings from "pages/dashboard/Settings";
 import ContactUs from "pages/dashboard/ContactUs";
 
 // Admin Pages
-
 import AdminUsers from "pages/admin/AdminUsers";
 import AdminAnalytics from "pages/admin/AdminAnalytics";
 import AdminUserDetails from "pages/admin/AdminUserDetails";
 import AdminDatabase from "pages/admin/AdminDatabase";
 import AdminCategories from "pages/admin/AdminCategories";
+
+// UI Components
+import DeviceFrameToggle from "components/ui/DeviceFrameToggle";
 
 // Lazy loaded components
 const Home = lazy(() => import("pages/dashboard/Home"));
@@ -70,6 +72,9 @@ export const App = () => {
 
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
+
+      {/* Device Frame Toggle for development */}
+      <DeviceFrameToggle />
     </BrowserRouter>
   );
 };

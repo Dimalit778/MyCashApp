@@ -1,17 +1,17 @@
-import { isPlatformMobile } from "./platform";
+import { isPlatformMobile, shouldUseTokenStorage } from "./platform";
 
 class TokenStorage {
   constructor() {
-    this.isMobile = isPlatformMobile();
+    this.shouldUseStorage = shouldUseTokenStorage();
   }
   setTokens(accessToken, refreshToken) {
-    if (this.isMobile) {
+    if (this.shouldUseStorage) {
       localStorage.setItem("accessToken", accessToken);
       localStorage.setItem("refreshToken", refreshToken);
     }
   }
   getTokens() {
-    if (this.isMobile) {
+    if (this.shouldUseStorage) {
       return {
         accessToken: localStorage.getItem("accessToken"),
         refreshToken: localStorage.getItem("refreshToken"),
@@ -21,7 +21,7 @@ class TokenStorage {
   }
 
   clearTokens() {
-    if (this.isMobile) {
+    if (this.shouldUseStorage) {
       localStorage.removeItem("accessToken");
       localStorage.removeItem("refreshToken");
     }

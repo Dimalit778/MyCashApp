@@ -56,6 +56,7 @@ export const protectRoute = asyncHandler(async (req, res, next) => {
         maxAge: 24 * 60 * 60 * 1000,
       });
     } else {
+      // Set the header name to match what the frontend is expecting
       res.set("MobileToken", newAccessToken);
     }
 

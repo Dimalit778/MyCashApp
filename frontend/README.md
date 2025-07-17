@@ -72,3 +72,29 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+## MyCash App Frontend
+
+This is the frontend for the MyCash personal finance management application.
+
+### How to View Mobile Device Frame
+
+To view the application with a mobile device frame like shown in the screenshot:
+
+1. Open the application in Chrome or Edge browser
+2. Press F12 or right-click and select "Inspect" to open Developer Tools
+3. Click on the "Toggle device toolbar" button (or press Ctrl+Shift+M)
+4. From the device dropdown at the top, select a mobile device (e.g., iPhone 12 Pro)
+5. Enable "Show device frame" option in the three-dot menu of the device toolbar
+6. The application will now display with a mobile device frame around it
+
+This allows you to test the mobile responsiveness and see how the app appears on different devices with their native UI elements.
+
+### Development
+
+```
+npm install
+npm start
+```
+
+The application will be available at http://localhost:3000

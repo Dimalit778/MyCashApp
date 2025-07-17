@@ -81,17 +81,13 @@ const logout = asyncHandler(async (req, res) => {
 });
 const login = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
-  console.log("email", email);
-  console.log("password", password);
 
   if (!email || !password) {
     throw new ApiError(400, "All fields are required");
   }
-  const users = await User.find({});
-  console.log("users", users);
 
   const user = await User.findOne({ email });
-  console.log("user", user);
+
   if (!user) {
     throw new ApiError(404, "Invalid Email or Password");
   }
@@ -111,6 +107,18 @@ const login = asyncHandler(async (req, res) => {
     secure: process.env.NODE_ENV === "production",
     sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
   };
+
+  // Check if this is a mobile or Safari request (no cookies)
+  const isMobileOrSafari =
+    req.headers["user-agent"] &&
+    (req.headers["user-agent"].includes("Mobile") ||
+      (req.headers["user-agent"].includes("Safari") &&
+        !req.headers["user-agent"].includes("Chrome")));
+
+  // For Safari browsers in development, we'll also send the token in the header
+  if (isMobileOrSafari) {
+    res.set("MobileToken", accessToken);
+  }
 
   return res
     .status(200)

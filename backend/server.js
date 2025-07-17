@@ -43,7 +43,8 @@ app.use(
     ].filter(Boolean), // Remove undefined values
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization", "Cookie"],
+    allowedHeaders: ["Content-Type", "Authorization", "Cookie", "Refresh"],
+    exposedHeaders: ["MobileToken"],
     optionsSuccessStatus: 200,
   })
 );
@@ -65,8 +66,9 @@ app.use((req, res, next) => {
   );
   res.header(
     "Access-Control-Allow-Headers",
-    "Content-Type, Authorization, Cookie"
+    "Content-Type, Authorization, Cookie, Refresh"
   );
+  res.header("Access-Control-Expose-Headers", "MobileToken");
 
   // Handle preflight requests
   if (req.method === "OPTIONS") {
