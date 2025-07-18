@@ -7,6 +7,19 @@ const DeviceFrameToggle = () => {
   const [deviceType, setDeviceType] = useState("ios"); // 'ios' or 'android'
 
   useEffect(() => {
+    // Check if running in Cypress test environment
+    const isCypressTest = window.Cypress !== undefined;
+
+    // Check for Cypress environment variable
+    const cypressDisableDeviceFrame =
+      window.Cypress?.env("DISABLE_DEVICE_FRAME") ||
+      process.env.CYPRESS_DISABLE_DEVICE_FRAME === "true";
+
+    // If in Cypress test or explicitly disabled, don't show the toggle
+    if (isCypressTest || cypressDisableDeviceFrame) {
+      return;
+    }
+
     // Only show toggle in development environment
     const isDev = process.env.NODE_ENV === "development";
     if (!isDev) return;
@@ -61,6 +74,19 @@ const DeviceFrameToggle = () => {
       "android-device"
     );
   };
+
+  // Check if running in Cypress test environment
+  const isCypressTest = window.Cypress !== undefined;
+
+  // Check for Cypress environment variable
+  const cypressDisableDeviceFrame =
+    window.Cypress?.env("DISABLE_DEVICE_FRAME") ||
+    process.env.CYPRESS_DISABLE_DEVICE_FRAME === "true";
+
+  // Don't render anything in Cypress tests or if explicitly disabled
+  if (isCypressTest || cypressDisableDeviceFrame) {
+    return null;
+  }
 
   // Only show in development environment and on desktop
   if (process.env.NODE_ENV !== "development" || getDeviceType() !== "desktop") {

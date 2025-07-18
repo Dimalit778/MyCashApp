@@ -12,7 +12,17 @@ describe("Admin User Details Page", () => {
   // This test will ensure we can navigate from the users list to a specific user's details
   describe("Navigation from Users List", () => {
     it("should navigate to user details from users list", () => {
+      // Intercept API calls with delay
+      cy.intercept("GET", "**/api/admin/all**", (req) => {
+        req.on("response", (res) => {
+          return new Promise((resolve) => setTimeout(resolve, 300));
+        });
+      }).as("getUsers");
+
       cy.visit("/admin/users");
+      cy.wait("@getUsers", { timeout: 15000 });
+      cy.waitForLoadingSpinner({ timeout: 10000 });
+
       cy.getDataCy("users-table").should("be.visible");
 
       // First get the user ID from the API
@@ -31,8 +41,31 @@ describe("Admin User Details Page", () => {
 
         testUserId = testUser._id;
 
+        // Intercept user details API call
+        cy.intercept("GET", `**/api/admin/user/${testUserId}`, (req) => {
+          req.on("response", (res) => {
+            return new Promise((resolve) => setTimeout(resolve, 300));
+          });
+        }).as("getUserDetails");
+
+        // Intercept user transactions API call
+        cy.intercept(
+          "GET",
+          `**/api/admin/user/${testUserId}/transactions**`,
+          (req) => {
+            req.on("response", (res) => {
+              return new Promise((resolve) => setTimeout(resolve, 300));
+            });
+          }
+        ).as("getUserTransactions");
+
         // Now visit the user details page directly
         cy.visit(`/admin/users/${testUserId}`);
+
+        // Wait for API calls to complete
+        cy.wait("@getUserDetails", { timeout: 15000 });
+        cy.wait("@getUserTransactions", { timeout: 15000 });
+        cy.waitForLoadingSpinner({ timeout: 10000 });
 
         // Verify we're on the right page
         cy.contains("h1", "User Details").should("be.visible");
@@ -58,8 +91,30 @@ describe("Admin User Details Page", () => {
 
         testUserId = testUser._id;
 
+        // Intercept user details API calls
+        cy.intercept("GET", `**/api/admin/user/${testUserId}`, (req) => {
+          req.on("response", (res) => {
+            return new Promise((resolve) => setTimeout(resolve, 300));
+          });
+        }).as("getUserDetails");
+
+        cy.intercept(
+          "GET",
+          `**/api/admin/user/${testUserId}/transactions**`,
+          (req) => {
+            req.on("response", (res) => {
+              return new Promise((resolve) => setTimeout(resolve, 300));
+            });
+          }
+        ).as("getUserTransactions");
+
         // Visit the page with the user ID
         cy.visit(`/admin/users/${testUserId}`);
+
+        // Wait for API calls to complete
+        cy.wait("@getUserDetails", { timeout: 15000 });
+        cy.wait("@getUserTransactions", { timeout: 15000 });
+        cy.waitForLoadingSpinner({ timeout: 10000 });
       });
     });
 

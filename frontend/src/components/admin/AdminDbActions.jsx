@@ -147,7 +147,12 @@ const AdminDbActions = () => {
                 disabled={isLoading}
               >
                 {isLoading ? (
-                  <Spinner size="sm" animation="border" className="me-2" />
+                  <Spinner
+                    size="sm"
+                    animation="border"
+                    className="me-2"
+                    data-cy="loading-spinner"
+                  />
                 ) : (
                   <FontAwesomeIcon icon={faTrash} className="me-2" />
                 )}
@@ -173,7 +178,12 @@ const AdminDbActions = () => {
                 disabled={isLoading}
               >
                 {isLoading ? (
-                  <Spinner size="sm" animation="border" className="me-2" />
+                  <Spinner
+                    size="sm"
+                    animation="border"
+                    className="me-2"
+                    data-cy="loading-spinner"
+                  />
                 ) : (
                   <FontAwesomeIcon icon={faTrash} className="me-2" />
                 )}

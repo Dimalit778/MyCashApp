@@ -1,3 +1,4 @@
+//
 describe("Admin Database Management", () => {
   beforeEach(() => {
     cy.task("db:clear-db");
@@ -155,9 +156,13 @@ describe("Admin Database Management", () => {
   describe("Loading States", () => {
     it("should show loading state during operations", () => {
       // Intercept delete request with delay
-      cy.intercept("DELETE", "**/api/admin/dbActions/transactions").as(
-        "slowDelete"
-      );
+      cy.intercept("DELETE", "**/api/admin/dbActions/transactions", (req) => {
+        // Add a delay to ensure we can catch the loading state
+        req.on("response", (res) => {
+          // Delay the response by 500ms
+          return new Promise((resolve) => setTimeout(resolve, 500));
+        });
+      }).as("slowDelete");
 
       // Click delete transactions button
       cy.contains("h6", "Transactions")
@@ -169,13 +174,18 @@ describe("Admin Database Management", () => {
       // Confirm in modal
       cy.get(".modal-footer").contains("Confirm Delete").click();
 
-      // Button should show loading spinner
-      cy.getDataCy("loading-spinner").should("be.visible");
+      // Button should show loading spinner - use should with timeout
+      cy.getDataCy("loading-spinner", { timeout: 10000 })
+        .should("exist")
+        .should("be.visible");
 
-      cy.wait("@slowDelete");
+      // Wait for the request to complete
+      cy.wait("@slowDelete", { timeout: 15000 });
 
       // Check success message
-      cy.contains("Operation completed successfully").should("be.visible");
+      cy.contains("Operation completed successfully", {
+        timeout: 10000,
+      }).should("be.visible");
     });
   });
 

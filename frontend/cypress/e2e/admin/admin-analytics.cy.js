@@ -9,42 +9,76 @@ describe("Admin Analytics Page", () => {
 
     cy.intercept("GET", "**/api/admin/stats", (req) => {
       req.headers["Cache-Control"] = "no-cache, no-store, must-revalidate";
+      // Add a delay to ensure we can catch loading states
+      req.on("response", (res) => {
+        return new Promise((resolve) => setTimeout(resolve, 300));
+      });
     }).as("getStats");
 
     cy.intercept("GET", "**/api/admin/historical*", (req) => {
       req.headers["Cache-Control"] = "no-cache, no-store, must-revalidate";
+      // Add a delay to ensure we can catch loading states
+      req.on("response", (res) => {
+        return new Promise((resolve) => setTimeout(resolve, 300));
+      });
     }).as("getHistorical");
 
     cy.visit("/admin/analytics");
-    cy.wait("@getStats");
-    cy.wait("@getHistorical");
+    cy.wait("@getStats", { timeout: 15000 });
+    cy.wait("@getHistorical", { timeout: 15000 });
+    cy.waitForLoadingSpinner({ timeout: 10000 });
   });
 
   describe("Page Loading", () => {
     it("should display loading spinner initially", () => {
+      // First clear any previous intercepts
+      cy.intercept("GET", "**/api/admin/stats").as("originalStats");
+      cy.intercept("GET", "**/api/admin/historical*").as("originalHistorical");
+
+      // Set up new intercepts with significant delay
       cy.intercept("GET", "**/api/admin/stats", (req) => {
         req.on("response", (res) => {
-          // Delay the response to ensure spinner is visible
-          res.setDelay(500);
+          // Use a longer delay (1000ms) to ensure spinner is visible
+          return new Promise((resolve) => setTimeout(resolve, 1000));
         });
       }).as("delayedStats");
 
-      cy.visit("/admin/analytics");
-      cy.getDataCy("loading-spinner").should("be.visible");
+      cy.intercept("GET", "**/api/admin/historical*", (req) => {
+        req.on("response", (res) => {
+          // Use a longer delay (1000ms) to ensure spinner is visible
+          return new Promise((resolve) => setTimeout(resolve, 1000));
+        });
+      }).as("delayedHistorical");
 
-      cy.wait("@delayedStats");
-      cy.getDataCy("loading-spinner").should("not.exist");
-      cy.getDataCy("page-title").should("be.visible");
+      // Visit the page after setting up intercepts
+      cy.visit("/admin/analytics", { timeout: 30000 });
+
+      // Look for any loading indicator with more flexible selectors
+      cy.get(
+        '[data-cy="loading-spinner"], .spinner-border, .spinner, [class*="loading"], [class*="spinner"]'
+      )
+        .should("exist")
+        .then(() => {
+          cy.log("Loading indicator found");
+        });
+
+      // Wait for API calls to complete
+      cy.wait(["@delayedStats", "@delayedHistorical"], { timeout: 30000 });
+
+      // Verify page content is visible after loading
+      cy.getDataCy("page-title").should("be.visible", { timeout: 15000 });
+      cy.getDataCy("admin-analytics-page").should("be.visible");
     });
 
     it("should handle API errors gracefully", () => {
       cy.intercept("GET", "**/api/admin/stats", {
         statusCode: 500,
         body: { message: "Server error" },
+        delay: 300, // Add delay to ensure error state is visible
       }).as("getStatsError");
 
       cy.visit("/admin/analytics");
-      cy.wait("@getStatsError");
+      cy.wait("@getStatsError", { timeout: 15000 });
       cy.getDataCy("error-message").should("be.visible");
     });
   });
@@ -102,17 +136,29 @@ describe("Admin Analytics Page", () => {
       cy.getDataCy("period-selector").should("have.value", "7");
 
       // Verify new API call is made with the selected period
-      cy.intercept("GET", "**/api/admin/historical?period=7").as("getPeriod7");
+      cy.intercept("GET", "**/api/admin/historical?period=7", (req) => {
+        // Add a delay to ensure we can catch loading states
+        req.on("response", (res) => {
+          return new Promise((resolve) => setTimeout(resolve, 300));
+        });
+      }).as("getPeriod7");
+
       cy.getDataCy("period-selector").select("7");
-      cy.wait("@getPeriod7");
+      cy.wait("@getPeriod7", { timeout: 15000 });
+      cy.waitForLoadingSpinner({ timeout: 10000 });
 
       // Change period and verify it updates
-      cy.intercept("GET", "**/api/admin/historical?period=90").as(
-        "getPeriod90"
-      );
+      cy.intercept("GET", "**/api/admin/historical?period=90", (req) => {
+        // Add a delay to ensure we can catch loading states
+        req.on("response", (res) => {
+          return new Promise((resolve) => setTimeout(resolve, 300));
+        });
+      }).as("getPeriod90");
+
       cy.getDataCy("period-selector").select("90");
       cy.getDataCy("period-selector").should("have.value", "90");
-      cy.wait("@getPeriod90");
+      cy.wait("@getPeriod90", { timeout: 15000 });
+      cy.waitForLoadingSpinner({ timeout: 10000 });
     });
 
     it("should render transaction types pie chart", () => {

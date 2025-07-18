@@ -1,4 +1,4 @@
-import { Spinner } from 'react-bootstrap';
+import { Spinner } from "react-bootstrap";
 
 // */ ---> Loader Spinner Animation
 const Loader = () => {
@@ -6,11 +6,12 @@ const Loader = () => {
     <Spinner
       animation="border"
       role="status"
+      data-cy="loading-spinner"
       style={{
-        width: '100px',
-        height: '100px',
-        margin: 'auto',
-        display: 'block',
+        width: "100px",
+        height: "100px",
+        margin: "auto",
+        display: "block",
       }}
     ></Spinner>
   );

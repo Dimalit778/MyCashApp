@@ -1,4 +1,4 @@
-import { isPlatformMobile, shouldUseTokenStorage } from "./platform";
+import { shouldUseTokenStorage } from "./platform";
 
 class TokenStorage {
   constructor() {

@@ -4,13 +4,17 @@ describe("Admin Default Categories Management", () => {
     cy.task("db:seed-admin");
 
     cy.loginTestUser("admin");
-    cy.intercept("GET", "**/api/admin/getDefaultCategories").as(
-      "getCategories"
-    );
+    cy.intercept("GET", "**/api/admin/getDefaultCategories", (req) => {
+      // Add a delay to ensure we can catch loading states
+      req.on("response", (res) => {
+        return new Promise((resolve) => setTimeout(resolve, 300));
+      });
+    }).as("getCategories");
 
     cy.visit("/admin/categories");
 
-    cy.wait("@getCategories");
+    cy.wait("@getCategories", { timeout: 15000 });
+    cy.waitForLoadingSpinner({ timeout: 10000 });
   });
 
   describe("Page Load and Display", () => {
@@ -43,12 +47,26 @@ describe("Admin Default Categories Management", () => {
 
       cy.getDataCy("category-name-input").type("Test Expense Category");
       cy.getDataCy("category-type-select").select("expenses");
+
+      // Intercept the save request to check for loading state
+      cy.intercept("POST", "**/api/admin/addDefaultCategory", (req) => {
+        req.on("response", (res) => {
+          return new Promise((resolve) => setTimeout(resolve, 500));
+        });
+      }).as("addCategory");
+
       cy.getDataCy("save-category-btn").click();
+
+      // Check for loading spinner
+      cy.waitForLoadingSpinner({ timeout: 10000 });
+
+      // Wait for request to complete
+      cy.wait("@addCategory", { timeout: 15000 });
 
       // Check success message
       cy.contains("Category added successfully").should("be.visible");
       cy.getDataCy("category-modal").should("not.exist");
-      cy.wait("@getCategories").then((res) => {
+      cy.wait("@getCategories", { timeout: 15000 }).then((res) => {
         const categories = res.response.body.data;
         cy.getDataCy("categories-body")
           .find("tr")
@@ -65,10 +83,21 @@ describe("Admin Default Categories Management", () => {
 
       cy.getDataCy("category-name-input").type("Test Income Category");
       cy.getDataCy("category-type-select").select("incomes");
+
+      // Intercept the save request
+      cy.intercept("POST", "**/api/admin/addDefaultCategory").as("addCategory");
+
       cy.getDataCy("save-category-btn").click();
+
+      // Check for loading spinner
+      cy.waitForLoadingSpinner({ timeout: 10000 });
+
+      // Wait for request to complete
+      cy.wait("@addCategory", { timeout: 15000 });
+
       cy.getDataCy("category-modal").should("not.exist");
 
-      cy.wait("@getCategories").then((res) => {
+      cy.wait("@getCategories", { timeout: 15000 }).then((res) => {
         const categories = res.response.body.data;
         cy.getDataCy("categories-body")
           .find("tr")

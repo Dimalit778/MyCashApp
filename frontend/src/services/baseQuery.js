@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { isPlatformMobile, shouldUseTokenStorage } from "utils/platform";
+import { shouldUseTokenStorage } from "utils/platform";
 import { tokenStorage } from "utils/tokenStorage";
 
 const BASE_URL =

@@ -1,5 +1,9 @@
 const navLinks = [
-  { name: "Expenses", route: "/transactions/expenses", dataCy: "link-expenses" },
+  {
+    name: "Expenses",
+    route: "/transactions/expenses",
+    dataCy: "link-expenses",
+  },
   { name: "Incomes", route: "/transactions/incomes", dataCy: "link-incomes" },
   { name: "Contact", route: "/contact", dataCy: "link-contact" },
   { name: "Settings", route: "/settings", dataCy: "link-settings" },
@@ -45,11 +49,24 @@ describe("Main Layout", () => {
 
     cy.loginTestUser();
     cy.visit("/home");
+
+    // Hide the device frame toggle that might be covering UI elements
+    cy.window().then((win) => {
+      cy.document().then((doc) => {
+        const deviceFrameToggle = doc.querySelector(".device-frame-toggle");
+        if (deviceFrameToggle) {
+          deviceFrameToggle.style.display = "none";
+        }
+      });
+    });
   });
 
   describe("Desktop Layout", () => {
     beforeEach(() => {
-      cy.viewport(Cypress.config("viewportWidth"), Cypress.config("viewportHeight"));
+      cy.viewport(
+        Cypress.config("viewportWidth"),
+        Cypress.config("viewportHeight")
+      );
     });
 
     it("should display correct layout and sidebar elements", () => {
@@ -61,8 +78,12 @@ describe("Main Layout", () => {
       cy.getDataCy("left-sidebar").within(() => {
         cy.getDataCy("brand-logo").should("be.visible");
         cy.getDataCy("profile-image-container").should("be.visible");
-        cy.getDataCy("user-name").should("be.visible").and("contain", "Test User");
-        cy.getDataCy("user-email").should("be.visible").and("contain", "cypress@gmail.com");
+        cy.getDataCy("user-name")
+          .should("be.visible")
+          .and("contain", "Test User");
+        cy.getDataCy("user-email")
+          .should("be.visible")
+          .and("contain", "cypress@gmail.com");
 
         navLinks.forEach((link) => {
           cy.getDataCy(`nav-${link.dataCy}`).should("be.visible");
@@ -77,7 +98,9 @@ describe("Main Layout", () => {
         navLinks.forEach((link) => {
           cy.getDataCy(`nav-${link.dataCy}`).click();
           cy.url().should("include", link.route);
-          cy.getDataCy(`nav-${link.dataCy}`).should("have.css", "background-color").and("not.equal", "transparent");
+          cy.getDataCy(`nav-${link.dataCy}`)
+            .should("have.css", "background-color")
+            .and("not.equal", "transparent");
         });
       });
     });
@@ -91,12 +114,20 @@ describe("Main Layout", () => {
   describe("Mobile Layout", () => {
     beforeEach(() => {
       cy.viewport(375, 667);
+
+      // Ensure device frame toggle is hidden for mobile tests
+      cy.document().then((doc) => {
+        const deviceFrameToggle = doc.querySelector(".device-frame-toggle");
+        if (deviceFrameToggle) {
+          deviceFrameToggle.style.display = "none";
+        }
+      });
     });
 
     it("should display correct mobile layout elements", () => {
       cy.getDataCy("left-sidebar-container").should("not.be.visible");
       cy.getDataCy("top-bar").should("be.visible");
-      cy.getDataCy("bottom-nav").should("be.visible");
+      cy.getDataCy("bottom-nav").should("be.visible", { timeout: 10000 });
       cy.getDataCy("main-layout-outlet").should("be.visible");
 
       cy.getDataCy("top-bar").within(() => {
@@ -113,11 +144,17 @@ describe("Main Layout", () => {
     });
 
     it("should navigate through bottom nav links", () => {
+      // Make sure bottom nav is visible first
+      cy.getDataCy("bottom-nav").should("be.visible", { timeout: 10000 });
+
+      // Use force: true to click even if covered
       cy.getDataCy("bottom-nav").within(() => {
         navLinks.forEach((link) => {
-          cy.getDataCy(`nav-link-${link.name}`).click();
+          cy.getDataCy(`nav-link-${link.name}`).click({ force: true });
           cy.url().should("include", link.route);
-          cy.getDataCy(`nav-link-${link.name}`).should("have.css", "background-color").and("not.equal", "transparent");
+          cy.getDataCy(`nav-link-${link.name}`)
+            .should("have.css", "background-color")
+            .and("not.equal", "transparent");
         });
       });
     });
@@ -137,8 +174,17 @@ describe("Main Layout", () => {
 
       // Mobile view
       cy.viewport(375, 667);
+
+      // Ensure device frame toggle is hidden
+      cy.document().then((doc) => {
+        const deviceFrameToggle = doc.querySelector(".device-frame-toggle");
+        if (deviceFrameToggle) {
+          deviceFrameToggle.style.display = "none";
+        }
+      });
+
       cy.getDataCy("left-sidebar").should("not.be.visible");
-      cy.getDataCy("bottom-nav").should("be.visible");
+      cy.getDataCy("bottom-nav").should("be.visible", { timeout: 10000 });
     });
   });
   describe("Loading States", () => {

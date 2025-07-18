@@ -43,8 +43,51 @@ Cypress.Commands.add("logout", () => {
   cy.clearCookie("persist:root");
 });
 
-Cypress.Commands.add("getDataCy", (dataTestSelector) => {
-  return cy.get(`[data-cy="${dataTestSelector}"]`);
+// Add a custom command to check for loading spinner
+Cypress.Commands.add("waitForLoadingSpinner", (options = {}) => {
+  const timeout = options.timeout || 10000;
+
+  // Look for any loading indicator with more flexible selectors
+  cy.get("body").then(($body) => {
+    // Check for any loading indicators
+    const spinnerSelectors = [
+      '[data-cy="loading-spinner"]',
+      ".spinner-border",
+      ".spinner",
+      '[class*="loading"]',
+      '[class*="spinner"]',
+    ];
+
+    // Check if any spinner exists
+    const hasSpinner = spinnerSelectors.some((selector) => {
+      return $body.find(selector).length > 0;
+    });
+
+    if (hasSpinner) {
+      // Wait for all spinners to disappear
+      cy.get(spinnerSelectors.join(", "), { timeout })
+        .should("exist")
+        .then(() => {
+          cy.log("Spinner found, waiting for it to disappear");
+
+          // Wait for spinners to disappear or timeout
+          cy.get("body", { timeout }).should(($newBody) => {
+            const stillHasSpinner = spinnerSelectors.some((selector) => {
+              return $newBody.find(selector).is(":visible");
+            });
+            // Use assert instead of expect to fix linter error
+            assert.isFalse(stillHasSpinner, "All spinners should be hidden");
+          });
+        });
+    } else {
+      cy.log("No spinner found, continuing");
+    }
+  });
+});
+
+// Add a custom command for data-cy selectors
+Cypress.Commands.add("getDataCy", (selector, options = {}) => {
+  return cy.get(`[data-cy="${selector}"]`, options);
 });
 // Helper command for viewport testing
 Cypress.Commands.add("testViewport", (testCallback) => {

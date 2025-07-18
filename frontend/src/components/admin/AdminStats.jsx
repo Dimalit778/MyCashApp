@@ -40,7 +40,12 @@ const StatCard = ({ icon, title, value, color, subtitle, dataCy }) => (
 const AdminStats = () => {
   const { data: stats, isLoading, error } = useGetUserStatsQuery();
 
-  if (isLoading) return <Loader data-cy="loading-spinner" />;
+  if (isLoading)
+    return (
+      <div data-cy="loading-spinner">
+        <Loader />
+      </div>
+    );
   if (error)
     return (
       <div className="alert alert-danger" data-cy="error-message">
