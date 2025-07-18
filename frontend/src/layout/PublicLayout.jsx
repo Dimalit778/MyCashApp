@@ -16,9 +16,25 @@ const PublicLayout = () => {
   }
 
   return (
-    <div className="bg-black min-vh-100 ">
+    <div
+      // className="bg-black min-vh-100"
+      style={{
+        width: "100%",
+        maxWidth: "100%",
+        overflow: "hidden",
+        position: "relative",
+      }}
+    >
       <TopBar />
-      <div className="main-content" style={{ paddingTop: "65px" }}>
+      <div
+        className="main-content"
+        style={{
+          paddingTop: "65px",
+          width: "100%",
+          maxWidth: "100%",
+          overflow: "hidden",
+        }}
+      >
         <Outlet />
       </div>
     </div>

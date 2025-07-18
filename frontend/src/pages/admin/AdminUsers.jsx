@@ -1,11 +1,11 @@
 import React from "react";
-import { Container, Row, Col, Card } from "react-bootstrap";
+import { Container, Row, Col } from "react-bootstrap";
 import UserManagement from "components/admin/UserManagement";
 import styles from "./AdminPages.module.css";
 
 const AdminUsers = () => {
   return (
-    <div className={styles.adminPage}>
+    <div>
       <div className={styles.pageHeader}>
         <Container fluid>
           <Row>
@@ -20,15 +20,7 @@ const AdminUsers = () => {
       </div>
 
       <Container fluid>
-        <Row>
-          <Col>
-            <Card className={styles.contentCard}>
-              <Card.Body className="p-0">
-                <UserManagement />
-              </Card.Body>
-            </Card>
-          </Col>
-        </Row>
+        <UserManagement />
       </Container>
     </div>
   );

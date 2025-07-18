@@ -16,20 +16,16 @@ import { useGetUserStatsQuery } from "services/api/adminApi";
 
 const StatCard = ({ icon, title, value, color, subtitle, dataCy }) => (
   <Col md={6} lg={4} className="mb-4">
-    <Card
-      className={`stat-card border-0 shadow-sm h-100`}
-      style={{ backgroundColor: "var(--light)" }}
-      data-cy={dataCy}
-    >
-      <Card.Body className="d-flex align-items-center">
+    <Card className="stats-card" data-cy={dataCy}>
+      <Card.Body className="d-flex align-items-center p-0 m-0 px-2">
         <div
-          className={`stat-icon rounded-circle d-flex align-items-center justify-content-center me-3 bg-${color}`}
+          className={`stats-icon rounded-circle d-flex align-items-center justify-content-center me-3 bg-${color}`}
         >
           {icon}
         </div>
         <div className="flex-grow-1">
-          <h3 className="stat-value mb-1">{value}</h3>
-          <p className="stat-title mb-0 text-muted">{title}</p>
+          <h3 className="stats-value mb-1">{value}</h3>
+          <p className="stats-title mb-0 text-muted">{title}</p>
           {subtitle && <small className="text-muted">{subtitle}</small>}
         </div>
       </Card.Body>
@@ -40,12 +36,7 @@ const StatCard = ({ icon, title, value, color, subtitle, dataCy }) => (
 const AdminStats = () => {
   const { data: stats, isLoading, error } = useGetUserStatsQuery();
 
-  if (isLoading)
-    return (
-      <div data-cy="loading-spinner">
-        <Loader />
-      </div>
-    );
+  if (isLoading) return <Loader data-cy="loading-spinner" />;
   if (error)
     return (
       <div className="alert alert-danger" data-cy="error-message">

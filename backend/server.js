@@ -37,7 +37,6 @@ app.use(
     origin: [
       ORIGIN,
       "http://localhost:3000",
-      "http://127.0.0.1:3000",
       process.env.CLIENT_URL,
       process.env.RENDER_FRONTEND_URL,
     ].filter(Boolean), // Remove undefined values

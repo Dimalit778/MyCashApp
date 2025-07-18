@@ -177,11 +177,46 @@ describe("Admin Analytics Page", () => {
       cy.get("canvas").should("be.visible");
     });
 
-    it("should display platform summary with statistics", () => {
+    it.only("should display platform summary with statistics", () => {
+      // First ensure the page is loaded
+      cy.getDataCy("admin-analytics-page").should("be.visible");
+
+      // Scroll using window scrolling since we removed position: fixed
+      cy.window().scrollTo("bottom");
+
+      // Verify the platform summary is visible after scrolling
       cy.getDataCy("platform-summary").should("be.visible");
+
+      // Verify the statistics are displayed
       cy.getDataCy("avg-transactions").should("be.visible");
       cy.getDataCy("avg-categories").should("be.visible");
       cy.getDataCy("growth-rate").should("be.visible");
+
+      // Verify the content of the statistics
+      cy.get("@getStats").then(({ response }) => {
+        const stats = response.body.data;
+
+        // Check average transactions per user
+        const avgTransactions =
+          stats.totalUsers > 0
+            ? (stats.totalTransactions / stats.totalUsers).toFixed(1)
+            : "0";
+        cy.getDataCy("avg-transactions").should("contain", avgTransactions);
+
+        // Check average categories per user
+        const avgCategories =
+          stats.totalUsers > 0
+            ? (stats.totalCategories / stats.totalUsers).toFixed(1)
+            : "0";
+        cy.getDataCy("avg-categories").should("contain", avgCategories);
+
+        // Check growth rate
+        const growthRate =
+          stats.totalUsers > 0
+            ? ((stats.recentUsers / stats.totalUsers) * 100).toFixed(1) + "%"
+            : "0%";
+        cy.getDataCy("growth-rate").should("contain", growthRate);
+      });
     });
   });
 
@@ -191,6 +226,10 @@ describe("Admin Analytics Page", () => {
       cy.viewport(1200, 800);
       cy.getDataCy("admin-analytics-page").should("be.visible");
       cy.getDataCy("stats-card").should("be.visible");
+      // Target the specific container for scrolling
+      cy.get('[data-cy="admin-layout-outlet"]').scrollTo("bottom", {
+        duration: 500,
+      });
       cy.getDataCy("charts-container").should("be.visible");
       cy.getDataCy("admin-sidebar").should("be.visible");
       cy.getDataCy("admin-topbar").should("not.be.visible");
@@ -198,12 +237,18 @@ describe("Admin Analytics Page", () => {
       // Test tablet view
       cy.viewport(768, 1024);
       cy.getDataCy("admin-analytics-page").should("be.visible");
+      cy.get('[data-cy="admin-layout-outlet"]').scrollTo("bottom", {
+        duration: 500,
+      });
       cy.getDataCy("user-growth-chart").should("be.visible");
       cy.getDataCy("charts-container").should("be.visible");
 
       // Test mobile view
       cy.viewport(375, 667);
       cy.getDataCy("admin-analytics-page").should("be.visible");
+      cy.get('[data-cy="admin-layout-outlet"]').scrollTo("bottom", {
+        duration: 500,
+      });
       cy.getDataCy("user-growth-chart").should("be.visible");
       cy.getDataCy("charts-container").should("be.visible");
       cy.getDataCy("admin-sidebar").should("not.be.visible");

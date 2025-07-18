@@ -20,9 +20,6 @@ import AdminUserDetails from "pages/admin/AdminUserDetails";
 import AdminDatabase from "pages/admin/AdminDatabase";
 import AdminCategories from "pages/admin/AdminCategories";
 
-// UI Components
-import DeviceFrameToggle from "components/ui/DeviceFrameToggle";
-
 // Lazy loaded components
 const Home = lazy(() => import("pages/dashboard/Home"));
 const Transactions = lazy(() => import("pages/dashboard/Transactions"));
@@ -72,9 +69,6 @@ export const App = () => {
 
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
-
-      {/* Device Frame Toggle for development */}
-      <DeviceFrameToggle />
     </BrowserRouter>
   );
 };

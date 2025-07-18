@@ -111,7 +111,6 @@ const UserManagement = () => {
           }}
         >
           <Row className="align-items-center g-3">
-            {/* Title*/}
             <Col xs={6} md={6} lg={4}>
               <h5 className="mb-0" style={{ color: "var(--light)" }}>
                 User Management
@@ -237,12 +236,7 @@ const UserManagement = () => {
             </thead>
             <tbody>
               {users.map((user, index) => (
-                <tr
-                  key={user._id}
-                  className="dark-row"
-                  data-cy="user-row"
-                  onClick={() => showUserDetails(user._id)}
-                >
+                <tr key={user._id} data-cy="user-row">
                   <td>{(page - 1) * 10 + index + 1}</td>
                   <td>
                     <CloudImage
@@ -254,7 +248,7 @@ const UserManagement = () => {
                   </td>
                   <td>
                     <div>
-                      <strong data-cy="user-name">
+                      <strong data-cy="user-name" style={{ color: "white" }}>
                         {user.firstName} {user.lastName}
                       </strong>
                     </div>
@@ -262,33 +256,39 @@ const UserManagement = () => {
                   <td>{user.email}</td>
                   <td>
                     <Dropdown>
-                      <Dropdown.Toggle
-                        variant={user.role === "admin" ? "warning" : "primary"}
-                        size="sm"
-                        style={{
-                          backgroundColor:
-                            user.role === "admin" ? "#ffc107" : "#007bff",
-                          borderColor:
-                            user.role === "admin" ? "#ffc107" : "#007bff",
-                        }}
-                      >
+                      <Dropdown.Toggle size="md" variant="outline-secondary">
                         {user.role === "admin" ? (
-                          <FontAwesomeIcon icon={faUserShield} />
+                          <FontAwesomeIcon
+                            icon={faUserShield}
+                            style={{ color: "gold" }}
+                          />
                         ) : (
-                          <FontAwesomeIcon icon={faUser} />
-                        )}{" "}
-                        {user.role}
+                          <FontAwesomeIcon
+                            icon={faUser}
+                            style={{ color: "lightblue" }}
+                          />
+                        )}
+                        {"  "}
+                        <span
+                          style={{
+                            color: user.role === "admin" ? "gold" : "lightblue",
+                          }}
+                        >
+                          {user.role === "admin" ? "Admin" : "User"}
+                        </span>
                       </Dropdown.Toggle>
                       <Dropdown.Menu className="dark-dropdown">
                         <Dropdown.Item
                           onClick={() => handleRoleChange(user._id, "admin")}
                           disabled={user.role === "admin"}
+                          className="spaced-dropdown-item"
                         >
                           Make Admin
                         </Dropdown.Item>
                         <Dropdown.Item
                           onClick={() => handleRoleChange(user._id, "user")}
                           disabled={user.role === "user"}
+                          className="spaced-dropdown-item"
                         >
                           Make User
                         </Dropdown.Item>

@@ -199,9 +199,13 @@ describe("Admin Database Management", () => {
       // Cards should stack vertically on mobile
       cy.get(".card").should("have.length", 2);
 
-      // Check that content is visible
-      cy.contains("h5", "Database Operations").should("be.visible");
-      cy.contains("h5", "Data Statistics & Export").should("be.visible");
+      // Check that content is visible - add scrollIntoView to fix visibility issues
+      cy.contains("h5", "Database Operations")
+        .scrollIntoView()
+        .should("be.visible");
+      cy.contains("h5", "Data Statistics & Export")
+        .scrollIntoView()
+        .should("be.visible");
     });
 
     it("should display correctly on tablet devices", () => {

@@ -18,7 +18,9 @@ const MainLayout = () => {
     return <Navigate to="/" replace />;
   }
   return (
-    <div style={{ backgroundColor: "black", minHeight: "100vh" }}>
+    <div
+      style={{ backgroundColor: "black", minHeight: "100vh", overflow: "auto" }}
+    >
       <TopBar className="d-md-none" />
 
       <Row className="g-0">
@@ -45,6 +47,10 @@ const MainLayout = () => {
           md={{ span: 9, offset: 3 }}
           lg={{ span: 10, offset: 2 }}
           className="main-content"
+          style={{
+            paddingTop: "65px",
+            paddingBottom: "50px",
+          }}
         >
           <Outlet />
         </Col>

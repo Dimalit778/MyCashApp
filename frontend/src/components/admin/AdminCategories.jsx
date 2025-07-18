@@ -212,7 +212,7 @@ const AdminCategories = () => {
             </Button>
           </div>
         </Card.Header>
-        <Card.Body>
+        <Card.Body className="p-0">
           {isLoadingCategories && <ShowLoadingOrError />}
           {data && (
             <Table

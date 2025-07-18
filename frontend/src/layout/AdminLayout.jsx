@@ -21,9 +21,8 @@ const AdminLayout = () => {
   }
 
   return (
-    <div style={{ minHeight: "100vh" }}>
+    <div>
       <AdminTopBar className="d-md-none" />
-
       <Row className="g-0">
         <Col
           md={3}
@@ -47,7 +46,7 @@ const AdminLayout = () => {
           xs={12}
           md={{ span: 9, offset: 3 }}
           lg={{ span: 10, offset: 2 }}
-          className="main-content"
+          className="admin-content"
         >
           <Outlet />
         </Col>

@@ -113,7 +113,7 @@ const AdminUserDetails = () => {
   ).map((year) => ({ value: year.toString(), label: year.toString() }));
 
   return (
-    <div className={styles.adminPage}>
+    <div>
       <div className={styles.pageHeader}>
         <Container fluid>
           <Row className="align-items-center">

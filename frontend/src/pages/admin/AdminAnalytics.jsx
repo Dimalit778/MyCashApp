@@ -19,7 +19,6 @@ import {
 } from "chart.js";
 
 import { format } from "date-fns";
-import toast from "react-hot-toast";
 import AdminStats from "components/admin/AdminStats";
 import Charts from "components/admin/analytics/charts";
 
@@ -133,22 +132,20 @@ const AdminAnalytics = () => {
 
   if (error) {
     return (
-      <div className={styles.adminPage}>
-        <Container fluid>
-          <Card className={styles.contentCard}>
-            <Card.Body className="text-center p-5">
-              <p data-cy="error-message" style={{ color: "#ef4444" }}>
-                Error loading analytics data
-              </p>
-            </Card.Body>
-          </Card>
-        </Container>
-      </div>
+      <Container fluid>
+        <Card className={styles.contentCard}>
+          <Card.Body className="text-center p-5">
+            <p data-cy="error-message" style={{ color: "#ef4444" }}>
+              Error loading analytics data
+            </p>
+          </Card.Body>
+        </Card>
+      </Container>
     );
   }
 
   return (
-    <div className={styles.adminPage} data-cy="admin-analytics-page">
+    <div data-cy="admin-analytics-page">
       <div className={styles.pageHeader}>
         <Container fluid>
           <Row className="align-items-center">

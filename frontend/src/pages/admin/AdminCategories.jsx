@@ -1,13 +1,13 @@
-import { Container, Row, Col } from "react-bootstrap";
+import { Row, Col, Container } from "react-bootstrap";
 import styles from "./AdminPages.module.css";
 
 import AdminCategories from "components/admin/AdminCategories";
 
-const AdminSettings = () => {
+const AdminCategoriesPage = () => {
   return (
-    <div className={styles.adminPage}>
+    <div>
       <div className={styles.pageHeader}>
-        <Container fluid>
+        <div>
           <Row className="align-items-center">
             <Col>
               <h1 className={styles.pageTitle}>Default Categories</h1>
@@ -16,14 +16,14 @@ const AdminSettings = () => {
               </p>
             </Col>
           </Row>
-        </Container>
+        </div>
       </div>
 
-      <Container fluid className="py-4">
+      <Container fluid>
         <AdminCategories />
       </Container>
     </div>
   );
 };
 
-export default AdminSettings;
+export default AdminCategoriesPage;

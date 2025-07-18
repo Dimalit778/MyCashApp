@@ -8,7 +8,7 @@ const MaintenanceSettings = () => {
   const { data: stats, isLoading } = useGetDatabaseStatsQuery();
 
   return (
-    <div className={styles.adminPage}>
+    <div>
       <div className={styles.pageHeader}>
         <Container fluid>
           <Row className="align-items-center">

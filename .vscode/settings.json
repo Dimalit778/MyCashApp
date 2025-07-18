@@ -11,7 +11,8 @@
     "sweetalert",
     "testid",
     "virtuals",
-    "Xmark"
+    "Xmark",
+    "persistor"
   ],
   "cSpell.ignoreWords": ["mycash"]
 }

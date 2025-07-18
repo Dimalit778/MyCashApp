@@ -2,6 +2,10 @@
   display: flex;
   justify-content: center;
   padding-top: 3rem;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+  box-sizing: border-box;
 }
 
 .auth-form-wrapper {
@@ -13,6 +17,7 @@
   margin: 1rem;
   padding: 1.5rem;
   box-shadow: 0 0 32px 0 rgba(31, 38, 135, 0.37);
+  overflow: hidden;
 }
 
 .auth-title {
@@ -25,10 +30,18 @@
   letter-spacing: 2.5px;
 }
 
+.auth-form {
+  width: 100%;
+  max-width: 100%;
+}
+
 .form-control {
   background-color: rgba(255, 255, 255, 0.1) !important;
   color: #fff !important;
   border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .form-control:focus {
@@ -62,9 +75,10 @@
   transition: all 0.3s ease;
   padding: 0.5rem 1rem;
   color: #fff;
-
   letter-spacing: 0.05rem;
+  width: 100%;
 }
+
 .btn-submit:hover {
   background-color: #686d8a;
   border-color: #fefeff;
@@ -103,6 +117,8 @@
   justify-content: space-around;
   margin-top: 2rem;
   color: rgba(255, 255, 255, 0.7);
+  width: 100%;
+  flex-wrap: wrap;
 }
 
 .auth-prompt p {
@@ -111,4 +127,27 @@
 
 .auth-prompt .btn {
   padding: 0.25rem 1rem;
+}
+
+/* Mobile specific fixes */
+@media (max-width: 576px) {
+  .auth-container {
+    padding-top: 2rem;
+  }
+
+  .auth-form-wrapper {
+    width: 95%;
+    margin: 0.5rem;
+    padding: 1.25rem;
+  }
+
+  .auth-title {
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .auth-prompt {
+    flex-direction: column;
+    align-items: center;
+  }
 }

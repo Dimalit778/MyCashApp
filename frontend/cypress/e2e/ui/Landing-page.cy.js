@@ -14,13 +14,17 @@ describe("Landing Page", () => {
   it("should display landing page elements", () => {
     cy.getDataCy("landing-title").should("contain", "MANAGE YOUR");
     cy.getDataCy("stroke-title").should("contain", "MONEY");
-    cy.getDataCy("team-image").should("have.attr", "alt", "Team").and("be.visible");
-    cy.getDataCy("about-title").should("contain", "About Us");
+    cy.getDataCy("team-image")
+      .should("have.attr", "alt", "Team")
+      .and("be.visible");
+    // Scroll to about section before checking visibility
+    cy.getDataCy("about-title").scrollIntoView().should("contain", "About Us");
     cy.getDataCy("about-text-1").should("exist");
     cy.getDataCy("about-text-2").should("exist");
   });
   it("should display the footer", () => {
-    cy.getDataCy("footer").should("be.visible");
+    // Scroll to footer before checking visibility
+    cy.getDataCy("footer").scrollIntoView().should("be.visible");
     cy.getDataCy("footer-info").within(() => {
       cy.get("h5")
         .should("be.visible")
@@ -47,7 +51,9 @@ describe("Landing Page", () => {
       cy.getDataCy("instagram-link")
         .should("be.visible")
         .and("have.attr", "href", "https://www.instagram.com/dima1litvinov/");
-      cy.getDataCy("youtube-link").should("be.visible").and("have.attr", "href", "https://www.youtube.com/");
+      cy.getDataCy("youtube-link")
+        .should("be.visible")
+        .and("have.attr", "href", "https://www.youtube.com/");
     });
     cy.getDataCy("footer-divider").should("be.visible");
     cy.getDataCy("footer-copyright")

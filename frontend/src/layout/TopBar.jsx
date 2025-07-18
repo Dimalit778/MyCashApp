@@ -24,7 +24,7 @@ const TopBar = ({ className }) => {
     <Navbar
       data-cy="top-bar"
       expand="lg"
-      className={`${className}  `}
+      className={`${className} px-2`}
       style={{
         background: `linear-gradient(to top, #434343, #000000)`,
         position: "fixed",
@@ -32,54 +32,80 @@ const TopBar = ({ className }) => {
         left: "0",
         right: "0",
         width: "100%",
+        maxWidth: "100%",
         height: "65px",
         zIndex: 999,
-        paddingLeft: "10px",
-        paddingRight: "10px",
+        overflow: "hidden",
+        boxSizing: "border-box",
       }}
     >
-      <Navbar.Brand data-cy="app-logo-link-to-home" as={Link} to="/home">
-        <BrandLogo className="me-2" />
-      </Navbar.Brand>
-      <Nav className="ms-auto">
-        {!user ? (
-          <div className="d-flex justify-content-center gap-2">
-            <Nav.Link
-              as={Link}
-              to="/signup"
-              className={`btn-outline-light ${location.pathname === "/signup"}`}
-              data-cy="signup-link"
-            >
-              Sign Up
-            </Nav.Link>
-            <Nav.Link
-              as={Link}
-              to="/login"
-              className={`btn-outline-light ${location.pathname === "/login"}`}
-              data-cy="login-link"
-            >
-              Login
-            </Nav.Link>
-          </div>
-        ) : (
-          <div className="d-flex align-items-center">
-            <div className="me-4">
-              <Button data-cy="top-bar-logout-button" variant="link" className="text-light p-0" onClick={logoutHandler}>
-                <img data-cy="nav-profile-icon" src={logoutIcon} alt="logout" width="24" height="24" />
-              </Button>
+      <div
+        style={{
+          width: "100%",
+          maxWidth: "100%",
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
+        <Navbar.Brand data-cy="app-logo-link-to-home" as={Link} to="/home">
+          <BrandLogo className="me-2" />
+        </Navbar.Brand>
+        <Nav>
+          {!user ? (
+            <div className="d-flex justify-content-center gap-2">
+              <Nav.Link
+                as={Link}
+                to="/signup"
+                className={`btn-outline-light ${
+                  location.pathname === "/signup"
+                }`}
+                data-cy="signup-link"
+              >
+                Sign Up
+              </Nav.Link>
+              <Nav.Link
+                as={Link}
+                to="/login"
+                className={`btn-outline-light ${
+                  location.pathname === "/login"
+                }`}
+                data-cy="login-link"
+              >
+                Login
+              </Nav.Link>
             </div>
-            <div data-cy="top-bar-profile-image" className="text-light">
-              <img
-                src={user?.avatar ? user.avatar : avatarIcon}
-                alt="profile"
-                width={34}
-                height={34}
-                style={{ color: "gray" }}
-              />
+          ) : (
+            <div className="d-flex align-items-center">
+              <div className="me-4">
+                <Button
+                  data-cy="top-bar-logout-button"
+                  variant="link"
+                  className="text-light p-0"
+                  onClick={logoutHandler}
+                >
+                  <img
+                    data-cy="nav-profile-icon"
+                    src={logoutIcon}
+                    alt="logout"
+                    width="24"
+                    height="24"
+                  />
+                </Button>
+              </div>
+              <div data-cy="top-bar-profile-image" className="text-light">
+                <img
+                  src={user?.avatar ? user.avatar : avatarIcon}
+                  alt="profile"
+                  width={34}
+                  height={34}
+                  style={{ color: "gray" }}
+                />
+              </div>
             </div>
-          </div>
-        )}
-      </Nav>
+          )}
+        </Nav>
+      </div>
     </Navbar>
   );
 };
