@@ -145,7 +145,7 @@ const UserTransactionsCard = ({
             {selectedYear && ` ${selectedYear}`}
           </h4>
           <h5 style={{ color: "var(--primary-orange)" }}>
-            Total: ${formatAmount(transactionData?.total || 0)}
+            Total: ${formatAmount(transactionData?.totalAmount || 0)}
           </h5>
         </div>
 

@@ -7,6 +7,7 @@ import cloudinary from "../cloudinary.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
+
 const getAllUsers = asyncHandler(async (req, res) => {
   const { page = 1, limit = 10, search = "", role = "" } = req.query;
 
@@ -54,7 +55,6 @@ const getAllUsers = asyncHandler(async (req, res) => {
 });
 // [GET] User Stats
 const getUserStats = asyncHandler(async (req, res) => {
-  console.log("getUserStats");
   const totalUsers = await User.countDocuments();
   const adminUsers = await User.countDocuments({ role: "admin" });
   const regularUsers = await User.countDocuments({ role: "user" });
@@ -177,59 +177,7 @@ const getUserCategories = asyncHandler(async (req, res) => {
       new ApiResponse(200, categories, "User categories retrieved successfully")
     );
 });
-// [GET] User Transactions
-const getUserTransactions = asyncHandler(async (req, res) => {
-  const { userId } = req.params;
-  const { type } = req.query;
 
-  // Validate user exists
-  const userExists = await User.findById(userId);
-  if (!userExists) {
-    throw new ApiError(404, "User not found");
-  }
-
-  // Build query
-  const query = { user: userId };
-  if (type) {
-    query.transactionType = type;
-  }
-
-  // Get transactions
-  const transactions = await Transaction.find(query).sort({ date: -1 });
-
-  // Get categories for this user to match with transaction category names
-  const userCategories = await Category.find({ user: userId });
-
-  // Map transactions to include category details
-  const transactionsWithCategoryDetails = transactions.map((transaction) => {
-    const transactionObj = transaction.toObject();
-    // Find matching category by name
-    const categoryMatch = userCategories.find(
-      (cat) => cat.name === transaction.category
-    );
-
-    // Add category details if found
-    if (categoryMatch) {
-      transactionObj.category = {
-        _id: categoryMatch._id,
-        name: categoryMatch.name,
-        type: categoryMatch.type,
-      };
-    }
-
-    return transactionObj;
-  });
-
-  return res
-    .status(200)
-    .json(
-      new ApiResponse(
-        200,
-        transactionsWithCategoryDetails,
-        "User transactions retrieved successfully"
-      )
-    );
-});
 // [GET] User Transactions Paginated
 const getUserTransactionsPaginated = asyncHandler(async (req, res) => {
   const { userId } = req.params;
@@ -259,8 +207,8 @@ const getUserTransactionsPaginated = asyncHandler(async (req, res) => {
     if (year) {
       const startDate = new Date(year, month ? month - 1 : 0, 1);
       const endDate = month
-        ? new Date(year, month, 0) // Last day of specified month
-        : new Date(year, 11, 31, 23, 59, 59); // Last day of year
+        ? new Date(year, month, 0)
+        : new Date(year, 11, 31, 23, 59, 59);
 
       query.date = {
         $gte: startDate,
@@ -279,29 +227,26 @@ const getUserTransactionsPaginated = asyncHandler(async (req, res) => {
     .limit(parseInt(limit))
     .lean();
 
-  // Get categories for this user to match with transaction category names
-  const userCategories = await Category.find({ user: userId }).lean();
+  // Calculate total amount for all matching transactions
+  // Need to convert userId to ObjectId for aggregation
+  const aggregateQuery = { ...query };
+  if (aggregateQuery.user) {
+    aggregateQuery.user = new mongoose.Types.ObjectId(userId);
+  }
 
-  // Map transactions to include category details
-  const transactionsWithCategoryDetails = transactions.map((transaction) => {
-    // Find matching category by name
-    const categoryMatch = userCategories.find(
-      (cat) => cat.name === transaction.category
-    );
+  const totalAmountResult = await Transaction.aggregate([
+    { $match: aggregateQuery },
+    { $group: { _id: null, totalAmount: { $sum: "$amount" } } },
+  ]);
 
-    // Add category details if found
-    if (categoryMatch) {
-      transaction.category = categoryMatch.name;
-    }
-
-    return transaction;
-  });
+  const totalAmount = totalAmountResult[0]?.totalAmount || 0;
 
   return res.status(200).json(
     new ApiResponse(
       200,
       {
-        transactions: transactionsWithCategoryDetails,
+        transactions,
+        totalAmount,
         pagination: {
           totalTransactions,
           totalPages: Math.ceil(totalTransactions / limit),
@@ -648,7 +593,6 @@ export {
   getAllUsers,
   getUserStats,
   getUserCategories,
-  getUserTransactions,
   adminDeleteUser,
   updateUserRole,
   getUserDetails,
