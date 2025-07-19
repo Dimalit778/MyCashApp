@@ -3,7 +3,6 @@ import { Navbar, Nav, Button } from "react-bootstrap";
 import { Link, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import BrandLogo from "components/brandLogo";
-import avatarIcon from "assets/icons/avatarIcon.svg";
 import logoutIcon from "assets/icons/logoutIcon.svg";
 import { currentUser } from "services/reducers/userSlice";
 import { useLogoutMutation } from "services/api/authApi";

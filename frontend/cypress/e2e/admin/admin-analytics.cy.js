@@ -227,9 +227,7 @@ describe("Admin Analytics Page", () => {
       cy.getDataCy("admin-analytics-page").should("be.visible");
       cy.getDataCy("stats-card").should("be.visible");
       // Target the specific container for scrolling
-      cy.get('[data-cy="admin-layout-outlet"]').scrollTo("bottom", {
-        duration: 500,
-      });
+
       cy.getDataCy("charts-container").should("be.visible");
       cy.getDataCy("admin-sidebar").should("be.visible");
       cy.getDataCy("admin-topbar").should("not.be.visible");
@@ -237,18 +235,12 @@ describe("Admin Analytics Page", () => {
       // Test tablet view
       cy.viewport(768, 1024);
       cy.getDataCy("admin-analytics-page").should("be.visible");
-      cy.get('[data-cy="admin-layout-outlet"]').scrollTo("bottom", {
-        duration: 500,
-      });
       cy.getDataCy("user-growth-chart").should("be.visible");
       cy.getDataCy("charts-container").should("be.visible");
 
       // Test mobile view
       cy.viewport(375, 667);
       cy.getDataCy("admin-analytics-page").should("be.visible");
-      cy.get('[data-cy="admin-layout-outlet"]').scrollTo("bottom", {
-        duration: 500,
-      });
       cy.getDataCy("user-growth-chart").should("be.visible");
       cy.getDataCy("charts-container").should("be.visible");
       cy.getDataCy("admin-sidebar").should("not.be.visible");

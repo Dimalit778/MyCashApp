@@ -25,7 +25,7 @@ const Home = () => {
   const { monthlyStats = [], yearlyStats = [] } = data?.data || {};
 
   return (
-    <LoadingOverlay dataCy="loading" show={isLoading || isFetching}>
+    <LoadingOverlay data-cy="loading" show={isLoading || isFetching}>
       <div className="container-fluid d-flex flex-column gap-3  ">
         <YearCalender year={year} setYear={setYear} />
 
