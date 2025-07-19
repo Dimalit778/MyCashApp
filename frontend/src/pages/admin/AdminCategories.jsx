@@ -7,7 +7,7 @@ const AdminCategoriesPage = () => {
   return (
     <div>
       <div className={styles.pageHeader}>
-        <div>
+        <Container fluid>
           <Row className="align-items-center">
             <Col>
               <h1 className={styles.pageTitle}>Default Categories</h1>
@@ -16,7 +16,7 @@ const AdminCategoriesPage = () => {
               </p>
             </Col>
           </Row>
-        </div>
+        </Container>
       </div>
 
       <Container fluid>

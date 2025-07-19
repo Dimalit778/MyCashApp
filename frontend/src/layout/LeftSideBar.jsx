@@ -1,7 +1,6 @@
 import React from "react";
 import { NavLink, useLocation } from "react-router-dom";
-import avatarIcon from "assets/avatar.jpg";
-import adminIcon from "assets/icons/adminIcon.svg";
+
 import BrandLogo from "components/brandLogo";
 import { useSelector } from "react-redux";
 import MyButton from "components/ui/button";
@@ -35,22 +34,15 @@ const LeftSideBar = () => {
       {/* User Profile Section */}
       <div data-cy="profile-image-container" className={styles.profileSection}>
         <div className={styles.avatarContainer}>
-          {user?.imageUrl ? (
-            <div data-cy="user-profile-image" className={styles.profileImage}>
-              <CloudImage
-                publicId={user.imageUrl}
-                className={styles.cloudImage}
-                alt="profile"
-              />
-            </div>
-          ) : (
-            <img
-              data-cy="avatar-icon"
-              src={avatarIcon}
+          <div data-cy="user-profile-image" className={styles.profileImage}>
+            <CloudImage
+              publicId={user.imageUrl}
+              width={"100%"}
+              height={"100%"}
+              className="rounded-circle"
               alt="profile"
-              className={styles.defaultAvatar}
             />
-          )}
+          </div>
         </div>
 
         <div className={styles.userInfo}>
@@ -90,26 +82,6 @@ const LeftSideBar = () => {
               </li>
             );
           })}
-
-          {/* Admin Link - Only show for admin users */}
-          {user?.role === "admin" && (
-            <li className={styles.navItem}>
-              <NavLink
-                data-cy="nav-admin"
-                to="/admin"
-                className={`${styles.navLink} ${
-                  pathname === "/admin" ? styles.navLinkActive : ""
-                }`}
-              >
-                <img
-                  src={adminIcon}
-                  alt="Admin"
-                  className={`${styles.navIcon} ${styles.adminIcon}`}
-                />
-                <span className={styles.navLabel}>Admin</span>
-              </NavLink>
-            </li>
-          )}
         </ul>
       </nav>
 

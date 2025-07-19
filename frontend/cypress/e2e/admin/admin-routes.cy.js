@@ -20,21 +20,21 @@ describe("Admin Routes and Access Control", () => {
         cy.visit(route);
         cy.url().should("include", "/admin/analytics");
         // Wait for loading to complete after each redirect
-        cy.waitForLoadingSpinner({ timeout: 10000 });
+        cy.waitForLoadingSpinner({ timeout: 2000 });
       });
     });
 
     it("should redirect to admin analytics when visiting root as admin", () => {
       cy.visit("/");
       cy.url().should("include", "/admin/analytics");
-      cy.waitForLoadingSpinner({ timeout: 10000 });
+      cy.waitForLoadingSpinner({ timeout: 2000 });
     });
   });
 
   describe("Navigation Between Admin Routes", () => {
     beforeEach(() => {
       cy.visit("/admin/analytics");
-      cy.waitForLoadingSpinner({ timeout: 10000 });
+      cy.waitForLoadingSpinner({ timeout: 2000 });
     });
 
     it("should navigate through all admin pages via sidebar (desktop)", () => {
@@ -42,7 +42,7 @@ describe("Admin Routes and Access Control", () => {
       adminRoutes.forEach((route) => {
         cy.getDataCy(route.dataCy).click();
         cy.url().should("include", route.path);
-        cy.waitForLoadingSpinner({ timeout: 10000 });
+        cy.waitForLoadingSpinner({ timeout: 2000 });
         cy.contains("h1", route.title).should("be.visible");
       });
     });
@@ -55,7 +55,7 @@ describe("Admin Routes and Access Control", () => {
         cy.getDataCy("admin-sidebar").should("be.visible");
         cy.getDataCy(route.dataCy).filter(":visible").click(); // Filter for visible elements
         cy.url().should("include", route.path);
-        cy.waitForLoadingSpinner({ timeout: 10000 });
+        cy.waitForLoadingSpinner({ timeout: 2000 });
         cy.contains("h1", route.title).should("be.visible");
         cy.getDataCy("admin-sidebar").should("not.be.visible");
       });
@@ -72,8 +72,8 @@ describe("Admin Routes and Access Control", () => {
       cy.intercept("GET", "**/api/admin/all**").as("getUsers");
 
       cy.visit("/admin/users");
-      cy.wait("@getUsers", { timeout: 15000 });
-      cy.waitForLoadingSpinner({ timeout: 10000 });
+      cy.wait("@getUsers", { timeout: 5000 });
+      cy.waitForLoadingSpinner({ timeout: 2000 });
 
       // Wait for users to load
       cy.contains("User Management").should("be.visible");
@@ -83,7 +83,7 @@ describe("Admin Routes and Access Control", () => {
 
       // Should be on user details page
       cy.url().should("match", /\/admin\/users\/[a-f0-9]{24}$/);
-      cy.waitForLoadingSpinner({ timeout: 10000 });
+      cy.waitForLoadingSpinner({ timeout: 2000 });
       cy.contains("User Details").should("be.visible");
 
       // Navigate back using back button
@@ -91,7 +91,7 @@ describe("Admin Routes and Access Control", () => {
         .should("be.visible")
         .click();
       cy.url().should("include", "/admin/users");
-      cy.waitForLoadingSpinner({ timeout: 10000 });
+      cy.waitForLoadingSpinner({ timeout: 2000 });
       cy.contains("User Management").should("be.visible");
     });
   });
@@ -104,34 +104,34 @@ describe("Admin Routes and Access Control", () => {
     it("should handle browser back/forward navigation correctly", () => {
       // Start at analytics
       cy.visit("/admin/analytics");
-      cy.waitForLoadingSpinner({ timeout: 10000 });
+      cy.waitForLoadingSpinner({ timeout: 2000 });
       cy.contains("Analytics & Reports").should("be.visible");
 
       // Navigate to users
       cy.getDataCy("nav-users").click();
-      cy.waitForLoadingSpinner({ timeout: 10000 });
+      cy.waitForLoadingSpinner({ timeout: 2000 });
       cy.contains("User Management").should("be.visible");
 
       // Navigate to categories
       cy.getDataCy("nav-categories").click();
-      cy.waitForLoadingSpinner({ timeout: 10000 });
+      cy.waitForLoadingSpinner({ timeout: 2000 });
       cy.contains("Default Categories").should("be.visible");
 
       // Use browser back button
       cy.go("back");
-      cy.waitForLoadingSpinner({ timeout: 10000 });
+      cy.waitForLoadingSpinner({ timeout: 2000 });
       cy.url().should("include", "/admin/users");
       cy.contains("User Management").should("be.visible");
 
       // Use browser back again
       cy.go("back");
-      cy.waitForLoadingSpinner({ timeout: 10000 });
+      cy.waitForLoadingSpinner({ timeout: 2000 });
       cy.url().should("include", "/admin/analytics");
       cy.contains("Analytics & Reports").should("be.visible");
 
       // Use browser forward button
       cy.go("forward");
-      cy.waitForLoadingSpinner({ timeout: 10000 });
+      cy.waitForLoadingSpinner({ timeout: 2000 });
       cy.url().should("include", "/admin/users");
       cy.contains("User Management").should("be.visible");
     });

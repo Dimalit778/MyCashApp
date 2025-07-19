@@ -180,11 +180,11 @@ describe("Admin Database Management", () => {
         .should("be.visible");
 
       // Wait for the request to complete
-      cy.wait("@slowDelete", { timeout: 15000 });
+      cy.wait("@slowDelete", { timeout: 5000 });
 
       // Check success message
       cy.contains("Operation completed successfully", {
-        timeout: 10000,
+        timeout: 2000,
       }).should("be.visible");
     });
   });

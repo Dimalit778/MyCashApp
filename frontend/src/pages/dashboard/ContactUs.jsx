@@ -25,19 +25,30 @@ const ContactUs = () => {
   });
 
   return (
-    <Container fluid>
+    <Container
+      fluid
+      className="d-flex flex-column justify-content-around"
+      style={{ minHeight: "80vh" }}
+    >
       <Row>
         <div className="text-center p-5 ">
           <BrandLogo size="lg" />
           <div data-cy="contact-title" className="mt-4">
-            <h2 className="fs-4 text-white-50 mb-3">Our support team can help you with every question you have.</h2>
-            <p className="fs-5 text-white-50 mb-0">You can contact us and our team will respond within 24 hours.</p>
+            <h2 className="fs-4 text-white-50 mb-3">
+              Our support team can help you with every question you have.
+            </h2>
+            <p className="fs-5 text-white-50 mb-0">
+              You can contact us and our team will respond within 24 hours.
+            </p>
           </div>
         </div>
       </Row>
-      <Row className="mt-4 d-flex  ">
+      <Row className="mt-4 d-flex">
         <Col lg={4} className=" text-center mb-4 ">
-          <div data-cy="contact-info" className="d-flex flex-column align-items-center">
+          <div
+            data-cy="contact-info"
+            className="d-flex flex-column align-items-center"
+          >
             <h1 className="display-4 mb-4" style={{ color: THEME.orange }}>
               Contact Us
             </h1>

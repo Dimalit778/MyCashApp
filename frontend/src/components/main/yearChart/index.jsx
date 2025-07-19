@@ -1,9 +1,24 @@
 import React, { useMemo } from "react";
-import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from "chart.js";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+} from "chart.js";
 import { Bar } from "react-chartjs-2";
 import { ALL_MONTHS } from "constants/AllMonths";
 
-ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend
+);
 
 const formatAmount = (amount) => {
   if (amount >= 1000000) return `$${(amount / 1000000).toFixed(1)}M`;
@@ -18,7 +33,9 @@ const YearChart = React.memo(({ monthlyStats }) => {
       datasets: [
         {
           label: "Monthly Incomes",
-          data: ALL_MONTHS.map((_, index) => monthlyStats[index]?.totalIncomes || 0),
+          data: ALL_MONTHS.map(
+            (_, index) => monthlyStats[index]?.totalIncomes || 0
+          ),
 
           backgroundColor: "rgba(40, 167, 69, 0.6)",
           borderColor: "rgba(40, 167, 69, 1)",
@@ -28,7 +45,9 @@ const YearChart = React.memo(({ monthlyStats }) => {
         },
         {
           label: "Monthly Expenses",
-          data: ALL_MONTHS.map((_, index) => monthlyStats[index]?.totalExpenses || 0),
+          data: ALL_MONTHS.map(
+            (_, index) => monthlyStats[index]?.totalExpenses || 0
+          ),
 
           backgroundColor: "rgba(220, 53, 69, 0.6)",
           borderColor: "rgba(220, 53, 69, 1)",
@@ -96,7 +115,7 @@ const YearChart = React.memo(({ monthlyStats }) => {
     <div
       data-cy="year-chart"
       className="mt-3 text-light border-light shadow-lg p-3  rounded bg-dark "
-      style={{ minHeight: "70vh" }}
+      style={{ height: "65vh" }}
     >
       <Bar options={options} data={chartData} />
     </div>

@@ -8,7 +8,11 @@ import DeleteUser from "components/settings/DeleteUser";
 
 const Settings = () => {
   return (
-    <Container fluid className="p-3 min-vh-100 d-flex flex-column">
+    <Container
+      fluid
+      className="p-3 d-flex flex-column "
+      style={{ minHeight: "80vh" }}
+    >
       <Row className="g-4">
         <Col xs={12} lg={5}>
           <UploadImage />

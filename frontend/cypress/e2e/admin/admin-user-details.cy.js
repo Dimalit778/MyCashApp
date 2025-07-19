@@ -20,8 +20,8 @@ describe("Admin User Details Page", () => {
       }).as("getUsers");
 
       cy.visit("/admin/users");
-      cy.wait("@getUsers", { timeout: 15000 });
-      cy.waitForLoadingSpinner({ timeout: 10000 });
+      cy.wait("@getUsers", { timeout: 5000 });
+      cy.waitForLoadingSpinner({ timeout: 2000 });
 
       cy.getDataCy("users-table").should("be.visible");
 
@@ -63,9 +63,9 @@ describe("Admin User Details Page", () => {
         cy.visit(`/admin/users/${testUserId}`);
 
         // Wait for API calls to complete
-        cy.wait("@getUserDetails", { timeout: 15000 });
-        cy.wait("@getUserTransactions", { timeout: 15000 });
-        cy.waitForLoadingSpinner({ timeout: 10000 });
+        cy.wait("@getUserDetails", { timeout: 5000 });
+        cy.wait("@getUserTransactions", { timeout: 5000 });
+        cy.waitForLoadingSpinner({ timeout: 2000 });
 
         // Verify we're on the right page
         cy.contains("h1", "User Details").should("be.visible");
@@ -112,13 +112,14 @@ describe("Admin User Details Page", () => {
         cy.visit(`/admin/users/${testUserId}`);
 
         // Wait for API calls to complete
-        cy.wait("@getUserDetails", { timeout: 15000 });
-        cy.wait("@getUserTransactions", { timeout: 15000 });
-        cy.waitForLoadingSpinner({ timeout: 10000 });
+        cy.wait("@getUserDetails", { timeout: 5000 });
+        cy.wait("@getUserTransactions", { timeout: 5000 });
+        cy.waitForLoadingSpinner({ timeout: 2000 });
       });
     });
 
     it("should display user profile information", () => {
+      cy.getDataCy("user-profile-image").should("be.visible");
       // Check for basic user info
       cy.contains("Test User").should("be.visible");
       cy.contains("cypress@gmail.com").should("be.visible");
@@ -130,7 +131,6 @@ describe("Admin User Details Page", () => {
       cy.contains("Joined:").should("be.visible");
 
       // Check for user image
-      cy.get(".rounded-circle").should("be.visible");
     });
 
     it("should display user statistics", () => {

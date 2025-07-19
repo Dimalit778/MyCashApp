@@ -177,7 +177,7 @@ describe("Admin Analytics Page", () => {
       cy.get("canvas").should("be.visible");
     });
 
-    it.only("should display platform summary with statistics", () => {
+    it("should display platform summary with statistics", () => {
       // First ensure the page is loaded
       cy.getDataCy("admin-analytics-page").should("be.visible");
 

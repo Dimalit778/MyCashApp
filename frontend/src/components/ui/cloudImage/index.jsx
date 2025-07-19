@@ -1,7 +1,8 @@
 import { AdvancedImage } from "@cloudinary/react";
 import { Cloudinary } from "@cloudinary/url-gen";
 import { lazyload } from "@cloudinary/react";
-import { scale } from "@cloudinary/url-gen/actions/resize";
+
+import { fill } from "@cloudinary/url-gen/actions/resize";
 import React from "react";
 import { Image } from "react-bootstrap";
 
@@ -11,30 +12,30 @@ const cld = new Cloudinary({
   },
 });
 
-const CloudImage = ({ publicId, width = 40, height = 40, ...props }) => {
+const CloudImage = ({ publicId, width, height, className, alt }) => {
   const myImage = cld
     .image(publicId)
     .quality("auto:best")
     .format("auto")
     .delivery("q_auto:best")
-    .resize(scale().width(props.width).height(props.height));
-
+    .resize(fill().width(200).height(200));
   return publicId ? (
     <AdvancedImage
       cldImg={myImage}
       plugins={[lazyload()]}
       loading="lazy"
-      className="w-100 h-100 object-fit-cover"
-      onError={(e) => {
-        e.target.style.display = "none";
+      alt={alt}
+      className={className}
+      style={{
+        width: width,
+        height: height,
+        objectFit: "cover",
       }}
-      {...props}
     />
   ) : (
     <Image
-      src={require("../../../assets/avatar.jpg")}
-      alt="user"
-      className="rounded-circle"
+      src={require("../../../assets/avatar.webp")}
+      alt={alt}
       width={width}
       height={height}
     />

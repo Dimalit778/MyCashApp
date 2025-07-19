@@ -1,7 +1,13 @@
 import { format } from "date-fns";
 import Capitalize from "utils/Capitalize";
 
-const TableItem = ({ item, selectedItems, toggleSelection, categoryColors, handleOpenModal }) => {
+const TableItem = ({
+  item,
+  selectedItems,
+  toggleSelection,
+  categoryColors,
+  handleOpenModal,
+}) => {
   return (
     <tr
       data-cy="transactions-row"
@@ -9,13 +15,17 @@ const TableItem = ({ item, selectedItems, toggleSelection, categoryColors, handl
       onClick={() => handleOpenModal("edit", item)}
       className="align-middle text-center"
     >
-      <td style={{ width: "20%", minWidth: "120px", textAlign: "left" }}>{Capitalize(item.description)}</td>
+      <td style={{ width: "20%", textAlign: "left" }}>
+        {Capitalize(item.description)}
+      </td>
 
-      <td style={{ minWidth: "100px" }}>${item.amount.toLocaleString()}</td>
-      <td style={{ minWidth: "120px" }}>
+      <td>${item.amount.toLocaleString()}</td>
+      <td>
         <div className="d-flex justify-content-center">
           <span
-            className={`badge bg-${categoryColors[item.category] || "secondary"}`}
+            className={`badge bg-${
+              categoryColors[item.category] || "secondary"
+            }`}
             style={{
               padding: "0.5rem 1rem",
               fontSize: "0.85rem",
@@ -34,8 +44,8 @@ const TableItem = ({ item, selectedItems, toggleSelection, categoryColors, handl
         </div>
       </td>
 
-      <td style={{ minWidth: "120px" }}>{format(new Date(item.date), "MMM dd, yyyy")}</td>
-      <td className="text-center" onClick={(e) => e.stopPropagation()} style={{ minWidth: "80px" }}>
+      <td>{format(new Date(item.date), "MMM dd, yyyy")}</td>
+      <td className="text-center" onClick={(e) => e.stopPropagation()}>
         <div className="form-check d-flex justify-content-center">
           <input
             className="form-check-input bg-secondary"

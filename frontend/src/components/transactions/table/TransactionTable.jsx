@@ -18,7 +18,10 @@ const TransactionsTable = ({ monthData, type }) => {
   const { transactions, total } = monthData;
 
   const [currentPage, setCurrentPage] = useState(1);
-  const [sortConfig, setSortConfig] = useState({ key: "date", direction: "desc" });
+  const [sortConfig, setSortConfig] = useState({
+    key: "date",
+    direction: "desc",
+  });
   const [selectedItems, setSelectedItems] = useState([]);
   const [deleteTransaction] = useDeleteTransactionMutation();
 
@@ -32,7 +35,9 @@ const TransactionsTable = ({ monthData, type }) => {
           ? new Date(aValue) - new Date(bValue)
           : new Date(bValue) - new Date(aValue);
       } else if (sortConfig.key === "amount") {
-        return sortConfig.direction === "asc" ? aValue - bValue : bValue - aValue;
+        return sortConfig.direction === "asc"
+          ? aValue - bValue
+          : bValue - aValue;
       }
 
       return 0;
@@ -42,12 +47,16 @@ const TransactionsTable = ({ monthData, type }) => {
   // Items Per Page
   const currentItems = useMemo(() => {
     const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
-    return filteredAndSortedItems.slice(startIndex, startIndex + ITEMS_PER_PAGE);
+    return filteredAndSortedItems.slice(
+      startIndex,
+      startIndex + ITEMS_PER_PAGE
+    );
   }, [filteredAndSortedItems, currentPage]);
   const categoryColors = transactions.reduce((acc, item) => {
     const categoryName = item.category; // directly use category since it's a string
     if (categoryName && !acc[categoryName]) {
-      acc[categoryName] = TABLE_COLORS[Object.keys(acc).length % TABLE_COLORS.length];
+      acc[categoryName] =
+        TABLE_COLORS[Object.keys(acc).length % TABLE_COLORS.length];
     }
     return acc;
   }, {});
@@ -84,10 +93,19 @@ const TransactionsTable = ({ monthData, type }) => {
   );
   const handleExport = useCallback(() => {
     const csvContent = transactions
-      .map((item) => [item.name, item.amount, item.category, format(new Date(item.date), "yyyy-MM-dd")].join(","))
+      .map((item) =>
+        [
+          item.name,
+          item.amount,
+          item.category,
+          format(new Date(item.date), "yyyy-MM-dd"),
+        ].join(",")
+      )
       .join("\n");
 
-    const blob = new Blob([`Name,Amount,Category,Date\n${csvContent}`], { type: "text/csv" });
+    const blob = new Blob([`Name,Amount,Category,Date\n${csvContent}`], {
+      type: "text/csv",
+    });
 
     const url = window.URL.createObjectURL(blob);
     const a = document.createElement("a");
@@ -98,7 +116,9 @@ const TransactionsTable = ({ monthData, type }) => {
   }, [transactions, type]);
 
   const toggleSelection = (id) => {
-    setSelectedItems((prev) => (prev.includes(id) ? prev.filter((i) => i !== id) : [...prev, id]));
+    setSelectedItems((prev) =>
+      prev.includes(id) ? prev.filter((i) => i !== id) : [...prev, id]
+    );
   };
 
   const handleDelete = async (ids) => {
@@ -117,7 +137,9 @@ const TransactionsTable = ({ monthData, type }) => {
       if (!isConfirmed) return;
 
       if (isBulk) {
-        await Promise.all(ids.map((id) => deleteTransaction({ id, type }).unwrap()));
+        await Promise.all(
+          ids.map((id) => deleteTransaction({ id, type }).unwrap())
+        );
         setSelectedItems([]);
         toast.success(`Deleted ${ids.length} items`);
       } else {
@@ -126,23 +148,36 @@ const TransactionsTable = ({ monthData, type }) => {
         toast.success("Transaction deleted");
       }
     } catch (error) {
-      toast.error(isBulk ? "Failed to delete items" : "Failed to delete transaction");
+      toast.error(
+        isBulk ? "Failed to delete items" : "Failed to delete transaction"
+      );
     }
   };
   const handleDeleteItems = () => handleDelete(selectedItems);
 
   return (
     <div className="card bg-dark mt-5" style={{ minHeight: "40vh" }}>
-      <div className="card-body">
-        <TableHeader type={type} total={total} exportData={handleExport} openModal={handleOpenModal} />
+      <div className="card-body ">
+        <TableHeader
+          type={type}
+          total={total}
+          exportData={handleExport}
+          openModal={handleOpenModal}
+        />
 
         <div className="table-responsive">
           {!transactions.length ? (
-            <div data-cy="transactions-empty" className="d-flex justify-content-center mt-5">
+            <div
+              data-cy="transactions-empty"
+              className="d-flex justify-content-center mt-5"
+            >
               <h3 className="text-secondary">{type} List is empty</h3>
             </div>
           ) : (
-            <table data-cy="transactions-table" className="table table-dark table-hover ">
+            <table
+              data-cy="transactions-table"
+              className="table table-dark table-hover "
+            >
               <TableTitles
                 selectedItems={selectedItems}
                 onDelete={handleDeleteItems}
@@ -166,7 +201,11 @@ const TransactionsTable = ({ monthData, type }) => {
         </div>
 
         {totalPages > 1 && (
-          <PaginationPages currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />
+          <PaginationPages
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={handlePageChange}
+          />
         )}
       </div>
     </div>

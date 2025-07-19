@@ -20,12 +20,12 @@ describe("Admin User Management", () => {
     cy.visit("/admin/users");
 
     // Wait for the API call to complete
-    cy.wait("@getUsers", { timeout: 15000 });
+    cy.wait("@getUsers", { timeout: 5000 });
   });
 
   it("should display the user management page with users", () => {
     // Check for loading spinner first
-    cy.waitForLoadingSpinner({ timeout: 10000 });
+    cy.waitForLoadingSpinner({ timeout: 2000 });
 
     // Check page title
     cy.contains("h1", "User Management").should("be.visible");
@@ -39,7 +39,7 @@ describe("Admin User Management", () => {
 
   it("should allow searching for users", () => {
     // Wait for loading to complete
-    cy.waitForLoadingSpinner({ timeout: 10000 });
+    cy.waitForLoadingSpinner({ timeout: 2000 });
 
     // Type in the search box
     cy.getDataCy("search-users-input").find("input").type("admin");
@@ -50,7 +50,7 @@ describe("Admin User Management", () => {
 
   it("should filter users by role", () => {
     // Wait for loading to complete
-    cy.waitForLoadingSpinner({ timeout: 10000 });
+    cy.waitForLoadingSpinner({ timeout: 2000 });
 
     // Click the role filter dropdown
     cy.getDataCy("role-filter-dropdown").click();
@@ -64,7 +64,7 @@ describe("Admin User Management", () => {
 
   it("should navigate to user details page", () => {
     // Wait for loading to complete
-    cy.waitForLoadingSpinner({ timeout: 10000 });
+    cy.waitForLoadingSpinner({ timeout: 2000 });
 
     // Click the view button on the first user
     cy.getDataCy("user-view-btn").first().click({ force: true });

@@ -109,7 +109,6 @@ input[type="number"]::-webkit-outer-spin-button {
   -webkit-overflow-scrolling: touch;
   border-radius: 8px;
 }
-/* Admin content scrolling */
 
 /* Responsive design */
 @media (max-width: 768px) {
@@ -130,6 +129,7 @@ input[type="number"]::-webkit-outer-spin-button {
   .main-content {
     padding-top: 65px !important;
     padding-bottom: 55px !important;
+    min-height: 90vh !important;
     width: 100%;
     max-width: 100%;
   }

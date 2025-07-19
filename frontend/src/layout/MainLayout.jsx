@@ -19,7 +19,9 @@ const MainLayout = () => {
   }
   return (
     <div
-      style={{ backgroundColor: "black", minHeight: "100vh", overflow: "auto" }}
+      style={{
+        backgroundColor: "black",
+      }}
     >
       <TopBar className="d-md-none" />
 
@@ -46,11 +48,7 @@ const MainLayout = () => {
           xs={12}
           md={{ span: 9, offset: 3 }}
           lg={{ span: 10, offset: 2 }}
-          className="main-content"
-          style={{
-            paddingTop: "65px",
-            paddingBottom: "50px",
-          }}
+          className="main-content px-3 "
         >
           <Outlet />
         </Col>

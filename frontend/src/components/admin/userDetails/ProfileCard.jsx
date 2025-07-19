@@ -22,15 +22,16 @@ const ProfileCard = ({ userData }) => {
         <Container fluid className="px-0">
           <Row className="justify-content-center text-center mb-3 mb-md-4">
             <Col xs={12}>
-              <div className="d-flex flex-column align-items-center">
+              <div
+                className="d-flex flex-column align-items-center"
+                data-cy="user-profile-image"
+              >
                 <CloudImage
                   publicId={userData?.user?.imageUrl}
-                  className="rounded-circle mb-3 border border-3 border-light shadow"
+                  className="mb-3 border border-1 border-light shadow rounded-4"
                   width={120}
                   height={120}
-                  alt={`${userData?.user?.firstName || ""} ${
-                    userData?.user?.lastName || ""
-                  }`}
+                  alt={userData?.user?.firstName}
                 />
                 <h3 className="fw-bold mb-2" style={{ color: "var(--light)" }}>
                   {userData?.user?.firstName} {userData?.user?.lastName}
@@ -55,13 +56,13 @@ const ProfileCard = ({ userData }) => {
             </Col>
           </Row>
 
-          <Row className="mt-4 gy-3 gx-md-4  ">
+          <Row className="mt-4 gy-3 gx-md-4 ">
             <Col
               xs={12}
               md={6}
               className="d-flex flex-column justify-content-center"
             >
-              <div>
+              <div className="ms-3">
                 <p
                   className="d-flex align-items-center mb-3 flex-wrap"
                   style={{ color: "var(--light)", wordBreak: "break-all" }}
@@ -91,7 +92,7 @@ const ProfileCard = ({ userData }) => {
               md={6}
               className="d-flex flex-column justify-content-center"
             >
-              <div>
+              <div className="ms-3">
                 <p
                   className="d-flex align-items-center mb-3"
                   style={{ color: "var(--light)" }}

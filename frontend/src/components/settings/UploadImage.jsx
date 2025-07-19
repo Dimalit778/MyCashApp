@@ -17,7 +17,6 @@ const UploadImage = () => {
   });
   const user = useSelector(currentUser);
   const [imageActions, { isLoading }] = useImageActionsMutation();
-  console.log("imageState", imageState);
 
   const handleImageAction = async (actionType, imageData = null) => {
     try {
@@ -31,7 +30,11 @@ const UploadImage = () => {
         setImageState({ preview: "", data: "" });
       }
 
-      toast.success(actionType === "delete" ? "Photo was deleted" : "Profile updated successfully");
+      toast.success(
+        actionType === "delete"
+          ? "Photo was deleted"
+          : "Profile updated successfully"
+      );
     } catch (error) {
       toast.error(error.message || `Failed to ${actionType} photo`);
     }
@@ -64,13 +67,32 @@ const UploadImage = () => {
   };
 
   const ImageContainer = () => (
-    <div className="w-100 h-100 overflow-hidden rounded" style={{ backgroundColor: THEME.dark, minHeight: "200px" }}>
+    <div
+      className="w-100 h-100 overflow-hidden rounded"
+      style={{ backgroundColor: THEME.dark, minHeight: "200px" }}
+    >
       {user.imageUrl && !imageState.preview ? (
-        <CloudImage data-cy="profile-image" publicId={user.imageUrl} />
+        <CloudImage
+          data-cy="profile-image"
+          publicId={user.imageUrl}
+          width={"100%"}
+          height={"100%"}
+          alt="profile"
+        />
       ) : imageState.preview ? (
-        <img data-cy="preview-image" src={imageState.preview} alt="Preview" className="w-100 h-100 object-fit-cover" />
+        <img
+          data-cy="preview-image"
+          src={imageState.preview}
+          alt="Preview"
+          className="w-100 h-100 object-fit-cover"
+        />
       ) : (
-        <img data-cy="default-profile" src={uploadUserImg} alt="Upload" className="w-100 h-100 object-fit-cover" />
+        <img
+          data-cy="default-profile"
+          src={uploadUserImg}
+          alt="Upload"
+          className="w-100 h-100 object-fit-cover"
+        />
       )}
     </div>
   );
@@ -82,11 +104,18 @@ const UploadImage = () => {
           <MyButton
             dataCy="save-image-button"
             bgColor={THEME.orange}
-            onClick={() => imageState.data && handleImageAction("upload", imageState.data)}
+            onClick={() =>
+              imageState.data && handleImageAction("upload", imageState.data)
+            }
           >
             Save
           </MyButton>
-          <MyButton dataCy="cancel-image-button" bgColor="red" size="sm" onClick={handleCancel}>
+          <MyButton
+            dataCy="cancel-image-button"
+            bgColor="red"
+            size="sm"
+            onClick={handleCancel}
+          >
             Cancel
           </MyButton>
         </>
@@ -126,7 +155,11 @@ const UploadImage = () => {
 
   return (
     <LoadingOverlay show={isLoading}>
-      <Container fluid data-cy="uploadImage-container" className="bg-dark border border-1 border-secondary rounded p-3">
+      <Container
+        fluid
+        data-cy="uploadImage-container"
+        className="bg-dark border border-1 border-secondary rounded p-3"
+      >
         <Row className="gy-4">
           <Col xs={12} md={6}>
             <div className="d-flex flex-column align-items-center">
@@ -147,7 +180,10 @@ const UploadImage = () => {
 
           <Col xs={12} md={6}>
             <div className="h-100 d-flex flex-column justify-content-between">
-              <div data-cy="uploadImage-user-info" className="text-center text-md-start">
+              <div
+                data-cy="uploadImage-user-info"
+                className="text-center text-md-start"
+              >
                 <h2 className="text-white h3 mb-2">
                   {user.firstName} {user.lastName}
                 </h2>
@@ -155,10 +191,12 @@ const UploadImage = () => {
               </div>
               <div
                 data-cy="user-subscription"
-                className="d-flex justify-content-center justify-content-md-start align-items-center gap-2"
+                className="d-flex justify-content-center  align-items-center gap-2"
               >
                 <span className="text-light">Subscription:</span>
-                <span className="badge bg-primary px-3">{user.subscription}</span>
+                <span className="badge bg-primary px-3">
+                  {user.subscription}
+                </span>
               </div>
             </div>
           </Col>

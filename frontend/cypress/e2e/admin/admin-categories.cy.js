@@ -13,8 +13,8 @@ describe("Admin Default Categories Management", () => {
 
     cy.visit("/admin/categories");
 
-    cy.wait("@getCategories", { timeout: 15000 });
-    cy.waitForLoadingSpinner({ timeout: 10000 });
+    cy.wait("@getCategories", { timeout: 5000 });
+    cy.waitForLoadingSpinner({ timeout: 2000 });
   });
 
   describe("Page Load and Display", () => {
@@ -58,15 +58,15 @@ describe("Admin Default Categories Management", () => {
       cy.getDataCy("save-category-btn").click();
 
       // Check for loading spinner
-      cy.waitForLoadingSpinner({ timeout: 10000 });
+      cy.waitForLoadingSpinner({ timeout: 2000 });
 
       // Wait for request to complete
-      cy.wait("@addCategory", { timeout: 15000 });
+      cy.wait("@addCategory", { timeout: 5000 });
 
       // Check success message
       cy.contains("Category added successfully").should("be.visible");
       cy.getDataCy("category-modal").should("not.exist");
-      cy.wait("@getCategories", { timeout: 15000 }).then((res) => {
+      cy.wait("@getCategories", { timeout: 5000 }).then((res) => {
         const categories = res.response.body.data;
         cy.getDataCy("categories-body")
           .find("tr")
@@ -90,14 +90,14 @@ describe("Admin Default Categories Management", () => {
       cy.getDataCy("save-category-btn").click();
 
       // Check for loading spinner
-      cy.waitForLoadingSpinner({ timeout: 10000 });
+      cy.waitForLoadingSpinner({ timeout: 2000 });
 
       // Wait for request to complete
-      cy.wait("@addCategory", { timeout: 15000 });
+      cy.wait("@addCategory", { timeout: 5000 });
 
       cy.getDataCy("category-modal").should("not.exist");
 
-      cy.wait("@getCategories", { timeout: 15000 }).then((res) => {
+      cy.wait("@getCategories", { timeout: 5000 }).then((res) => {
         const categories = res.response.body.data;
         cy.getDataCy("categories-body")
           .find("tr")

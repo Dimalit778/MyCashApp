@@ -8,7 +8,10 @@ import { useParams } from "react-router-dom";
 import Categories from "components/transactions/categories";
 
 import { useSelector } from "react-redux";
-import { selectedDateObject, transactionModal } from "services/reducers/uiSlice";
+import {
+  selectedDateObject,
+  transactionModal,
+} from "services/reducers/uiSlice";
 import { useGetCategoriesQuery } from "services/api/categoriesApi";
 import { useGetMonthlyTransactionsQuery } from "services/api/transactionsApi";
 import LoadingOverlay from "components/LoadingLayout";
@@ -54,12 +57,12 @@ const Transaction = () => {
     return <DataError error={monthError || categoriesError} />;
   }
 
-  
-  const isLoading = fetchingData || fetchingCategories || loadingData || loadingCategories;
+  const isLoading =
+    fetchingData || fetchingCategories || loadingData || loadingCategories;
 
   return (
     <LoadingOverlay data-cy="loading" show={isLoading}>
-      <div className="container-fluid ">
+      <div>
         <div className="row mt-2 gx-5" style={{ minHeight: "45vh" }}>
           <div className="col-12 col-lg-8">
             <CalendarMonth date={date} setDate={setDate} />
@@ -73,7 +76,9 @@ const Transaction = () => {
 
         <TransactionsTable monthData={{ transactions, total }} type={type} />
 
-        {modalState.isOpen && <TransactionModal type={type} date={date} categories={categories} />}
+        {modalState.isOpen && (
+          <TransactionModal type={type} date={date} categories={categories} />
+        )}
       </div>
     </LoadingOverlay>
   );

@@ -7,6 +7,7 @@ import avatarIcon from "assets/icons/avatarIcon.svg";
 import logoutIcon from "assets/icons/logoutIcon.svg";
 import { currentUser } from "services/reducers/userSlice";
 import { useLogoutMutation } from "services/api/authApi";
+import CloudImage from "components/ui/cloudImage";
 
 const TopBar = ({ className }) => {
   const user = useSelector(currentUser);
@@ -94,12 +95,12 @@ const TopBar = ({ className }) => {
                 </Button>
               </div>
               <div data-cy="top-bar-profile-image" className="text-light">
-                <img
-                  src={user?.avatar ? user.avatar : avatarIcon}
+                <CloudImage
+                  publicId={user?.imageUrl}
+                  width={40}
+                  height={40}
+                  className="rounded-circle"
                   alt="profile"
-                  width={34}
-                  height={34}
-                  style={{ color: "gray" }}
                 />
               </div>
             </div>
