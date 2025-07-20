@@ -1,23 +1,12 @@
 name: CI/CD Pipeline
-
 on:
   push:
-    branches: [main, master]
+    branches:
+      - main
+      - master
     paths-ignore:
       - "*.md"
       - "**/README.md"
-      - "frontend/src/assets/appImages/**"
-      - "docs/**"
-      - ".gitignore"
-  pull_request:
-    branches: [main, master]
-    paths-ignore:
-      - "*.md"
-      - "**/README.md"
-      - "frontend/src/assets/appImages/**"
-      - "docs/**"
-      - ".gitignore"
-
 jobs:
   cypress-run:
     runs-on: ubuntu-24.04
@@ -57,6 +46,7 @@ jobs:
           DEBUG: cypress:*
 
           # Backend environment variables
+          MONGO_TEST_DB: ${{ secrets.MONGO_TEST_DB }}
           TOKEN: ${{ secrets.TOKEN }}
           REFRESH_TOKEN: ${{ secrets.REFRESH_TOKEN }}
           TOKEN_EXPIRY: ${{ secrets.TOKEN_EXPIRY }}
