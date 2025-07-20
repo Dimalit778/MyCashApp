@@ -8,8 +8,8 @@ A modern, full-stack web application for tracking personal expenses and income w
 
 <div align="center" width="70%>
   <h3>👤 User Flow Demo</h3>
-  
- https://github.com/user-attachments/assets/d0834017-f891-4b2c-8d43-1b3578c35974
+  https://github.com/user-attachments/assets/eb515a0b-7505-4f8d-86db-70a1f506a4da
+
  
 </div>
 
