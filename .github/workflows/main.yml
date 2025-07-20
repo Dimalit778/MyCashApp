@@ -1,5 +1,22 @@
-name: Test and Deploy
-on: push
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [main, master]
+    paths-ignore:
+      - "*.md"
+      - "**/README.md"
+      - "frontend/src/assets/appImages/**"
+      - "docs/**"
+      - ".gitignore"
+  pull_request:
+    branches: [main, master]
+    paths-ignore:
+      - "*.md"
+      - "**/README.md"
+      - "frontend/src/assets/appImages/**"
+      - "docs/**"
+      - ".gitignore"
 
 jobs:
   cypress-run:
