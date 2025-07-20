@@ -73,7 +73,6 @@ export const protectRoute = asyncHandler(async (req, res, next) => {
 
 // Admin authorization middleware
 export const adminOnly = asyncHandler(async (req, res, next) => {
-  console.log("adminOnly");
   if (!req.user) {
     throw new ApiError(401, "Unauthorized: Please login first");
   }
