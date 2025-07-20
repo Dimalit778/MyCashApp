@@ -1,12 +1,10 @@
 import { Suspense, lazy } from "react";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 
-// -- Layouts
 import MainLayout from "layout/MainLayout";
 import PublicLayout from "layout/PublicLayout";
 import AdminLayout from "layout/AdminLayout";
 
-// Pages
 import Landing from "pages/Landing";
 import SignUp from "pages/auth/SignUp";
 import Login from "pages/auth/Login";
