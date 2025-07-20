@@ -8,16 +8,13 @@ A modern, full-stack web application for tracking personal expenses and income w
 
 <div align="center">
   <h3>👤 User Flow Demo</h3>
-  <video width="80%" controls>
-    <source src="https://github.com/user-attachments/assets/d0834017-f891-4b2c-8d43-1b3578c35974" type="video/mp4">
-    Your browser does not support the video tag.
-  </video>
-  
+  <div width="80%" >
+   https://github.com/user-attachments/assets/d0834017-f891-4b2c-8d43-1b3578c35974" 
+  </div>
   <h3>⚙️ Admin Flow Demo</h3>
-  <video width="80%" controls>
-    <source src="https://github.com/user-attachments/assets/90386206-3d63-46ac-9154-b24a7d15d553" type="video/mp4">
-    Your browser does not support the video tag.
-  </video>
+  <div width="80%" >
+  "https://github.com/user-attachments/assets/90386206-3d63-46ac-9154-b24a7d15d553" 
+  </div>
 </div>
 
 ## 📱 Screenshots
