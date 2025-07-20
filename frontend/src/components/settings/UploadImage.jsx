@@ -103,6 +103,7 @@ const UploadImage = () => {
         <>
           <MyButton
             dataCy="save-image-button"
+            ariaLabel="Save Image"
             bgColor={THEME.orange}
             onClick={() =>
               imageState.data && handleImageAction("upload", imageState.data)
@@ -112,6 +113,7 @@ const UploadImage = () => {
           </MyButton>
           <MyButton
             dataCy="cancel-image-button"
+            ariaLabel="Cancel Image"
             bgColor="red"
             size="sm"
             onClick={handleCancel}
@@ -131,7 +133,7 @@ const UploadImage = () => {
           />
           <MyButton
             data-cy="upload-image-button"
-            type="button"
+            ariaLabel="Upload Image"
             size="sm"
             bgColor={THEME.secondary}
             onClick={() => document.getElementById("fileInput").click()}
@@ -141,6 +143,7 @@ const UploadImage = () => {
           {user.imageUrl && (
             <MyButton
               dataCy="delete-image-button"
+              ariaLabel="Delete Image"
               bgColor="red"
               size="sm"
               onClick={() => handleImageAction("delete", null)}

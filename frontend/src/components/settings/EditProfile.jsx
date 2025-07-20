@@ -33,7 +33,10 @@ export default function EditProfile() {
     mode: "all",
   });
 
-  const [currentPassword, newPassword] = watch(["currentPassword", "newPassword"]);
+  const [currentPassword, newPassword] = watch([
+    "currentPassword",
+    "newPassword",
+  ]);
 
   useEffect(() => {
     reset({
@@ -105,7 +108,10 @@ export default function EditProfile() {
       </Row>
 
       {isEditing && (
-        <Row data-cy="edit-account-form" className="d-flex py-3 mt-3 border-bottom border-secondary">
+        <Row
+          data-cy="edit-account-form"
+          className="d-flex py-3 mt-3 border-bottom border-secondary"
+        >
           <Col md={6}>
             <TextInput
               data-cy="current-password-input"
@@ -151,7 +157,11 @@ export default function EditProfile() {
   );
 
   return (
-    <Container fluid data-cy="edit-profile-container" className="p-4 bg-dark border border-1 border-secondary rounded">
+    <Container
+      fluid
+      data-cy="edit-profile-container"
+      className="p-4 bg-dark border border-1 border-secondary rounded"
+    >
       <Form onSubmit={handleSubmit(onSubmit)}>
         {renderFormFields()}
 
@@ -160,7 +170,7 @@ export default function EditProfile() {
             <>
               <MyButton
                 data-cy="profile-cancel-btn"
-                type="button"
+                ariaLabel="Cancel"
                 bgColor={THEME.dark}
                 color={THEME.light}
                 border={THEME.light}
@@ -174,6 +184,7 @@ export default function EditProfile() {
               <MyButton
                 data-cy="profile-save-btn"
                 type="submit"
+                ariaLabel="Save Changes"
                 bgColor={THEME.dark}
                 color={THEME.light}
                 border={THEME.light}
@@ -186,7 +197,7 @@ export default function EditProfile() {
           ) : (
             <MyButton
               data-cy="profile-edit-btn"
-              type="button"
+              ariaLabel="Edit Profile"
               bgColor={THEME.dark}
               color={THEME.light}
               border={THEME.light}

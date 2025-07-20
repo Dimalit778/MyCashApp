@@ -198,6 +198,7 @@ const TransactionModal = ({ type, date, categories }) => {
             <MyButton
               data-cy="modal-submit"
               type="submit"
+              ariaLabel="Submit"
               disabled={
                 isSubmitting || isAdding || isUpdating || (editItem && !isDirty)
               }
@@ -215,7 +216,7 @@ const TransactionModal = ({ type, date, categories }) => {
             </MyButton>
             <MyButton
               data-cy="modal-cancel"
-              type="button"
+              ariaLabel="Cancel"
               bgColor="gray"
               color="black"
               size="sm"

@@ -12,6 +12,7 @@ const TableHeader = ({ total = 0, exportData, openModal, type }) => {
       <div className=" d-flex justify-content-center align-items-center gap-3 ">
         <MyButton
           data-cy="add-transaction-btn"
+          ariaLabel="Add Transaction"
           bgColor={THEME.dark}
           color={THEME.light}
           border={THEME.light}
@@ -22,6 +23,7 @@ const TableHeader = ({ total = 0, exportData, openModal, type }) => {
         </MyButton>
         <MyButton
           data-cy="export-transaction-btn"
+          ariaLabel="Export Transaction"
           bgColor={THEME.dark}
           color={THEME.light}
           border={THEME.light}
@@ -36,7 +38,13 @@ const TableHeader = ({ total = 0, exportData, openModal, type }) => {
       <div className="d-flex align-items-center">
         <h3 className="me-3 text-secondary">Total:</h3>
         <h3 data-cy="transaction-total-amount" className="text-secondary">
-          <CountUp start={0} end={total || 0} separator="," prefix="$" duration={2.5} />
+          <CountUp
+            start={0}
+            end={total || 0}
+            separator=","
+            prefix="$"
+            duration={2.5}
+          />
         </h3>
       </div>
     </div>

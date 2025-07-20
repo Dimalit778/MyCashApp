@@ -4,6 +4,8 @@ import styles from "./button.module.css";
 const MyButton = ({
   dataCy,
   children,
+  type = "button",
+  ariaLabel,
   isLoading,
   disabled,
   onClick,
@@ -34,9 +36,15 @@ const MyButton = ({
       disabled={disabled || isLoading}
       onClick={onClick}
       style={buttonStyle}
+      type={type}
+      aria-label={ariaLabel}
       {...props}
     >
-      <div className={`${styles.buttonContent} ${isLoading ? styles.loading : ""}`}>{children}</div>
+      <div
+        className={`${styles.buttonContent} ${isLoading ? styles.loading : ""}`}
+      >
+        {children}
+      </div>
       {isLoading && (
         <div className={styles.spinnerWrapper}>
           <div className={styles.loaderSpinner}></div>

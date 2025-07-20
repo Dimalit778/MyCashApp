@@ -56,6 +56,7 @@ const LoginForm = ({ onSubmit, isLoading }) => {
               endAdornment={
                 <IconButton
                   data-cy="toggle-password"
+                  ariaLabel="Toggle Password"
                   icon={
                     <FontAwesomeIcon icon={showPassword ? faEye : faEyeSlash} />
                   }
@@ -70,6 +71,7 @@ const LoginForm = ({ onSubmit, isLoading }) => {
           <div className="d-grid gap-2">
             <MyButton
               data-cy="login-submit"
+              ariaLabel="Login"
               type="submit"
               bgColor={THEME.orange}
               isLoading={isLoading}

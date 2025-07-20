@@ -11,6 +11,7 @@ const YearCalender = ({ year, setYear }) => {
     >
       <IconButton
         data-cy="year-prev-btn"
+        ariaLabel="Previous Year"
         icon={<FontAwesomeIcon icon={faAngleLeft} />}
         onClick={() => setYear((prev) => prev - 1)}
         className="border-1 border-light btn-sm me-5 bg-transparent"

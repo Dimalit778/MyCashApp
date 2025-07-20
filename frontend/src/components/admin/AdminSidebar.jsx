@@ -107,6 +107,8 @@ const AdminSidebar = ({ onClose }) => {
       {/* Logout Button */}
       <div className={styles.logoutSection}>
         <MyButton
+          type="button"
+          ariaLabel="Logout"
           data-cy="admin-sidebar-logout-button"
           bgColor={THEME.dark}
           className={styles.logoutButton}

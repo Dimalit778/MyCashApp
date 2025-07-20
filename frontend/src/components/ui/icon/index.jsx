@@ -3,6 +3,7 @@ import styles from "./icon.module.css";
 
 const IconButton = ({
   onClick,
+  ariaLabel,
   icon,
   color = "white",
   bgColor = "transparent",
@@ -46,6 +47,7 @@ const IconButton = ({
   return (
     <button
       type="button"
+      aria-label={ariaLabel}
       onClick={onClick}
       className={`${styles.iconButton} ${className}`}
       style={buttonStyle}

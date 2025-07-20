@@ -89,6 +89,7 @@ const LeftSideBar = () => {
       <div className={styles.logoutSection}>
         <MyButton
           data-cy="left-sidebar-logout-button"
+          ariaLabel="Logout"
           bgColor={THEME.dark}
           className={styles.logoutButton}
           onClick={logoutHandler}

@@ -5,7 +5,10 @@ import IconButton from "components/ui/icon";
 import MyButton from "components/ui/button";
 import "./categoriesStyle.css";
 
-import { useAddCategoryMutation, useDeleteCategoryMutation } from "services/api/categoriesApi";
+import {
+  useAddCategoryMutation,
+  useDeleteCategoryMutation,
+} from "services/api/categoriesApi";
 import { useParams } from "react-router-dom";
 import toast from "react-hot-toast";
 import Swal from "sweetalert2";
@@ -86,7 +89,10 @@ const Categories = ({ categories, max }) => {
           {Capitalize(type)} Categories
         </p>
 
-        <p data-cy="categories-max" className="px-2 bg-secondary rounded fw-bold fs-6">
+        <p
+          data-cy="categories-max"
+          className="px-2 bg-secondary rounded fw-bold fs-6"
+        >
           {categories?.length} / {max}
         </p>
       </div>
@@ -96,15 +102,21 @@ const Categories = ({ categories, max }) => {
           data-cy="categories-list"
           className="d-grid gap-2"
           style={{
-            gridTemplateColumns: categories?.length > 5 ? "repeat(2, 1fr)" : "1fr",
+            gridTemplateColumns:
+              categories?.length > 5 ? "repeat(2, 1fr)" : "1fr",
           }}
         >
           {categories?.map((category) => (
-            <div data-cy="category-item" key={category._id} className="my-card-item">
+            <div
+              data-cy="category-item"
+              key={category._id}
+              className="my-card-item"
+            >
               <span data-cy="category-name">{category.name}</span>
 
               <IconButton
                 data-cy="delete-category-btn"
+                ariaLabel="Delete Category"
                 onClick={() => handleDelete(category._id)}
                 icon={<FontAwesomeIcon icon={faXmark} />}
                 color="red"
@@ -116,7 +128,13 @@ const Categories = ({ categories, max }) => {
         </div>
 
         {categories?.length < max && (
-          <Form data-cy="category-form" noValidate ref={formRef} onSubmit={handleSubmit(onSubmit)} className="mt-3">
+          <Form
+            data-cy="category-form"
+            noValidate
+            ref={formRef}
+            onSubmit={handleSubmit(onSubmit)}
+            className="mt-3"
+          >
             <div className="mb-3 border-bottom border-3 border-secondary"></div>
             <div className="d-flex gap-2 align-items-start">
               <div className="w-100" style={{ marginBottom: "-1rem" }}>
@@ -143,6 +161,7 @@ const Categories = ({ categories, max }) => {
               <MyButton
                 data-cy="submit-category"
                 type="submit"
+                ariaLabel="Add Category"
                 bgColor={THEME.dark}
                 border={THEME.light}
                 isLoading={isAdding || isSubmitting}
