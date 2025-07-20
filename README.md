@@ -7,15 +7,15 @@ A modern, full-stack web application for tracking personal expenses and income w
 ## 🎥 Demo Videos
 
 <div align="center">
-  <h3>User Flow Demo</h3>
+  <h3>👤 User Flow Demo</h3>
   <video width="80%" controls>
-    <source src="frontend/src/assets/appImages/user-flow.mp4" type="video/mp4">
+    <source src="https://github.com/user-attachments/assets/d0834017-f891-4b2c-8d43-1b3578c35974" type="video/mp4">
     Your browser does not support the video tag.
   </video>
   
-  <h3>Admin Flow Demo</h3>
+  <h3>⚙️ Admin Flow Demo</h3>
   <video width="80%" controls>
-    <source src="frontend/src/assets/appImages/admin-flow.mp4" type="video/mp4">
+    <source src="https://github.com/user-attachments/assets/90386206-3d63-46ac-9154-b24a7d15d553" type="video/mp4">
     Your browser does not support the video tag.
   </video>
 </div>
@@ -150,9 +150,9 @@ npm run cy
 ## 📱 Mobile Responsive
 
 <div align="center">
-  <img src="frontend/src/assets/appImages/mobile-home-page.PNG" alt="Mobile Home" width="30%" />
-  <img src="frontend/src/assets/appImages/mobile-expenses-page.PNG" alt="Mobile Expenses" width="30%" />
   <img src="frontend/src/assets/appImages/mobile-admin-analytics.PNG" alt="Mobile Admin" width="30%" />
+  <img src="frontend/src/assets/appImages/mobile-admin-users.PNG.PNG" alt="Mobile Expenses" width="30%" />
+  <img src="frontend/src/assets/appImages/mobile-admin-database.PNG" alt="Mobile Home" width="30%" />
 </div>
 
 ## 🚢 Deployment
