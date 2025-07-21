@@ -31,9 +31,28 @@ export const isSafari = () => {
   return /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
 };
 
-// Safari has issues with cookies in development, so we'll treat it as mobile
 export const shouldUseTokenStorage = () => {
-  return isPlatformMobile() || isSafari();
+  const currentHost = window.location.hostname;
+  let backendUrl = "";
+
+  if (process.env.REACT_APP_ENVIRONMENT === "production") {
+    backendUrl = process.env.REACT_APP_RENDER_SERVER_URL || "";
+  } else {
+    backendUrl = process.env.REACT_APP_API_URL || "";
+  }
+
+  let backendHost = "";
+  try {
+    if (backendUrl) {
+      backendHost = new URL(backendUrl).hostname;
+    }
+  } catch (e) {
+    backendHost = "";
+  }
+
+  const isCrossDomain = backendHost !== currentHost && backendHost !== "";
+
+  return isPlatformMobile() || isSafari() || isCrossDomain;
 };
 
 export const applyDeviceSpecificStyles = () => {

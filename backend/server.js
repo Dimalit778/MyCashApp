@@ -34,12 +34,7 @@ app.use(bodyParser.json());
 // --- CORS configurations
 app.use(
   cors({
-    origin: [
-      ORIGIN,
-      "http://localhost:3000",
-      process.env.CLIENT_URL,
-      process.env.RENDER_FRONTEND_URL,
-    ].filter(Boolean), // Remove undefined values
+    origin: ORIGIN,
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization", "Cookie", "Refresh"],

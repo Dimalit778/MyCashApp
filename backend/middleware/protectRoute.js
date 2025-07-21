@@ -8,6 +8,7 @@ export const protectRoute = asyncHandler(async (req, res, next) => {
 
   if (req.cookies.token || req.cookies.refreshToken) {
     token = req.cookies.token;
+    console.log("token ----", token);
     refreshToken = req.cookies.refreshToken;
   } else if (req.headers.authorization?.startsWith("Bearer")) {
     token = req.headers.authorization.split(" ")[1];
