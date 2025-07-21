@@ -47,11 +47,12 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "cross-env ESLINT_USE_FLAT_CONFIG=false REACT_APP_ENVIRONMENT=development react-scripts start",
-    "start:prod": "cross-env REACT_APP_ENVIRONMENT=production react-scripts start",
-    "dev": "concurrently \"cd ../backend && npm run dev\" \"cross-env REACT_APP_ENVIRONMENT=development react-scripts start\"",
-    "test:mode": "concurrently \"cd ../backend && npm run test:backend\" \"cross-env REACT_APP_ENVIRONMENT=test react-scripts start\"",
-    "build": "cross-env REACT_APP_ENVIRONMENT=production react-scripts build",
+    "start": "cross-env ESLINT_USE_FLAT_CONFIG=false REACT_APP_ENVIRONMENT=development craco start",
+    "start:prod": "cross-env REACT_APP_ENVIRONMENT=production craco start",
+    "dev": "concurrently \"cd ../backend && npm run dev\" \"cross-env REACT_APP_ENVIRONMENT=development craco start\"",
+    "test:mode": "concurrently \"cd ../backend && npm run test:backend\" \"cross-env REACT_APP_ENVIRONMENT=test craco start\"",
+    "build": "cross-env REACT_APP_ENVIRONMENT=production craco build",
+    "test": "craco test",
     "eject": "react-scripts eject",
     "cy:test": "npx cypress run",
     "cy": "cypress open",
@@ -75,6 +76,7 @@
     "undici": ">=6.21.1"
   },
   "devDependencies": {
+    "@craco/craco": "^7.1.0",
     "@testing-library/react": "^16.0.1",
     "@testing-library/user-event": "^14.5.2",
     "ajv": "^7.2.4",
