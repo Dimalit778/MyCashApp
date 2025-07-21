@@ -33,6 +33,12 @@ const BrandLogo = ({ size = "sm" }) => {
         src={appLogo}
         alt="money-bag"
         className="me-2"
+        style={{
+          // Ensure crisp rendering on high-DPI displays
+          imageRendering: "crisp-edges",
+          maxWidth: "100%",
+          height: "auto",
+        }}
       />
       <span
         className="title"
