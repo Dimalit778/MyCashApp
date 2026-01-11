@@ -206,12 +206,12 @@ const Landing = () => {
                     <h2 className={styles.sectionTitle} data-cy="about-title">
                       About Us
                     </h2>
-                    <p className={styles.aboutText} data-cy="about-text-2">
+                    <p className={styles.aboutText} data-cy="about-text-1">
                       MyCash is a financial planning firm based in Jerusalem, providing comprehensive financial planning
                       services to individuals and businesses. Our team of experts is dedicated to helping our clients
                       achieve their financial goals by providing them with personalized and customized solutions.
                     </p>
-                    <p className={styles.aboutText}>
+                    <p className={styles.aboutText} data-cy="about-text-2">
                       We understand that every client has unique financial needs and goals, and we work closely with
                       them to develop a plan that is tailored to their specific needs. Our goal is to provide our
                       clients with the knowledge and tools they need to make informed financial decisions and achieve
