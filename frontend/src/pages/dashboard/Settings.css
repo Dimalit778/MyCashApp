@@ -1,0 +1,110 @@
+/* Settings Page Styles */
+.settings-page {
+  min-height: 90vh;
+  padding: 2rem 0;
+}
+
+/* Header Section */
+.settings-header {
+  margin-bottom: 3rem;
+  text-align: center;
+}
+
+.settings-header-content {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.settings-title {
+  font-family: var(--font-accent);
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 0.75rem;
+  letter-spacing: -0.02em;
+  background: linear-gradient(135deg, #ff8c00, #ff6b6b);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.settings-subtitle {
+  font-family: var(--font-primary);
+  font-size: 1.2rem;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 0;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+
+/* Main Content */
+.settings-content {
+  margin-bottom: 3rem;
+}
+
+/* Danger Zone */
+.settings-danger-zone {
+  margin-top: 4rem;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Responsive Design */
+@media (max-width: 991.98px) {
+  .settings-page {
+    padding: 1.5rem 0;
+  }
+
+  .settings-header {
+    margin-bottom: 2rem;
+  }
+
+  .settings-title {
+    font-size: 2.5rem;
+  }
+
+  .settings-subtitle {
+    font-size: 1.1rem;
+  }
+
+  .settings-content {
+    margin-bottom: 2rem;
+  }
+
+  .settings-danger-zone {
+    margin-top: 3rem;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .settings-page {
+    padding: 1rem 0;
+  }
+
+  .settings-header {
+    margin-bottom: 1.5rem;
+  }
+
+  .settings-title {
+    font-size: 2rem;
+  }
+
+  .settings-subtitle {
+    font-size: 1rem;
+  }
+
+  .settings-danger-zone {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .settings-title {
+    font-size: 1.75rem;
+  }
+
+  .settings-subtitle {
+    font-size: 0.95rem;
+  }
+}

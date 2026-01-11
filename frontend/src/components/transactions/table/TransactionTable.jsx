@@ -1,17 +1,19 @@
-import React, { useCallback, useMemo, useState } from "react";
-import { useDispatch } from "react-redux";
-import { openTransactionModal } from "services/reducers/uiSlice";
-import { ITEMS_PER_PAGE, TABLE_COLORS } from "config/transactionsConfig";
+import React, { useCallback, useMemo, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { motion } from 'framer-motion';
+import { openTransactionModal } from 'services/reducers/uiSlice';
+import { ITEMS_PER_PAGE, TABLE_COLORS } from 'config/transactionsConfig';
 
-import { format } from "date-fns";
-import TableHeader from "./TableHeader";
-import Swal from "sweetalert2";
-import toast from "react-hot-toast";
-import TableTitles from "./TableTitles";
-import { useDeleteTransactionMutation } from "services/api/transactionsApi";
+import { format } from 'date-fns';
+import TableHeader from './TableHeader';
+import Swal from 'sweetalert2';
+import toast from 'react-hot-toast';
+import TableTitles from './TableTitles';
+import { useDeleteTransactionMutation } from 'services/api/transactionsApi';
 
-import PaginationPages from "../pagination";
-import TableItem from "./TableItem";
+import PaginationPages from '../pagination';
+import TableItem from './TableItem';
+import './TransactionTable.css';
 
 const TransactionsTable = ({ monthData, type }) => {
   const dispatch = useDispatch();
@@ -156,59 +158,70 @@ const TransactionsTable = ({ monthData, type }) => {
   const handleDeleteItems = () => handleDelete(selectedItems);
 
   return (
-    <div className="card bg-dark mt-5" style={{ minHeight: "40vh" }}>
-      <div className="card-body ">
-        <TableHeader
-          type={type}
-          total={total}
-          exportData={handleExport}
-          openModal={handleOpenModal}
-        />
+    <motion.div
+      className="transactions-table-container"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, delay: 0.2 }}
+    >
+      <TableHeader type={type} total={total} exportData={handleExport} openModal={handleOpenModal} />
 
-        <div className="table-responsive">
-          {!transactions.length ? (
-            <div
-              data-cy="transactions-empty"
-              className="d-flex justify-content-center mt-5"
-            >
-              <h3 className="text-secondary">{type} List is empty</h3>
-            </div>
-          ) : (
-            <table
-              data-cy="transactions-table"
-              className="table table-dark table-hover "
-            >
-              <TableTitles
-                selectedItems={selectedItems}
-                onDelete={handleDeleteItems}
-                handleSort={handleSort}
-                sortConfig={sortConfig}
-              />
-              <tbody data-cy="transactions-body">
-                {currentItems.map((item) => (
-                  <TableItem
-                    key={item._id}
-                    item={item}
-                    selectedItems={selectedItems}
-                    toggleSelection={toggleSelection}
-                    categoryColors={categoryColors}
-                    handleOpenModal={handleOpenModal}
-                  />
-                ))}
-              </tbody>
-            </table>
-          )}
-        </div>
-
-        {totalPages > 1 && (
-          <PaginationPages
-            currentPage={currentPage}
-            totalPages={totalPages}
-            onPageChange={handlePageChange}
-          />
+      <div className="table-responsive">
+        {!transactions.length ? (
+          <motion.div
+            data-cy="transactions-empty"
+            className="transactions-empty-state"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.4 }}
+          >
+            <div className="transactions-empty-icon">📊</div>
+            <h3>No {type} yet</h3>
+            <p style={{ color: 'rgba(255, 255, 255, 0.5)', marginTop: '0.5rem' }}>
+              Start tracking your {type.toLowerCase()} by adding your first transaction
+            </p>
+          </motion.div>
+        ) : (
+          <motion.table
+            data-cy="transactions-table"
+            className="transactions-table table-dark table-hover"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.3, delay: 0.1 }}
+          >
+            <TableTitles
+              selectedItems={selectedItems}
+              onDelete={handleDeleteItems}
+              handleSort={handleSort}
+              sortConfig={sortConfig}
+            />
+            <tbody data-cy="transactions-body">
+              {currentItems.map((item, index) => (
+                <TableItem
+                  key={item._id}
+                  item={item}
+                  selectedItems={selectedItems}
+                  toggleSelection={toggleSelection}
+                  categoryColors={categoryColors}
+                  handleOpenModal={handleOpenModal}
+                  index={index}
+                />
+              ))}
+            </tbody>
+          </motion.table>
         )}
       </div>
-    </div>
+
+      {totalPages > 1 && (
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3, delay: 0.3 }}
+        >
+          <PaginationPages currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />
+        </motion.div>
+      )}
+    </motion.div>
   );
 };
 

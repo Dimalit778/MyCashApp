@@ -1,9 +1,35 @@
 .my-card {
-  border: none;
-  border-radius: 15px;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-  padding: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 18px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.05);
+  padding: 0.8rem;
   margin: 0 auto;
+  background: linear-gradient(135deg, rgba(26, 26, 26, 0.95) 0%, rgba(40, 40, 40, 0.95) 100%);
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.my-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, #ff8c00, #ff6b6b, transparent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.my-card:hover {
+  border-color: rgba(255, 140, 0, 0.2);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 140, 0, 0.1);
+}
+
+.my-card:hover::before {
+  opacity: 1;
 }
 
 .my-card-header {
@@ -12,37 +38,216 @@
   letter-spacing: 0.08rem;
   font-size: 1.4rem;
   font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.categories-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.categories-title {
+  font-family: var(--font-accent);
+  font-weight: 500;
+  font-size: 1.1rem;
+  color: white;
+  letter-spacing: -0.01em;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.my-card-body {
+  position: relative;
+}
+
+.categories-grid {
+  display: grid;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
 }
 
 .my-card-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px;
-  background-color: #93979a;
-  color: black;
-  border: none;
-  font-weight: 500;
+  padding: 0.4rem 1.1rem;
+  background: rgba(255, 255, 255, 0.05);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  font-weight: 600;
   margin: 0;
-  border-radius: 8px;
-  height: 50px;
+  border-radius: 12px;
+  height: auto;
+  min-height: 50px;
   box-sizing: border-box;
-  transition: background-color 0.3s ease;
+  transition: all 0.3s ease;
   text-transform: capitalize;
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+  font-size: 1rem;
+  cursor: default;
+}
+
+.my-card-item::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: linear-gradient(180deg, #ff8c00, #ff6b6b);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.my-card-item:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 140, 0, 0.3);
+  transform: translateX(5px);
+  box-shadow: 0 4px 15px rgba(255, 140, 0, 0.15);
+}
+
+.my-card-item:hover::before {
+  opacity: 1;
+}
+
+.category-name {
+  flex: 1;
+  font-family: var(--font-primary);
+  letter-spacing: 0.02em;
+}
+
+.category-divider {
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(255, 140, 0, 0.3), transparent);
+  border: none;
+  margin: 1.5rem 0;
+}
+
+.category-form {
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .form-input {
-  background-color: #465c71;
-  color: #ecf0f1;
-  border: none;
-  transition: background-color 0.3s ease;
+  background: rgba(255, 255, 255, 0.05);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 0.5rem 1rem;
+  transition: all 0.3s ease;
+  font-size: 1rem;
+  font-weight: 500;
 }
 
 .form-input:focus {
-  background-color: #546e7a;
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 140, 0, 0.5);
   outline: none;
+  box-shadow: 0 0 0 3px rgba(255, 140, 0, 0.1);
 }
 
 .form-input::placeholder {
-  color: #bdc3c7;
+  color: rgba(255, 255, 255, 0.5);
+  font-weight: 400;
+}
+
+.add-category-btn {
+  background: linear-gradient(135deg, #ff8c00, #ff6b6b);
+  border: none;
+  border-radius: 12px;
+  color: white;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(255, 140, 0, 0.3);
+  min-width: 40px;
+  height: 42 px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.add-category-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 140, 0, 0.4);
+  background: linear-gradient(135deg, #ff6b6b, #ff8c00);
+}
+
+.add-category-btn:active {
+  transform: translateY(0);
+}
+
+.empty-state {
+  text-align: center;
+  padding: 2rem 1rem;
+  color: rgba(255, 255, 255, 0.6);
+  font-style: italic;
+}
+
+/* Animation for new items */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.my-card-item {
+  animation: slideIn 0.3s ease;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .my-card {
+    padding: 1.2rem;
+  }
+
+  .categories-title {
+    font-size: 1.1rem;
+  }
+
+  .categories-count {
+    font-size: 0.85rem;
+    padding: 0.3rem 0.8rem;
+  }
+
+  .my-card-item {
+    padding: 0.8rem 1rem;
+    font-size: 0.95rem;
+  }
+
+  .form-input {
+    padding: 0.8rem 1rem;
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .my-card {
+    padding: 1rem;
+  }
+
+  .categories-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .categories-title {
+    font-size: 1rem;
+  }
+
+  .my-card-item {
+    padding: 0.7rem 0.9rem;
+    font-size: 0.9rem;
+  }
 }

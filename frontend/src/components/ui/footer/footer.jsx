@@ -1,7 +1,7 @@
-import React from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFacebook, faInstagram, faYoutube } from "@fortawesome/free-brands-svg-icons";
-import { Container, Row, Col } from "react-bootstrap";
+import React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faFacebook, faInstagram, faYoutube } from '@fortawesome/free-brands-svg-icons';
+import { Container, Row, Col } from 'react-bootstrap';
 
 const Footer = () => {
   return (

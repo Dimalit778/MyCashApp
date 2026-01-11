@@ -1,8 +1,8 @@
-import React, { useState } from "react";
-import { format, addMonths, subMonths, addYears, subYears } from "date-fns";
-import { motion, AnimatePresence } from "framer-motion";
-import "./calendarStyle.css";
-import { monthItemVariants, overlayVariants } from "./animation";
+import React, { useState } from 'react';
+import { format, addMonths, subMonths, addYears, subYears } from 'date-fns';
+import { motion, AnimatePresence } from 'framer-motion';
+import './calendarStyle.css';
+import { monthItemVariants, overlayVariants } from './animation';
 
 const CalendarMonth = ({ date, setDate }) => {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -17,41 +17,61 @@ const CalendarMonth = ({ date, setDate }) => {
     setIsExpanded(false);
   };
 
+  const handleToggleExpanded = () => {
+    setIsExpanded(!isExpanded);
+  };
+
   return (
     <div data-cy="calendar-container" className="calendar-container">
-      <motion.div className="calendar-header">
+      <div className="calendar-header">
         <motion.button
           data-cy="calendar-prev-button"
           className="nav-button"
           onClick={() => (!isExpanded ? handlePrevMonth() : handlePrevYear())}
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.95 }}
+          whileHover={{ scale: 1.08, rotate: -5 }}
+          whileTap={{ scale: 0.92 }}
+          transition={{ type: 'spring', stiffness: 400, damping: 17 }}
+          aria-label={isExpanded ? 'Previous year' : 'Previous month'}
         >
-          <span className="calendar-nav-arrow">&#9664;</span>
+          <span className="calendar-nav-arrow">❮</span>
         </motion.button>
 
         <motion.h2
           data-cy="calendar-title"
-          onClick={() => setIsExpanded(!isExpanded)}
+          onClick={handleToggleExpanded}
           className="calendar-title"
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
+          transition={{ type: 'spring', stiffness: 400, damping: 17 }}
+          role="button"
+          tabIndex={0}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              handleToggleExpanded();
+            }
+          }}
+          aria-expanded={isExpanded}
+          aria-label={isExpanded ? 'Select month' : 'View all months'}
         >
-          {format(date, isExpanded ? "yyyy" : "MMMM yyyy")}
+          {format(date, isExpanded ? 'yyyy' : 'MMMM yyyy')}
         </motion.h2>
+
         <motion.button
           data-cy="calendar-next-button"
           className="nav-button"
           onClick={() => (!isExpanded ? handleNextMonth() : handleNextYear())}
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.95 }}
+          whileHover={{ scale: 1.08, rotate: 5 }}
+          whileTap={{ scale: 0.92 }}
+          transition={{ type: 'spring', stiffness: 400, damping: 17 }}
+          aria-label={isExpanded ? 'Next year' : 'Next month'}
         >
-          <span className="nav-arrow">&#9654;</span>
+          <span className="nav-arrow">❯</span>
         </motion.button>
-      </motion.div>
+      </div>
 
       {/* Months Overlay */}
-      <AnimatePresence>
+      <AnimatePresence mode="wait">
         {isExpanded && (
           <motion.div
             data-cy="months-overlay"
@@ -59,7 +79,7 @@ const CalendarMonth = ({ date, setDate }) => {
             variants={overlayVariants}
             initial="hidden"
             animate="visible"
-            exit="hidden"
+            exit="exit"
           >
             <motion.div data-cy="months-grid" className="months-grid">
               {Array.from({ length: 12 }, (_, i) => {
@@ -75,12 +95,13 @@ const CalendarMonth = ({ date, setDate }) => {
                     data-selected={isSelectedMonth}
                     key={i}
                     variants={monthItemVariants}
-                    whileHover={{ scale: 1.1 }}
+                    whileHover={{ scale: 1.05, y: -4 }}
                     whileTap={{ scale: 0.95 }}
-                    className={`month-button ${isCurrentMonth ? "current" : ""} ${isSelectedMonth ? "selected" : ""}`}
+                    className={`month-button ${isCurrentMonth ? 'current' : ''} ${isSelectedMonth ? 'selected' : ''}`}
                     onClick={() => handleMonthSelect(i)}
+                    aria-label={`Select ${format(monthDate, 'MMMM')}`}
                   >
-                    {format(monthDate, "MMM")}
+                    {format(monthDate, 'MMM')}
                   </motion.button>
                 );
               })}

@@ -1,128 +1,192 @@
-import BrandLogo from "components/brandLogo";
-import TextInput from "components/ui/textInput";
-
-import { THEME } from "constants/Theme";
-
-import React from "react";
-import { Container, Row, Col, Form, Button } from "react-bootstrap";
-import { useForm } from "react-hook-form";
-import toast from "react-hot-toast";
+import BrandLogo from 'components/brandLogo';
+import TextInput from 'components/ui/textInput';
+import React from 'react';
+import { Container, Row, Col, Form } from 'react-bootstrap';
+import { useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
+import { motion } from 'framer-motion';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEnvelope, faPhone, faPaperPlane } from '@fortawesome/free-solid-svg-icons';
+import './ContactUs.css';
 
 const ContactUs = () => {
-  const { control, handleSubmit, reset } = useForm({
+  const { control, handleSubmit, reset, formState } = useForm({
     defaultValues: {
-      name: "",
-      email: "",
-      message: "",
+      name: '',
+      email: '',
+      message: '',
     },
-    mode: "onChange",
+    mode: 'onChange',
   });
+
   const onSubmit = handleSubmit((data) => {
     if (data) {
-      toast.success("Message sent successfully");
+      toast.success('Message sent successfully! We will respond within 24 hours.');
       reset();
     }
   });
 
-  return (
-    <Container
-      fluid
-      className="d-flex flex-column justify-content-around"
-      style={{ minHeight: "80vh" }}
-    >
-      <Row>
-        <div className="text-center p-5 ">
-          <BrandLogo size="lg" />
-          <div data-cy="contact-title" className="mt-4">
-            <h2 className="fs-4 text-white-50 mb-3">
-              Our support team can help you with every question you have.
-            </h2>
-            <p className="fs-5 text-white-50 mb-0">
-              You can contact us and our team will respond within 24 hours.
-            </p>
-          </div>
-        </div>
-      </Row>
-      <Row className="mt-4 d-flex">
-        <Col lg={4} className=" text-center mb-4 ">
-          <div
-            data-cy="contact-info"
-            className="d-flex flex-column align-items-center"
-          >
-            <h1 className="display-4 mb-4" style={{ color: THEME.orange }}>
-              Contact Us
-            </h1>
-            <div className="d-inline-block text-start">
-              <p className="mb-2">Email: Mycash@outlook.com</p>
-              <p className="mb-2">Phone: +972 052-6731280</p>
-            </div>
-          </div>
-        </Col>
-        <Col lg={8}>
-          <Form
-            data-cy="contact-form"
-            onSubmit={onSubmit}
-            className="p-4 bg border border-1 border-secondary rounded   "
-          >
-            <Row className="d-flex">
-              <Col lg={6}>
-                <TextInput
-                  data-cy="contact-name"
-                  label="Name"
-                  name="name"
-                  placeholder="Enter your name"
-                  control={control}
-                  rules={{ required: "Name is required" }}
-                  className="form-control"
-                />
-              </Col>
-              <Col lg={6}>
-                <TextInput
-                  data-cy="contact-email"
-                  label="Email"
-                  name="email"
-                  placeholder="Enter your email address"
-                  control={control}
-                  rules={{
-                    required: "Email is required",
-                    pattern: {
-                      value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                      message: "Invalid email address",
-                    },
-                  }}
-                  className="form-control"
-                />
-              </Col>
-              <Col lg={12}>
-                <TextInput
-                  data-cy="contact-message"
-                  label="Message"
-                  name="message"
-                  placeholder="Write your message..."
-                  as="textarea"
-                  rows={3}
-                  control={control}
-                  rules={{ required: "Message is required" }}
-                  className="form-control"
-                />
-              </Col>
-            </Row>
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.15,
+        delayChildren: 0.1,
+      },
+    },
+  };
 
-            <Button
-              data-cy="contact-submit-button"
-              variant="dark"
-              type="submit"
-              style={{
-                border: "1px solid #444",
-                borderRadius: "4px",
-                padding: "10px 20px",
-              }}
-            >
-              Send
-            </Button>
-          </Form>
-        </Col>
-      </Row>
+  const itemVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.6,
+        ease: 'easeOut',
+      },
+    },
+  };
+
+  return (
+    <Container fluid className="contact-page">
+      <motion.div variants={containerVariants} initial="hidden" animate="visible">
+        {/* Header Section */}
+        <motion.div variants={itemVariants} className="contact-header">
+          <div data-cy="contact-title" className="contact-intro">
+            <h1 className="contact-main-title">Get In Touch</h1>
+            <p className="contact-subtitle">Our support team can help you with every question you have.</p>
+            <p className="contact-description">You can contact us and our team will respond within 24 hours.</p>
+          </div>
+        </motion.div>
+
+        <Row className="contact-content">
+          {/* Contact Info Card */}
+          <Col lg={4} className="mb-4">
+            <motion.div variants={itemVariants} data-cy="contact-info" className="contact-info-card">
+              <div className="contact-info-header">
+                <div className="contact-icon-wrapper">
+                  <span className="contact-emoji">💬</span>
+                </div>
+                <h2 className="contact-info-title">Contact Information</h2>
+              </div>
+
+              <div className="contact-info-items">
+                <motion.div
+                  className="contact-info-item"
+                  whileHover={{ x: 5 }}
+                  transition={{ type: 'spring', stiffness: 300 }}
+                >
+                  <div className="contact-info-icon">
+                    <FontAwesomeIcon icon={faEnvelope} />
+                  </div>
+                  <div className="contact-info-details">
+                    <span className="contact-info-label">Email</span>
+                    <a href="mailto:Mycash@outlook.com" className="contact-info-value">
+                      Mycash@outlook.com
+                    </a>
+                  </div>
+                </motion.div>
+
+                <motion.div
+                  className="contact-info-item"
+                  whileHover={{ x: 5 }}
+                  transition={{ type: 'spring', stiffness: 300 }}
+                >
+                  <div className="contact-info-icon">
+                    <FontAwesomeIcon icon={faPhone} />
+                  </div>
+                  <div className="contact-info-details">
+                    <span className="contact-info-label">Phone</span>
+                    <a href="tel:+972052-6731280" className="contact-info-value">
+                      +972 052-6731280
+                    </a>
+                  </div>
+                </motion.div>
+              </div>
+
+              <div className="contact-info-footer">
+                <p>We're here to help you manage your finances better</p>
+              </div>
+            </motion.div>
+          </Col>
+
+          {/* Contact Form */}
+          <Col lg={8}>
+            <motion.div variants={itemVariants}>
+              <Form data-cy="contact-form" onSubmit={onSubmit} className="contact-form">
+                <div className="contact-form-header">
+                  <h3 className="contact-form-title">Send Us a Message</h3>
+                  <p className="contact-form-subtitle">Fill out the form below and we'll get back to you soon</p>
+                </div>
+
+                <Row>
+                  <Col lg={6}>
+                    <div className="form-group-wrapper">
+                      <TextInput
+                        data-cy="contact-name"
+                        label="Your Name"
+                        name="name"
+                        placeholder="John Doe"
+                        control={control}
+                        rules={{ required: 'Name is required' }}
+                        className="contact-input"
+                      />
+                    </div>
+                  </Col>
+                  <Col lg={6}>
+                    <div className="form-group-wrapper">
+                      <TextInput
+                        data-cy="contact-email"
+                        label="Email Address"
+                        name="email"
+                        placeholder="john@example.com"
+                        control={control}
+                        rules={{
+                          required: 'Email is required',
+                          pattern: {
+                            value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                            message: 'Invalid email address',
+                          },
+                        }}
+                        className="contact-input"
+                      />
+                    </div>
+                  </Col>
+                  <Col lg={12}>
+                    <div className="form-group-wrapper">
+                      <TextInput
+                        data-cy="contact-message"
+                        label="Your Message"
+                        name="message"
+                        placeholder="Tell us how we can help you..."
+                        as="textarea"
+                        rows={5}
+                        control={control}
+                        rules={{ required: 'Message is required' }}
+                        className="contact-input contact-textarea"
+                      />
+                    </div>
+                  </Col>
+                </Row>
+
+                <motion.button
+                  data-cy="contact-submit-button"
+                  type="submit"
+                  className="contact-submit-btn"
+                  whileHover={{ scale: 1.02, y: -2 }}
+                  whileTap={{ scale: 0.98 }}
+                  disabled={formState.isSubmitting}
+                >
+                  <FontAwesomeIcon icon={faPaperPlane} style={{ marginRight: '0.5rem' }} />
+                  {formState.isSubmitting ? 'Sending...' : 'Send Message'}
+                </motion.button>
+              </Form>
+            </motion.div>
+          </Col>
+        </Row>
+      </motion.div>
     </Container>
   );
 };

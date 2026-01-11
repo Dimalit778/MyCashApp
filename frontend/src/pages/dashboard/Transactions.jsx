@@ -1,22 +1,21 @@
-import React, { useEffect, useState } from "react";
-import ProgressBar from "components/transactions/progressBar";
-import TransactionModal from "components/transactions/TransactionModal";
-import TransactionsTable from "components/transactions/table/TransactionTable";
-import CalendarMonth from "components/transactions/calendarMonth";
-import { useParams } from "react-router-dom";
+import React, { useEffect, useState } from 'react';
+import { motion } from 'framer-motion';
+import ProgressBar from 'components/transactions/progressBar';
+import TransactionModal from 'components/transactions/TransactionModal';
+import TransactionsTable from 'components/transactions/table/TransactionTable';
+import CalendarMonth from 'components/transactions/calendarMonth';
+import { useParams } from 'react-router-dom';
 
-import Categories from "components/transactions/categories";
+import Categories from 'components/transactions/categories';
 
-import { useSelector } from "react-redux";
-import {
-  selectedDateObject,
-  transactionModal,
-} from "services/reducers/uiSlice";
-import { useGetCategoriesQuery } from "services/api/categoriesApi";
-import { useGetMonthlyTransactionsQuery } from "services/api/transactionsApi";
-import LoadingOverlay from "components/LoadingLayout";
+import { useSelector } from 'react-redux';
+import { selectedDateObject, transactionModal } from 'services/reducers/uiSlice';
+import { useGetCategoriesQuery } from 'services/api/categoriesApi';
+import { useGetMonthlyTransactionsQuery } from 'services/api/transactionsApi';
+import LoadingOverlay from 'components/LoadingLayout';
 
-import DataError from "components/DataError";
+import DataError from 'components/DataError';
+import './TransactionsPage.css';
 
 const Transaction = () => {
   const { type } = useParams();
@@ -57,29 +56,52 @@ const Transaction = () => {
     return <DataError error={monthError || categoriesError} />;
   }
 
-  const isLoading =
-    fetchingData || fetchingCategories || loadingData || loadingCategories;
+  const isLoading = fetchingData || fetchingCategories || loadingData || loadingCategories;
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.5,
+        ease: 'easeOut',
+      },
+    },
+  };
 
   return (
     <LoadingOverlay data-cy="loading" show={isLoading}>
-      <div>
-        <div className="row mt-2 gx-5" style={{ minHeight: "45vh" }}>
-          <div className="col-12 col-lg-8">
-            <CalendarMonth date={date} setDate={setDate} />
+      <motion.div className="transactions-page" variants={containerVariants} initial="hidden" animate="visible">
+        <div className="row gx-4 gy-4">
+          <motion.div className="col-12 col-lg-8" variants={itemVariants}>
+            <div className="transactions-left-section">
+              <CalendarMonth date={date} setDate={setDate} />
+              <ProgressBar data={{ transactions, total }} />
+            </div>
+          </motion.div>
 
-            <ProgressBar data={{ transactions, total }} />
-          </div>
-          <div className="col-12 col-lg-4">
+          <motion.div className="col-12 col-lg-4" variants={itemVariants}>
             <Categories categories={categories} max={maxCategories} />
-          </div>
+          </motion.div>
         </div>
 
-        <TransactionsTable monthData={{ transactions, total }} type={type} />
+        <motion.div variants={itemVariants}>
+          <TransactionsTable monthData={{ transactions, total }} type={type} />
+        </motion.div>
 
-        {modalState.isOpen && (
-          <TransactionModal type={type} date={date} categories={categories} />
-        )}
-      </div>
+        {modalState.isOpen && <TransactionModal type={type} date={date} categories={categories} />}
+      </motion.div>
     </LoadingOverlay>
   );
 };
