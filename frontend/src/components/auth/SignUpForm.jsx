@@ -137,7 +137,7 @@ const SignUpForm = ({ onSubmit, isLoading }) => {
 
           <div className="auth-prompt">
             <p>Already have an account?</p>
-            <Link data-cy="goto-login login-link" to="/login" className="btn btn-outline-light btn-sm">
+            <Link data-cy="goto-login" to="/login" className="btn btn-outline-light btn-sm">
               Login
             </Link>
           </div>

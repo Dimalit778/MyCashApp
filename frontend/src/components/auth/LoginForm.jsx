@@ -92,7 +92,7 @@ const LoginForm = ({ onSubmit, isLoading }) => {
           <div className="auth-prompt">
             <p>Don't have an account?</p>
             <button
-              data-cy="goto-signup signup-link"
+              data-cy="goto-signup"
               type="button"
               className="btn btn-outline-light btn-sm"
               onClick={() => navigate('/signup')}
