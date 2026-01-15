@@ -10,35 +10,34 @@ import styles from 'components/landing/landing.module.css';
 import { motion, useInView } from 'framer-motion';
 import LandingAnimation from 'components/landing/animation';
 import { Link } from 'react-router-dom';
+const features = [
+  {
+    icon: '📊',
+    title: 'Track Expenses',
+    description: 'Monitor your spending patterns and stay on budget with detailed insights',
+  },
+  {
+    icon: '💰',
+    title: 'Smart Budgeting',
+    description: 'Create personalized budgets and achieve your financial goals faster',
+  },
+  {
+    icon: '📈',
+    title: 'Financial Reports',
+    description: 'Get comprehensive analytics and reports to make informed decisions',
+  },
+  {
+    icon: '🔒',
+    title: 'Secure & Private',
+    description: 'Your financial data is encrypted and protected with top-tier security',
+  },
+];
 
 const Landing = () => {
   const featuresRef = React.useRef(null);
   const aboutRef = React.useRef(null);
   const featuresInView = useInView(featuresRef, { once: true, amount: 0.3 });
   const aboutInView = useInView(aboutRef, { once: true, amount: 0.3 });
-
-  const features = [
-    {
-      icon: '📊',
-      title: 'Track Expenses',
-      description: 'Monitor your spending patterns and stay on budget with detailed insights',
-    },
-    {
-      icon: '💰',
-      title: 'Smart Budgeting',
-      description: 'Create personalized budgets and achieve your financial goals faster',
-    },
-    {
-      icon: '📈',
-      title: 'Financial Reports',
-      description: 'Get comprehensive analytics and reports to make informed decisions',
-    },
-    {
-      icon: '🔒',
-      title: 'Secure & Private',
-      description: 'Your financial data is encrypted and protected with top-tier security',
-    },
-  ];
 
   const containerVariants = {
     hidden: { opacity: 0 },

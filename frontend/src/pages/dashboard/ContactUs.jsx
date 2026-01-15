@@ -54,11 +54,9 @@ const ContactUs = () => {
       <motion.div variants={containerVariants} initial="hidden" animate="visible">
         {/* Header Section */}
         <motion.div variants={itemVariants} className="contact-header">
-          <div data-cy="brand-logo">
-            <BrandLogo />
-          </div>
           <div data-cy="contact-title" className="contact-intro">
-            <h2 className="contact-subtitle">Our support team can help you with every question you have.</h2>
+            <h1 className="contact-main-title">Get In Touch</h1>
+            <p className="contact-subtitle">Our support team can help you with every question you have.</p>
             <p className="contact-description">You can contact us and our team will respond within 24 hours.</p>
           </div>
         </motion.div>
@@ -71,7 +69,7 @@ const ContactUs = () => {
                 <div className="contact-icon-wrapper">
                   <span className="contact-emoji">💬</span>
                 </div>
-                <h1 className="contact-info-title">Contact Us</h1>
+                <h2 className="contact-info-title">Contact Information</h2>
               </div>
 
               <div className="contact-info-items">
@@ -84,9 +82,10 @@ const ContactUs = () => {
                     <FontAwesomeIcon icon={faEnvelope} />
                   </div>
                   <div className="contact-info-details">
-                    <p className="contact-info-value">
-                      Email: Mycash@outlook.com
-                    </p>
+                    <span className="contact-info-label">Email</span>
+                    <a href="mailto:Mycash@outlook.com" className="contact-info-value">
+                      Mycash@outlook.com
+                    </a>
                   </div>
                 </motion.div>
 
@@ -99,9 +98,10 @@ const ContactUs = () => {
                     <FontAwesomeIcon icon={faPhone} />
                   </div>
                   <div className="contact-info-details">
-                    <p className="contact-info-value">
-                      Phone: +972 052-6731280
-                    </p>
+                    <span className="contact-info-label">Phone</span>
+                    <a href="tel:+972052-6731280" className="contact-info-value">
+                      +972 052-6731280
+                    </a>
                   </div>
                 </motion.div>
               </div>
@@ -126,9 +126,9 @@ const ContactUs = () => {
                     <div className="form-group-wrapper">
                       <TextInput
                         data-cy="contact-name"
-                        label="Name"
+                        label="Your Name"
                         name="name"
-                        placeholder="Enter your name"
+                        placeholder="John Doe"
                         control={control}
                         rules={{ required: 'Name is required' }}
                         className="contact-input"
@@ -139,9 +139,9 @@ const ContactUs = () => {
                     <div className="form-group-wrapper">
                       <TextInput
                         data-cy="contact-email"
-                        label="Email"
+                        label="Email Address"
                         name="email"
-                        placeholder="Enter your email address"
+                        placeholder="john@example.com"
                         control={control}
                         rules={{
                           required: 'Email is required',
@@ -158,9 +158,9 @@ const ContactUs = () => {
                     <div className="form-group-wrapper">
                       <TextInput
                         data-cy="contact-message"
-                        label="Message"
+                        label="Your Message"
                         name="message"
-                        placeholder="Write your message..."
+                        placeholder="Tell us how we can help you..."
                         as="textarea"
                         rows={5}
                         control={control}
@@ -180,7 +180,7 @@ const ContactUs = () => {
                   disabled={formState.isSubmitting}
                 >
                   <FontAwesomeIcon icon={faPaperPlane} style={{ marginRight: '0.5rem' }} />
-                  {formState.isSubmitting ? 'Sending...' : 'Send'}
+                  {formState.isSubmitting ? 'Sending...' : 'Send Message'}
                 </motion.button>
               </Form>
             </motion.div>

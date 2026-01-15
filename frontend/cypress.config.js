@@ -34,16 +34,6 @@ module.exports = defineConfig({
     viewportWidth: 1280,
 
     setupNodeEvents(on, config) {
-      // Disable certificate errors
-      on('before:browser:launch', (browser, launchOptions) => {
-        if (browser.family === 'chromium' || browser.name === 'electron') {
-          launchOptions.args.push('--disable-features=CertificateTransparencyComponentUpdater');
-          launchOptions.args.push('--ignore-certificate-errors');
-          launchOptions.args.push('--disable-web-security');
-        }
-        return launchOptions;
-      });
-
       on("task", {
         async "db:seed-admin"() {
           try {

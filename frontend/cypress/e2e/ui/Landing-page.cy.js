@@ -14,15 +14,11 @@ describe("Landing Page", () => {
   it("should display landing page elements", () => {
     cy.getDataCy("landing-title").should("contain", "MANAGE YOUR");
     cy.getDataCy("stroke-title").should("contain", "MONEY");
-    
-    // Scroll to about section first to trigger animation
-    cy.getDataCy("about-title").scrollIntoView().should("contain", "About Us");
-    
-    // Wait for animation to complete, then check image visibility
     cy.getDataCy("team-image")
       .should("have.attr", "alt", "Team")
       .and("be.visible");
-    
+    // Scroll to about section before checking visibility
+    cy.getDataCy("about-title").scrollIntoView().should("contain", "About Us");
     cy.getDataCy("about-text-1").should("exist");
     cy.getDataCy("about-text-2").should("exist");
   });

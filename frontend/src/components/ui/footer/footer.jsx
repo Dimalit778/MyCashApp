@@ -5,12 +5,20 @@ import { Container, Row, Col } from 'react-bootstrap';
 
 const Footer = () => {
   return (
-    <footer data-cy="footer" className="py-2 mt-5" style={{ background: `linear-gradient(to top, #434343, #000000)` }}>
+    <footer
+      data-cy="footer"
+      className="py-2 "
+      style={{
+        background: `linear-gradient(to top, #000000,rgb(35, 34, 34))`,
+        position: 'relative',
+        zIndex: 10,
+      }}
+    >
       <Container>
         <Row className="text-center text-light mb-1">
           <Col data-cy="footer-info" md={6} className="mb-3 mb-md-0">
-            <h5 className="mb-3">Contact Information</h5>
-            <p className="mb-1">Israel, Tel Aviv</p>
+            <h5 className="mb-3 ">Contact Information</h5>
+            <p className="mb-1 ">Israel, Tel Aviv</p>
             <p className="mb-1">Email: Dimalit778@gmail.com</p>
             <p>Phone: +925 526731280</p>
           </Col>

@@ -135,7 +135,7 @@ export default function EditProfile() {
               rules={{
                 required: {
                   value: currentPassword,
-                  message: 'Please enter New password',
+                  message: 'Please enter new password',
                 },
                 minLength: {
                   value: 6,
