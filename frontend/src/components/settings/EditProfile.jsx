@@ -24,25 +24,22 @@ export default function EditProfile() {
     formState: { isDirty },
   } = useForm({
     defaultValues: {
-      firstName: userInfo?.firstName || "",
-      lastName: userInfo?.lastName || "",
-      currentPassword: "",
-      newPassword: "",
+      firstName: userInfo?.firstName || '',
+      lastName: userInfo?.lastName || '',
+      currentPassword: '',
+      newPassword: '',
     },
-    mode: "all",
+    mode: 'all',
   });
 
-  const [currentPassword, newPassword] = watch([
-    "currentPassword",
-    "newPassword",
-  ]);
+  const [currentPassword, newPassword] = watch(['currentPassword', 'newPassword']);
 
   useEffect(() => {
     reset({
-      firstName: userInfo?.firstName || "",
-      lastName: userInfo?.lastName || "",
-      currentPassword: "",
-      newPassword: "",
+      firstName: userInfo?.firstName || '',
+      lastName: userInfo?.lastName || '',
+      currentPassword: '',
+      newPassword: '',
     });
   }, [userInfo, reset, isEditing]);
 
@@ -55,7 +52,7 @@ export default function EditProfile() {
         newPassword: data.newPassword,
       }).unwrap();
 
-      toast.success("Profile updated successfully!");
+      toast.success('Profile updated successfully!');
       setIsEditing(false);
     } catch (error) {
       toast.error(error.data.message);
@@ -142,7 +139,10 @@ export default function EditProfile() {
                   message: 'Password must be at least 6 characters',
                 },
                 validate: (value) =>
-                  !value || !currentPassword || value !== currentPassword || 'New password must be different from current password',
+                  !value ||
+                  !currentPassword ||
+                  value !== currentPassword ||
+                  'New password must be different from current password',
               }}
             />
           </Col>
@@ -155,7 +155,9 @@ export default function EditProfile() {
     <Container fluid data-cy="edit-profile-container" className="edit-profile-container">
       <div className="edit-profile-header">
         <h3 className="edit-profile-title">Profile Information</h3>
-        <p className="edit-profile-subtitle">{isEditing ? 'Update your personal details and password' : 'View your profile information'}</p>
+        <p className="edit-profile-subtitle">
+          {isEditing ? 'Update your personal details and password' : 'View your profile information'}
+        </p>
       </div>
 
       <Form onSubmit={handleSubmit(onSubmit)}>
