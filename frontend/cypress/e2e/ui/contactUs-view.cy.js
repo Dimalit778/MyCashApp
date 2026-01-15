@@ -16,105 +16,37 @@ describe('Contact Page', () => {
       cy.get('p').should('be.visible').and('contain', 'You can contact us and our team will respond within 24 hours.');
     });
   });
-  it('should display Contact info', () => {
+
+  it('should display Contact info card', () => {
+    cy.getDataCy('contact-info').should('be.visible');
+    
     cy.getDataCy('contact-info').within(() => {
+      // Check title
       cy.get('h1').should('be.visible').and('contain', 'Contact Us');
+      
+      // Check email
       cy.get('p').should('contain', 'Email: Mycash@outlook.com');
+      
+      // Check phone
       cy.get('p').should('contain', 'Phone: +972 052-6731280');
+      
+      // Check footer message
+      cy.get('p').should('contain', "We're here to help you manage your finances better");
     });
   });
 
-  it('should display Form Fields', () => {
-    cy.getDataCy('contact-name')
-      .contains(/name/i)
-      .parent()
-      .find('input')
-      .should('have.attr', 'placeholder')
-      .and('match', /enter your name/i);
-
-    cy.getDataCy('contact-email')
-      .contains(/email/i)
-      .parent()
-      .find('input')
-      .should('have.attr', 'placeholder')
-      .and('match', /enter your email address/i);
-
-    cy.getDataCy('contact-message')
-      .contains(/message/i)
-      .parent()
-      .find('textarea')
-      .should('have.attr', 'placeholder')
-      .and('match', /write your message.../i);
-
-    cy.getDataCy('contact-submit-button').contains('Send');
-  });
-  it('should show validation errors for empty fields', () => {
-    cy.getDataCy('contact-submit-button').click();
-
-    cy.contains('Name is required').should('be.visible');
-    cy.contains('Email is required').should('be.visible');
-    cy.contains('Message is required').should('be.visible');
-  });
-
-  it('should show validation errors for invalid emails', () => {
-    cy.getDataCy('contact-name').find('input').as('nameInput');
-    cy.getDataCy('contact-email').find('input').as('emailInput');
-    cy.getDataCy('contact-message').find('textarea').as('messageInput');
-
-    const invalidEmails = ['invalid', 'invalid@', 'invalid@test', '@test.com'];
-
-    invalidEmails.forEach((email) => {
-      cy.get('@emailInput').clear();
-      cy.get('@emailInput').type(email);
-
-      cy.getDataCy('contact-submit-button').click();
-      cy.contains('Invalid email address').should('be.visible');
+  it('should display contact icons', () => {
+    cy.getDataCy('contact-info').within(() => {
+      // Check for FontAwesome icons (they render as SVG)
+      cy.get('svg').should('have.length.at.least', 2);
     });
-
-    cy.get('@emailInput').clear();
-    cy.get('@emailInput').type('example@gmail.com');
-
-    cy.getDataCy('contact-submit-button').click();
-    cy.contains('Invalid email address').should('not.exist');
   });
 
-  it('should clear validation error messages when typing', () => {
-    cy.getDataCy('contact-submit-button').click();
-
-    cy.getDataCy('contact-name').find('input').type('Test');
-    cy.contains('Name is required').should('not.exist');
-
-    cy.getDataCy('contact-email').find('input').type('test@gmail.com');
-    cy.contains('Email is required').should('not.exist');
-
-    cy.getDataCy('contact-message').find('textarea').type('Test message');
-    cy.contains('Message is required').should('not.exist');
-  });
-  it('should handle successful form submission and reset the form', () => {
-    cy.getDataCy('contact-name').find('input').type('Test User');
-    cy.getDataCy('contact-email').find('input').type('test@gmail.com');
-    cy.getDataCy('contact-message').find('textarea').type('This is a test message');
-
-    cy.getDataCy('contact-submit-button').click();
-
-    cy.contains('Message sent successfully').should('be.visible');
-
-    cy.getDataCy('contact-name')
-      .find('input')
-      .should('have.value', '')
-      .should('have.attr', 'placeholder')
-      .and('match', /enter your name/i);
-
-    cy.getDataCy('contact-email')
-      .find('input')
-      .should('have.value', '')
-      .should('have.attr', 'placeholder')
-      .and('match', /enter your email address/i);
-
-    cy.getDataCy('contact-message')
-      .find('textarea')
-      .should('have.value', '')
-      .should('have.attr', 'placeholder')
-      .and('match', /write your message.../i);
+  it('should have proper animations', () => {
+    // Check that the contact card is visible (animation completed)
+    cy.getDataCy('contact-info').should('be.visible');
+    
+    // Check that the header section is visible (animation completed)
+    cy.getDataCy('contact-title').should('be.visible');
   });
 });

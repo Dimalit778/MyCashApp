@@ -1,14 +1,14 @@
-import React, { useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
-import { Link } from "react-router-dom";
-import { useForm } from "react-hook-form";
-import "./authStyle.css";
-import IconButton from "components/ui/icon";
-import TextInput from "components/ui/textInput";
-import MyButton from "components/ui/button";
-import { THEME } from "constants/Theme";
-import { emailValidation } from "utils/emailValidation";
+import React, { useState } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+import { Link } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
+import './authStyle.css';
+import IconButton from 'components/ui/icon';
+import TextInput from 'components/ui/textInput';
+import MyButton from 'components/ui/button';
+import { THEME } from 'constants/Theme';
+import { emailValidation } from 'utils/emailValidation';
 
 const SignUpForm = ({ onSubmit, isLoading }) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -16,14 +16,14 @@ const SignUpForm = ({ onSubmit, isLoading }) => {
 
   const { control, handleSubmit, watch } = useForm({
     defaultValues: {
-      firstName: "",
-      lastName: "",
-      email: "",
-      password: "",
-      confirmPassword: "",
+      firstName: '',
+      lastName: '',
+      email: '',
+      password: '',
+      confirmPassword: '',
     },
   });
-  const password = watch("password");
+  const password = watch('password');
 
   return (
     <div className="auth-container ">
@@ -41,10 +41,10 @@ const SignUpForm = ({ onSubmit, isLoading }) => {
                 placeholder="First Name"
                 className="form-control"
                 rules={{
-                  required: "First name is required",
+                  required: 'First name is required',
                   minLength: {
                     value: 2,
-                    message: "First name must be at least 2 characters",
+                    message: 'First name must be at least 2 characters',
                   },
                 }}
               />
@@ -55,10 +55,10 @@ const SignUpForm = ({ onSubmit, isLoading }) => {
                 placeholder="Last Name"
                 className="form-control"
                 rules={{
-                  required: "Last name is required",
+                  required: 'Last name is required',
                   minLength: {
                     value: 2,
-                    message: "Last name must be at least 2 characters",
+                    message: 'Last name must be at least 2 characters',
                   },
                 }}
               />
@@ -77,23 +77,21 @@ const SignUpForm = ({ onSubmit, isLoading }) => {
               data-cy="signup-password"
               name="password"
               control={control}
-              type={showPassword ? "text" : "password"}
+              type={showPassword ? 'text' : 'password'}
               placeholder="Password"
               className="form-control"
               autoComplete="none"
               rules={{
-                required: "Password is required",
+                required: 'Password is required',
                 minLength: {
                   value: 6,
-                  message: "Password must be at least 6 characters",
+                  message: 'Password must be at least 6 characters',
                 },
               }}
               endAdornment={
                 <IconButton
                   data-cy="toggle-password"
-                  icon={
-                    <FontAwesomeIcon icon={showPassword ? faEye : faEyeSlash} />
-                  }
+                  icon={<FontAwesomeIcon icon={showPassword ? faEye : faEyeSlash} />}
                   onClick={() => setShowPassword(!showPassword)}
                   color="white"
                   border="none"
@@ -105,23 +103,18 @@ const SignUpForm = ({ onSubmit, isLoading }) => {
               data-cy="signup-confirm-password"
               name="confirmPassword"
               control={control}
-              type={showConfirmPassword ? "text" : "password"}
+              type={showConfirmPassword ? 'text' : 'password'}
               placeholder="Confirm Password"
               className="form-control"
               autoComplete="none"
               rules={{
-                required: "Confirm password is required",
-                validate: (value) =>
-                  value === password || "Passwords do not match",
+                required: 'Confirm password is required',
+                validate: (value) => value === password || 'Passwords do not match',
               }}
               endAdornment={
                 <IconButton
                   ariaLabel="Toggle Confirm Password"
-                  icon={
-                    <FontAwesomeIcon
-                      icon={showConfirmPassword ? faEye : faEyeSlash}
-                    />
-                  }
+                  icon={<FontAwesomeIcon icon={showConfirmPassword ? faEye : faEyeSlash} />}
                   onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                   color="white"
                   border="none"
@@ -144,11 +137,7 @@ const SignUpForm = ({ onSubmit, isLoading }) => {
 
           <div className="auth-prompt">
             <p>Already have an account?</p>
-            <Link
-              data-cy="goto-login"
-              to="/login"
-              className="btn btn-outline-light btn-sm"
-            >
+            <Link data-cy="goto-login login-link" to="/login" className="btn btn-outline-light btn-sm">
               Login
             </Link>
           </div>

@@ -1,23 +1,23 @@
-import React, { useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Link, useNavigate } from "react-router-dom";
-import { useForm } from "react-hook-form";
+import React, { useState } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useNavigate } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
 
-import TextInput from "components/ui/textInput";
-import IconButton from "components/ui/icon";
-import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
-import MyButton from "components/ui/button";
-import { THEME } from "constants/Theme";
-import "./authStyle.css";
-import { emailValidation } from "utils/emailValidation";
+import TextInput from 'components/ui/textInput';
+import IconButton from 'components/ui/icon';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+import MyButton from 'components/ui/button';
+import { THEME } from 'constants/Theme';
+import './authStyle.css';
+import { emailValidation } from 'utils/emailValidation';
 const LoginForm = ({ onSubmit, isLoading }) => {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
 
   const { control, handleSubmit } = useForm({
     defaultValues: {
-      email: "",
-      password: "",
+      email: '',
+      password: '',
     },
   });
 
@@ -42,24 +42,22 @@ const LoginForm = ({ onSubmit, isLoading }) => {
               data-cy="login-password"
               name="password"
               control={control}
-              type={showPassword ? "text" : "password"}
+              type={showPassword ? 'text' : 'password'}
               placeholder="Password"
               className="form-control"
               autoComplete="none"
               rules={{
-                required: "Password is required",
+                required: 'Password is required',
                 minLength: {
                   value: 6,
-                  message: "Password must be at least 6 characters",
+                  message: 'Password must be at least 6 characters',
                 },
               }}
               endAdornment={
                 <IconButton
                   data-cy="toggle-password"
                   ariaLabel="Toggle Password"
-                  icon={
-                    <FontAwesomeIcon icon={showPassword ? faEye : faEyeSlash} />
-                  }
+                  icon={<FontAwesomeIcon icon={showPassword ? faEye : faEyeSlash} />}
                   onClick={() => setShowPassword(!showPassword)}
                   color="white"
                   border="none"
@@ -80,21 +78,24 @@ const LoginForm = ({ onSubmit, isLoading }) => {
             </MyButton>
           </div>
 
-          <Link
-            data-cy="forgot-password"
-            to="/forgot-password"
-            className="forgot-password"
-          >
-            Forgot Password?
-          </Link>
+          <div className="text-center mt-2">
+            <button
+              data-cy="forgot-password"
+              type="button"
+              className="btn btn-link text-light"
+              onClick={(e) => e.preventDefault()}
+            >
+              Forgot Password?
+            </button>
+          </div>
 
           <div className="auth-prompt">
             <p>Don't have an account?</p>
             <button
-              data-cy="goto-signup"
+              data-cy="goto-signup signup-link"
               type="button"
               className="btn btn-outline-light btn-sm"
-              onClick={() => navigate("/signup")}
+              onClick={() => navigate('/signup')}
             >
               Register
             </button>

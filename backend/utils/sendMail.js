@@ -18,6 +18,7 @@ const sendVerificationMail = (user) => {
     console.log('Verification email sent');
   });
 };
+
 //@ ----> Reset Password
 const sendForgotPassMail = (user) => {
   const transporter = mailTransporter();
